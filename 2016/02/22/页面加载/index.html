@@ -1,0 +1,754 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="js,html,css," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="页面初始化加载曾经常用的两种写法
+123456window.onload = function()&amp;#123;    $(&quot;.gravatar&quot;).on(&apos;click&apos;,function()&amp;#123;        //...    &amp;#125;);    //以及其他操作DOM的节点&amp;#125;
+第二种方法
+1234$(document).ready(function()&amp;#123;    /">
+<meta property="og:type" content="article">
+<meta property="og:title" content="页面加载">
+<meta property="og:url" content="http://www.demozhan.com/2016/02/22/页面加载/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="页面初始化加载曾经常用的两种写法
+123456window.onload = function()&amp;#123;    $(&quot;.gravatar&quot;).on(&apos;click&apos;,function()&amp;#123;        //...    &amp;#125;);    //以及其他操作DOM的节点&amp;#125;
+第二种方法
+1234$(document).ready(function()&amp;#123;    /">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/timing-overview.png">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/redirect.jpg">
+<meta property="og:updated_time" content="2016-02-22T07:33:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="页面加载">
+<meta name="twitter:description" content="页面初始化加载曾经常用的两种写法
+123456window.onload = function()&amp;#123;    $(&quot;.gravatar&quot;).on(&apos;click&apos;,function()&amp;#123;        //...    &amp;#125;);    //以及其他操作DOM的节点&amp;#125;
+第二种方法
+1234$(document).ready(function()&amp;#123;    /">
+<meta name="twitter:image" content="http://7xltvd.com1.z0.glb.clouddn.com/timing-overview.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 页面加载 | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              页面加载
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2016-02-22T13:59:36+08:00" content="2016-02-22">
+            2016-02-22
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/02/22/页面加载/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/22/页面加载/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="页面初始化加载"><a href="#页面初始化加载" class="headerlink" title="页面初始化加载"></a>页面初始化加载</h2><p>曾经常用的两种写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">".gravatar"</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;);</div><div class="line">    <span class="comment">//以及其他操作DOM的节点</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第二种方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//操作DOM相关</span></div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="页面加载"><a href="#页面加载" class="headerlink" title="页面加载"></a>页面加载</h2><p>页面加载就是从你输入网址+enter开始，发生的一些列过程，最终到页面显示。 从微观上分的话，<strong>页面加载有两部分<br>一个是以DOMContentLoaded触发为标志的DOM树的渲染完成<br>一个是以辅助资源img,font加载完成为触发标志的onload事件<br>他们两个的具体区别就是”资源的加载”这个关键点。</strong></p>
+<p>在获得数据响应后,页面开始解析,发生的过程为:</p>
+<ol>
+<li>解析HTML结构。 </li>
+<li>加载外部脚本和样式表文件。 </li>
+<li>解析并执行脚本代码。 </li>
+<li>构造HTML DOM模型。//ready执行 </li>
+<li>加载图片等外部文件。 </li>
+<li>页面加载完毕。//onload执行</li>
+</ol>
+<p>这只是，页面加载很浅的一块，前端能在页面加载上做的工作其实超级多。 要知道， 从你输入网站 + enter键后，发生的过程为:</p>
+<blockquote>
+<p>重定向=&gt;检查DNS缓存=&gt; DNS解析 =&gt; TCP连接 =&gt; 发请求 =&gt; 得到响应=&gt; 浏览器处理 =&gt; 最后onload</p>
+</blockquote>
+<h2 id="宏观页面加载"><a href="#宏观页面加载" class="headerlink" title="宏观页面加载"></a>宏观页面加载</h2><p>如果我们想深入了解宏观页面加载，需要掌握ECMA5新给出的一个API。 performance . 是不是 感觉很熟悉呢？</p>
+<h3 id="performance简单讲解"><a href="#performance简单讲解" class="headerlink" title="performance简单讲解"></a>performance简单讲解</h3><p>以前，我们来检查浏览器的时候，大部分情况下是使用</p>
+<pre><code>console.time(specialNum);
+console.timeEnd(specialNum);
+</code></pre><p>或者</p>
+<pre><code>new Date().getTime();
+//或者
+Date.now();
+</code></pre><p>上面说的两种方法， 获取的精度都是毫秒级(10^-6) ，对于一些非常精确的测试，他们的作用来还是蛮有限的，而且获取数据的方式，也比较complicated.</p>
+<p>ES5提出的performance可以获取到，微秒级别(10^-9) 。而且，能够得到后台事件的更多时间数据。</p>
+<p>他的兼容性是IE9+ 。 觉得已经足够了。</p>
+<h2 id="performance-timing对象"><a href="#performance-timing对象" class="headerlink" title="performance.timing对象"></a>performance.timing对象</h2><p>通常，我们可以从performance.timing对象上，获得我们想要的一切时间值<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/timing-overview.png" alt="alt"><br>比如，我们获得重定向时间用:</p>
+<pre><code>var time = performance.timing;
+var redirect = time.redirectEnd - time.redirectStart; //单位为微秒
+</code></pre><p>即DOMContentLoaded事件 是在domContentLoaded那段触发的。图中所指的domContentLoaded其实分为两块, 一个是domContentLoadedEventStart和domContentLoadedEventEnd. 详见下述说明:(from 赖小赖小赖)</p>
+<h2 id="performance-now"><a href="#performance-now" class="headerlink" title="performance.now()"></a>performance.now()</h2><p>通常，我们会将该方法和Date.now()进行一个对比。</p>
+<p>performance.now();  //输出是微秒级别<br>Date.now();  //输出是毫秒级别<br>其中Date.now()是输出 从1970年开始的毫秒数.<br>performance.now()参考的是从.performance.timing.navigationStart(页面开始加载)的时间, 到现在的微秒数.<br>这里，我们可以使用performance.now()来模拟获取DomContentLoaded的时间。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> timesnipe = performance.now();</div><div class="line">        <span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(performance.now() - timesnipe);</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line">        <span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">           <span class="built_in">console</span>.log(performance.now() - timesnipe);</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line"><span class="comment">//但是这样并不等同于,只能算作约等于</span></div><div class="line">performance.timing.domContentLoadedEventStart - performance.timing.domLoading; <span class="comment">//检测domLoadEvent触发时间</span></div></pre></td></tr></table></figure>
+<p>上面不相等的原因就在于，当执行script的时候，DOM其实已经开始解析DOM和页面内容， 所以会造成时间上 比 真实时间略短。另外performance还有其他几个API,比如makr,getEntries. 不过，这里因为和页面显示的关系不是很大，这里就不做过多的讲解了。 有兴趣，可以参考:赖小赖小赖<br>接下来，我们一步一步来看一下，页面加载的整个过程.</p>
+<h2 id="redirect"><a href="#redirect" class="headerlink" title="redirect"></a>redirect</h2><p>这是页面加载的第一步(也有可能没有). 比如，当一个页面已经迁移，但是你输入原来的网站地址的时候就会发生。<br>或者， 比如example.com -&gt; m.example.com/home 。 这样耗费的时间成本是双倍的。 这里就会经过两次DNS解析，TCP连接，以及请求的发送。所以，在后台设置好正确的网址是很重要的。<br>如图:<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/redirect.jpg" alt="alt"><br>这里，我们可以使用.performance的属性,计算出重定向时间</p>
+<pre><code>redirectTime = redirectEnd - redirectStart
+</code></pre><h2 id="cache-DNS-TCP-Request-Response"><a href="#cache-DNS-TCP-Request-Response" class="headerlink" title="cache,DNS,TCP,Request,Response"></a>cache,DNS,TCP,Request,Response</h2><p>如果我们的域名输入正确的话，接着，浏览器会查询本地是否有域名缓存(appCache)，如果有，则不需要进行DNS解析，否则需要对域名进行解析，找到真实的IP地址，然后建立3次握手连接， 发送请求， 最后接受数据。 通常，这一部分，可以做的优化有:<br>发送请求的优化:加异地机房，加CDN.(加快解析request)<br>请求加载数据的优化:页面内容经过 gzip 压缩，静态资源 css/js 等压缩(request到response的优化)<br>ok~ 使用performance测试时间为:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// DNS 缓存时间</span></div><div class="line">    times.appcache = t.domainLookupStart - t.fetchStart;</div><div class="line"><span class="comment">// TCP 建立连接完成握手的时间</span></div><div class="line">    times.connect = t.connectEnd - t.connectStart;</div><div class="line"><span class="comment">//DNS 查询时间</span></div><div class="line">    times.lookupDomain = t.domainLookupEnd - t.domainLookupStart;</div><div class="line"><span class="comment">//整个解析时间</span></div><div class="line"><span class="keyword">var</span> lookup = t.responseEnd - t.fetchStart;</div></pre></td></tr></table></figure>
+<p>其实，只要对照那个图查查over，不用太关注上面的式子。使用时需要注意，performance的相关操作，最好放在onload的回调中执行，避免出现异常的bug.</p>
+<h2 id="jquery-ready事件浅析"><a href="#jquery-ready事件浅析" class="headerlink" title="jquery ready事件浅析"></a>jquery ready事件浅析</h2><p>jquery主要做的工作就是兼容IE6,7,8实现DOMContentLoaded的效果.由于现在主流只要兼容到IE8, 剩下IE6,7我们不做过多的分析了。<br>目前流行的做法有两种， 一种是使用readystatechange实现，另外一种使用IE自带的doScroll方法实现.</p>
+<h3 id="readyStateChange"><a href="#readyStateChange" class="headerlink" title="readyStateChange"></a>readyStateChange</h3><p>这其实是IE6，7，8的特有属性，用它来标识某个元素的加载状态。 但是现在w3c规定，只有xhr才有这个事件。 所以，这里，我们一般只能在IE中使用readyStateChange否则，其他浏览器是没有效果的。<br>详见:readyState兼容性分析<br>这样，我们模拟jquery的ready事件时就可以使用:</p>
+<pre><code>document.onreadystatechange = function () {
+  if (document.readyState == &quot;interactive&quot; || document.readyState == &quot;complete&quot;) {
+        //添加回调...
+  }
+}
+</code></pre><p>理想很丰满，现实很骨感。 事实上, 当readyState为interactive时， Dom的结构并未完全稳定，如果还有其他脚本影响DOM时, 这时候可能会造成bug。 另外为complete时， 这时候图片等相关资源已经加载完成。 这个时候模拟触发DOMContentLoaded事件，其实和onload事件触发时间并没有太久的时间距离。 这种方式兼容低版本IE还是不太可靠的。<br>另外提供一个doScroll方式</p>
+<h3 id="doScroll兼容"><a href="#doScroll兼容" class="headerlink" title="doScroll兼容"></a>doScroll兼容</h3><p>这是IE低版本特有的，不过IE11已经弃用了。 使用scrollLeft和scrollTop代替. doScroll 的主要作用是检测DOM结构是否问题， 通常我们会使用轮询来检测doScroll是否可用，当可用的时候一定是DOM结构稳定，图片资源还未加载的时候。<br>我们来看一下jquery中实现doScroll的兼容:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">  <span class="comment">//低版本的IE浏览器，这里添加监听作为向下兼容，如果doScroll执行出现bug，也能保证ready函数的执行</span></div><div class="line">            <span class="built_in">document</span>.attachEvent( <span class="string">"onreadystatechange"</span>, DOMContentLoaded );</div><div class="line">            <span class="built_in">window</span>.attachEvent( <span class="string">"onload"</span>, jQuery.ready );</div><div class="line"><span class="comment">//在ready里面会对执行做判断，确保只执行一次</span></div><div class="line">            <span class="keyword">var</span> top = <span class="literal">false</span>;</div><div class="line"><span class="comment">// 如果是IE且不是iframe就通过不停的检查doScroll来判断dom结构是否ready</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    top = <span class="built_in">window</span>.frameElement == <span class="literal">null</span> &amp;&amp; <span class="built_in">document</span>.documentElement;</div><div class="line">&#125; <span class="keyword">catch</span>(e) &#123;&#125;</div><div class="line"><span class="keyword">if</span> ( top &amp;&amp; top.doScroll ) &#123;</div><div class="line">    (<span class="function"><span class="keyword">function</span> <span class="title">doScrollCheck</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> ( !jQuery.isReady ) &#123;<span class="comment">//ready方法没有执行过</span></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 检查是否可以向左scroll滑动,当dom结构还没有解析完成时会抛出异常</span></div><div class="line">                top.doScroll(<span class="string">"left"</span>);</div><div class="line">            &#125; <span class="keyword">catch</span>(e) &#123;</div><div class="line">                <span class="comment">//递归调用,直到当dom结构解析完成</span></div><div class="line">                <span class="keyword">return</span> setTimeout( doScrollCheck, <span class="number">50</span> );</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//没有发现异常,表示dom结构解析完成,删除之前绑定的onreadystatechange事件</span></div><div class="line">            </div><div class="line">            <span class="comment">//执行jQuery的ready方法</span></div><div class="line">            jQuery.ready();</div><div class="line">        &#125;</div><div class="line">    &#125;)();</div><div class="line">&#125;</div><div class="line"><span class="comment">//看看jQuery.ready()方法:</span></div><div class="line">ready:<span class="function"><span class="keyword">function</span>(<span class="params">wait</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (wait === <span class="literal">true</span> ? --jQuery.readyWait : jQuery.isReady) &#123;</div><div class="line">        <span class="comment">//判断页面是否已完成加载并且是否已经执行ready方法</span></div><div class="line">        <span class="comment">//通过isReady状态进行判断, 保证只执行一次</span></div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (!<span class="built_in">document</span>.body) &#123;</div><div class="line">        <span class="keyword">return</span> setTimeout(jQuery.ready);</div><div class="line">    &#125;</div><div class="line">    jQuery.isReady = <span class="literal">true</span>; <span class="comment">//指示ready方法已被执行</span></div><div class="line">      <span class="comment">//这也是上面两次绑定事件的原因,会保证只执行一次</span></div><div class="line">    <span class="keyword">if</span> (wait !== <span class="literal">true</span> &amp;&amp; --jQuery.readyWait &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//以下是处理ready的状态</span></div><div class="line">    readyList.resolveWith(<span class="built_in">document</span>, [jQuery]);</div><div class="line">    <span class="keyword">if</span> (jQuery.fn.trigger) &#123;</div><div class="line">    <span class="comment">//解除引用</span></div><div class="line">        jQuery(<span class="built_in">document</span>).trigger(<span class="string">"ready"</span>).off(<span class="string">"ready"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上就是jquery 兼容ready的方法。</p>
+<h2 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h2><ul>
+<li><a href="https://segmentfault.com/a/1190000004466407" target="_blank" rel="external">segmentfault</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag">#js</a>
+          
+            <a href="/tags/html/" rel="tag">#html</a>
+          
+            <a href="/tags/css/" rel="tag">#css</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/27/窗口-元素大小/" rel="prev">窗口/元素大小</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/21/http2/" rel="next">http2</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/02/22/页面加载/"
+                   data-title="页面加载" data-url="http://www.demozhan.com/2016/02/22/页面加载/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#页面初始化加载"><span class="nav-number">1.</span> <span class="nav-text">页面初始化加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面加载"><span class="nav-number">2.</span> <span class="nav-text">页面加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宏观页面加载"><span class="nav-number">3.</span> <span class="nav-text">宏观页面加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#performance简单讲解"><span class="nav-number">3.1.</span> <span class="nav-text">performance简单讲解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#performance-timing对象"><span class="nav-number">4.</span> <span class="nav-text">performance.timing对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#performance-now"><span class="nav-number">5.</span> <span class="nav-text">performance.now()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redirect"><span class="nav-number">6.</span> <span class="nav-text">redirect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache-DNS-TCP-Request-Response"><span class="nav-number">7.</span> <span class="nav-text">cache,DNS,TCP,Request,Response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jquery-ready事件浅析"><span class="nav-number">8.</span> <span class="nav-text">jquery ready事件浅析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#readyStateChange"><span class="nav-number">8.1.</span> <span class="nav-text">readyStateChange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#doScroll兼容"><span class="nav-number">8.2.</span> <span class="nav-text">doScroll兼容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转载"><span class="nav-number">9.</span> <span class="nav-text">转载</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,918 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="nodejs,nginx," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="在开发的过程中,通过node app.js 􏰤􏱎运行服务器􏰓可。但它不适合在产􏱏环境下使用,因为到目前为􏱒这个服务 器还有几个重大􏱓􏱔问题
+##存在问题
+###不支持故障恢复不知你是􏱜在调试的过程中注意,􏱝程序有错误发生时,􏱞整个进程就会结束,需要重新在终端中􏱠动服务器。这一点在开发中无可厚非,但在产􏱏环境下就是􏱡重的问题 了,因为一􏱢用􏰑访问时触发了程序中􏱣个􏱤">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MAC中nodejs部署（参考自 nodejs开发指南）">
+<meta property="og:url" content="http://www.demozhan.com/2015/05/04/nodejs部署1/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="在开发的过程中,通过node app.js 􏰤􏱎运行服务器􏰓可。但它不适合在产􏱏环境下使用,因为到目前为􏱒这个服务 器还有几个重大􏱓􏱔问题
+##存在问题
+###不支持故障恢复不知你是􏱜在调试的过程中注意,􏱝程序有错误发生时,􏱞整个进程就会结束,需要重新在终端中􏱠动服务器。这一点在开发中无可厚非,但在产􏱏环境下就是􏱡重的问题 了,因为一􏱢用􏰑访问时触发了程序中􏱣个􏱤">
+<meta property="og:updated_time" content="2015-10-23T04:18:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MAC中nodejs部署（参考自 nodejs开发指南）">
+<meta name="twitter:description" content="在开发的过程中,通过node app.js 􏰤􏱎运行服务器􏰓可。但它不适合在产􏱏环境下使用,因为到目前为􏱒这个服务 器还有几个重大􏱓􏱔问题
+##存在问题
+###不支持故障恢复不知你是􏱜在调试的过程中注意,􏱝程序有错误发生时,􏱞整个进程就会结束,需要重新在终端中􏱠动服务器。这一点在开发中无可厚非,但在产􏱏环境下就是􏱡重的问题 了,因为一􏱢用􏰑访问时触发了程序中􏱣个􏱤">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> MAC中nodejs部署（参考自 nodejs开发指南） | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              MAC中nodejs部署（参考自 nodejs开发指南）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-05-04T11:34:26+08:00" content="2015-05-04">
+            2015-05-04
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/nodejs/" itemprop="url" rel="index">
+                  <span itemprop="name">nodejs</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/05/04/nodejs部署1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/04/nodejs部署1/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>在开发的过程中,通过node app.js 􏰤􏱎运行服务器􏰓可。但它不适合在产􏱏环境下使用,因为到目前为􏱒这个服务 器还有几个重大􏱓􏱔问题</p>
+<p>##存在问题</p>
+<p>###不支持故障恢复<br>不知你是􏱜在调试的过程中注意,􏱝程序有错误发生时,􏱞整个进程就会结束,需要重新在终端中􏱠动服务器。这一点在开发中无可厚非,但在产􏱏环境下就是􏱡重的问题 了,因为一􏱢用􏰑访问时触发了程序中􏱣个􏱤􏱥的bug􏱦􏱞个服务器就􏱧􏱨了，所以我们在部署nodejs的时候一定要注意故障恢复</p>
+<p>###没有日志<br>没有错误日志和访问日志</p>
+<p>###无法利用多核<br>Nodejs是单线程的，一个进程只能使用一个CPU核心</p>
+<p>###独占端口<br>假如􏱞个服务器只有一个网站,或者可以给每个网站分配一个􏰇􏰈的IP地址,不会有 端口􏰦􏰧冲突的问题。而很多时􏰯为了􏲉充分利用服务器的资源,我们会在同一个服务器上建􏰈多个网站,而且这些网站可能有的是PHP，有的是Rails，有的是Node.js。不能每个进程都􏰇􏲊80端口,所以我们有􏱶要通过􏲋􏲌代理来实现基于域􏰥名的端口共享。</p>
+<p>###需要手动启动<br>先前每次􏱠动服务器都是通过在􏰤􏱎行中􏰡接􏲑入􏰤􏱎来实现的,但在产􏱏环境中, 特别是在服务器重􏱠启以后,全部􏱭􏲒手动是不现实的。因此,我们应该制作一个自动启􏱠动服务器的脚􏲓本,并且通过该􏲓脚本可以实现􏲔􏱒服务器等功能。</p>
+<p>##解决问题</p>
+<p>###日志功能<br>Express有两种模式：调试模式、产品模式，产品模式易于部署，设置模式方法：在MAC命令行</p>
+<pre><code>export NODE_ENV=production
+</code></pre><p>我们实现访问􏱲􏱳日志和错误􏱲􏱳功能。访问日志􏱲􏱳就是􏲚录用􏰑对服务器的每个请求,包括􏲛􏰑端IP地址,访问时间,访问路径,服务器􏲜应以及􏲛􏰑端代理字符􏲝。而错误日志则􏲚录程序发生错误时的􏲞􏲟,由于调试中需要􏰓时􏰼看错误􏲞􏲟,将所有错误􏰡接显 示到终端􏰓可,而在产􏱏模式中,需要写入错误􏱲􏱳文件。<br>Express 提供了一个访问􏱲􏱳中间件,只需指定stream 参数为一个输出流􏰓可将访问日志写入文件。打开app.js,在最上方加入以下代码:</p>
+<pre><code>var fs = require(&apos;fs&apos;);
+var accessLogfile = fs.createWriteStream(&apos;access.log&apos;,{flags:&apos;a&apos;});
+var errorLogfile = fs.createWriteStream(&apos;error.log&apos;,{flags:&apos;a&apos;});
+</code></pre><p>􏲠􏲡􏲢然后在app.configure第一行加入</p>
+<pre><code>app.use(express.logger({stream:accessLogfile}));
+</code></pre><p>至于错误􏱲􏱳,需要􏰒􏰇实现错误􏲜,修􏲪改如下:</p>
+<pre><code>app.configure(&apos;production&apos;, function(){
+  app.use(function(err,req,res,next){
+    var meta = &apos;[&apos; + new Date() +&apos;]&apos; +req.url + &apos;\n&apos;;
+    errorLogfile.write(meta + err.stack + &apos;\n&apos;);
+    next();
+  });
+//  app.use(express.errorHandler());
+});
+</code></pre><p>为了产生一个错误,我们􏲪改routes/index.js 中􏰽 / 􏰾的􏲜应函数,加入以下代码: </p>
+<pre><code>throw new Error(&apos;An error for test purposes.&apos;);
+</code></pre><p>完整的app.js代码如下</p>
+<pre><code>/**
+ - Module dependencies.
+ */
+var express = require(&apos;express&apos;)
+  , routes = require(&apos;./routes&apos;)
+  , http = require(&apos;http&apos;)
+  , path = require(&apos;path&apos;)
+  , markdown=require(&apos;markdown-js&apos;)
+  , fs = require(&apos;fs&apos;);
+
+//写入日志
+var accessLogfile = fs.createWriteStream(&apos;access.log&apos;,{flags:&apos;a&apos;});
+var errorLogfile = fs.createWriteStream(&apos;error.log&apos;,{flags:&apos;a&apos;});
+
+var app = express();
+var MongoStore = require(&apos;connect-mongo&apos;)(express);
+
+var settings = require(&apos;./settings&apos;);
+// Configuration
+
+app.configure(function(){
+  app.set(&apos;port&apos;, process.env.PORT || 3300);
+  app.set(&apos;views&apos;, __dirname + &apos;/views&apos;);
+  app.set(&apos;view engine&apos;, &apos;ejs&apos;);
+  app.use(express.favicon(__dirname+&apos;/public/logo.ico&apos;));
+//  app.use(express.logger(&apos;dev&apos;));
+  app.use(express.logger({stream:accessLogfile}));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({
+    secret: settings.cookieSecret,
+    store: new MongoStore({
+      db: settings.db
+    })
+  }));
+  app.use(app.router);
+  app.use(express.static(path.join(__dirname, &apos;public&apos;)));
+});
+
+app.configure(&apos;development&apos;, function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+app.configure(&apos;production&apos;, function(){
+  app.use(function(err,req,res,next){
+    var meta = &apos;[&apos; + new Date() +&apos;]&apos; +req.url + &apos;\n&apos;;
+    errorLogfile.write(meta + err.stack + &apos;\n&apos;);
+    next();
+  });
+//  app.use(express.errorHandler());
+});
+
+app.engine(&apos;md&apos;, function(path, options, fn){  
+  fs.readFile(path, &apos;utf8&apos;, function(err, str){  
+    if (err) return fn(err);  
+    str = markdown.parse(str).toString();  
+    fn(null, str);  
+  });
+});
+
+// Routes
+
+app.get(&apos;/&apos;, routes.index);
+app.get(&apos;/home&apos;, routes.home);
+app.get(&apos;/about&apos;, routes.about);
+app.get(&apos;/report&apos;, routes.report);
+app.get(&apos;/submit&apos;, routes.getsubmit);
+app.post(&apos;/submit&apos;, routes.postsubmit);
+app.get(&apos;/login&apos;, routes.getlogin);
+app.post(&apos;/login&apos;, routes.postlogin);
+
+app.get(&apos;/logout&apos;, routes.logout);
+
+app.post(&apos;/modify&apos;, routes.modify);
+app.get(&apos;/login&apos;, routes.getlogin);
+
+app.get(&apos;/doc/:author/:title&apos;, routes.getdoc);
+
+app.get(&apos;/doc&apos;, routes.getdocindex);
+
+app.get(&apos;/xxx&apos;, function(req, res) {  
+    console.log(&apos;404 handler..&apos;)  
+    res.render(&apos;404&apos;, {  
+        status: 404,  
+        title: &apos;NodeBlog&apos;,
+        user: req.session.user  
+    });  
+});
+
+http.createServer(app).listen(app.get(&apos;port&apos;), function(){
+  console.log(&quot;Express server listening on port &quot; + app.get(&apos;port&apos;));
+});
+</code></pre><p>##多核多线程使用（cluster使用）<br>从0.6 版本开始，Node.js 提供了一个核心模块:cluster。cluster的功能是生成与􏱝当前进程􏰫相同的􏴸进程,并且􏺲允许􏴬进程和􏴸进程之间共享端口。Node.js另的􏰝一个核心模块 child_process 也提供了􏰫􏲬的进程生成功能,但最大的区别在于cluster允许跨进程端口复用,给我们的网络服务器开发带来了很大的方便􏺳</p>
+<p>为了在外部模块调用app.js􏱦首先需要􏺴􏱒禁止服务器自启􏱠动。􏲪修改app.js,在app.listen (3000); 前后加上􏺵􏺭判断语􏷵:</p>
+<pre><code>if(!module.parent){
+  http.createServer(app).listen(app.get(&apos;port&apos;), function(){
+    console.log(&quot;Express server listening on port &quot; + app.get(&apos;port&apos;));
+  });
+}
+</code></pre><p>这个语􏷵的功能是􏺵􏺭􏱝前模块是不是由其他模块调用的,如果不是,说􏴹它是􏰡接􏱠直接启动的,此时􏱠启动调试服务器。如果是,则不自动􏱠动服务器。以后􏰡直接调用node app.js服务器会􏰡接运行,但在其他模块中调用require(‘./app’) 则不会自动启动,需要􏲳显式地调用listen() 函数。</p>
+<p>接下来就让我们通过cluster 调用app.js􏺳。创建cluster.js􏱦内容如下所示:</p>
+<pre><code>var cluster = require(&apos;cluster&apos;);
+var os = require(&apos;os&apos;);
+
+// 获取cpu数量
+var numCPUs = os.cpus().length;
+
+var workers = {};
+
+if(cluster.isMaster){
+    // 主线程分支
+    cluster.on(&apos;death&apos;,function (worker) {
+        // 当一个工作进程结束时,重启工作进程
+        delete workers[worker.pid];
+        worker = cluster.fork();
+        workers[worker.pid] = worker;
+    });
+
+    // 初始开启与cpu数量相同的工作进程
+    for (var i = 0; i &lt; numCPUs; i++) {
+        var worker = cluster.fork();
+        workers[worker.pid] = worker;
+    }
+} else {
+    // 工作进程分支，启动服务器
+    var app = require(&apos;./app&apos;);
+    var http = require(&apos;http&apos;);
+    http.createServer(app).listen(app.get(&apos;port&apos;), function(){
+        console.log(&quot;Express server listening on port &quot; + app.get(&apos;port&apos;));
+     });
+}
+
+// 当主进程被终止，关闭所有工作进程
+process.on(&apos;SIGTERM&apos;,function () {
+    for(var pid in workers){
+        process.kill(pid);
+    }
+    process.exit(0);
+});
+</code></pre><p>对应修改app.js</p>
+<pre><code>var app = module.exports = express();
+
+if(!module.parent){
+    http.createServer(app).listen(app.get(&apos;port&apos;), function(){
+    console.log(&quot;Express server listening on port &quot; + app.get(&apos;port&apos;));
+  });
+}
+</code></pre><p>cluster.js 的功能是创建与CPU 核心个数􏰫同的服务器进程,以􏵎􏳢􏲉分利用多核CPU 的 资源。主进程生成􏹁􏹂个工作进程,并􏶍听工作进程结􏱟事件,􏱝工作进程结􏱟时,重新􏱠启动一个工作进程。分支进程产生时会自顶􏲌下重新􏵱行􏱝前程序,并通过分支􏺵􏺭进入工作进程分支,在其中读取模块并􏱠动服务器。通过cluster􏱠启动的工作进程可以􏰡接实现端口复用,因此所有工作进程只需􏶍听同一端口。􏱝主进程终􏱒时,还要主动关闭所有工作进程。</p>
+<p>##启动脚本<br>接下来,我们还需要一个􏱠脚􏲓本来简化维􏷁工作。如果你维􏷁过Linux 服务器,会对 /etc/init.d/ 下面的􏲓脚本有印􏵑象。例如使用/etc/init.d/nginx start 和/etc/init.d/ nginx stop 可以􏱠动和关闭Nginx 服务器。我们通过bash也来实现一个􏰘􏲬的功能, 创建microblog 并使用chmod +x microblog 􏵝􏼢其􏵱执行权限脚本内容为:</p>
+<pre><code>#! /bin/sh
+
+NODE_ENV=production
+DAEMON=&quot;node cluster.js&quot;
+NAME=HINOCLab
+DESC=HINOCLab
+PIDFILE=&quot;HINOCLab.pid&quot;
+
+case &quot;$1&quot; in
+    start)
+        echo &quot;starting $DESC: &quot;
+            nohup $DAEMON &gt; /dev/null &amp;
+        echo $! &gt; $PIDFILE
+        echo &quot;$NAME.&quot;
+            ;;
+    stop)
+        echo &quot;stoping $DESC: &quot;
+            pid=&apos;cat $PIDFILE&apos;
+        kill $pid
+            rm $PIDFILE
+        echo &quot;$NAME.&quot;
+            ;;
+esac
+exit 0
+</code></pre><p><em>注意不能有多余的空格</em></p>
+<p>##共享80端口<br>􏽂􏽃虚拟主机就是让多个网站共享使用同一服务器，同一IP地址通过域􏰥的不同来􏳾分请求。主流的HTTP服务器都提供了􏽂􏽃主机支持，如Nginx、Apache、IIS等。以Nginx为例,介绍如何通过􏲋􏲌代理实现Node.js 􏽂􏽃主机。</p>
+<p>在Nginx中设置􏲋􏲌代理和􏽂􏽃主机非常简􏰒单，下面是配置文件的一个示例:</p>
+<pre><code>server {
+    listen 80;
+    server_name mysite.com;
+    location / {
+    proxy_pass http://localhost:3000;
+    }
+}
+</code></pre><p>这个配置文件的功能是􏶍听访问mysite.com 80 端口的请求,并将所有的请求􏴔发给 <a href="http://localhost:3000，" target="_blank" rel="external">http://localhost:3000，</a> 到的Node.js 服务器。现在访问<a href="http://mysite.com/,就􏰫􏱝于服务器访问" target="_blank" rel="external">http://mysite.com/,就􏰫􏱝于服务器访问</a> <a href="http://localhost:3000" target="_blank" rel="external">http://localhost:3000</a> 了。<br>在􏳸加了􏽂􏽃主机以后,还可以在Nginx配置文件中􏳸加访问􏷦􏴠文件的规则(具体请<br>参考Nginx文档),􏷫去app.js中的app.use(express.static(__dirname + ‘/public’));。 这􏵌可以􏰡接让Nginx 来处理􏷦􏴠文件，􏰕少􏲋􏲌代理以及Node.js 的开销。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nodejs/" rel="tag">#nodejs</a>
+          
+            <a href="/tags/nginx/" rel="tag">#nginx</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/04/mac-nginx/" rel="prev">mac下nginx配置</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/03/mongodb-repair/" rel="next">mongodb repair</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/05/04/nodejs部署1/"
+                   data-title="MAC中nodejs部署（参考自 nodejs开发指南）" data-url="http://www.demozhan.com/2015/05/04/nodejs部署1/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

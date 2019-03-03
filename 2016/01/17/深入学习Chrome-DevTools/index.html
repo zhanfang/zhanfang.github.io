@@ -1,0 +1,773 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="chrome," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="本文大部分转载自civerzhu的专栏https://segmentfault.com/blog/civerzhu参考链接 https://developer.chrome.com/devtools/docs
+console相关技巧console.log
+console.log()可以传入多个参数
+
+console.log(&amp;quot;test&amp;quot;,123);
+同时log的第一个参数是带有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入学习Chrome DevTools">
+<meta property="og:url" content="http://www.demozhan.com/2016/01/17/深入学习Chrome-DevTools/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="本文大部分转载自civerzhu的专栏https://segmentfault.com/blog/civerzhu参考链接 https://developer.chrome.com/devtools/docs
+console相关技巧console.log
+console.log()可以传入多个参数
+
+console.log(&amp;quot;test&amp;quot;,123);
+同时log的第一个参数是带有">
+<meta property="og:updated_time" content="2016-01-17T09:16:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入学习Chrome DevTools">
+<meta name="twitter:description" content="本文大部分转载自civerzhu的专栏https://segmentfault.com/blog/civerzhu参考链接 https://developer.chrome.com/devtools/docs
+console相关技巧console.log
+console.log()可以传入多个参数
+
+console.log(&amp;quot;test&amp;quot;,123);
+同时log的第一个参数是带有">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 深入学习Chrome DevTools | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              深入学习Chrome DevTools
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2016-01-17T17:12:38+08:00" content="2016-01-17">
+            2016-01-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/tool/" itemprop="url" rel="index">
+                  <span itemprop="name">tool</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/01/17/深入学习Chrome-DevTools/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/17/深入学习Chrome-DevTools/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>本文大部分转载自<strong>civerzhu</strong>的专栏<a href="https://segmentfault.com/blog/civerzhu" target="_blank" rel="external">https://segmentfault.com/blog/civerzhu</a><br>参考链接 <a href="https://developer.chrome.com/devtools/docs" target="_blank" rel="external">https://developer.chrome.com/devtools/docs</a></p>
+<h2 id="console相关技巧"><a href="#console相关技巧" class="headerlink" title="console相关技巧"></a>console相关技巧</h2><h3 id="console-log"><a href="#console-log" class="headerlink" title="console.log"></a>console.log</h3><blockquote>
+<p>console.log()可以传入多个参数</p>
+</blockquote>
+<pre><code>console.log(&quot;test&quot;,123);
+</code></pre><p>同时log的第一个参数是带有特别标示符的字符串的话控制台会有不同的效果</p>
+<ul>
+<li>%s 输出字符串</li>
+<li>%d/%i 输出数字</li>
+<li>%f 输出浮点数</li>
+<li>%o 输出Dom元素</li>
+<li>%O 输出JS对象</li>
+<li>%c 表示对输出的文字应用特殊的样式</li>
+</ul>
+<hr>
+<pre><code>console.log(&quot;%o&quot;,document.body.firstElementChild);
+输出结果
+&lt;div class=&quot;...&quot;&gt;...&lt;div&gt;
+</code></pre><p>%c可以自定义输出样式</p>
+<pre><code>console.log(&quot;%cThis is a colorful text&quot;,&quot;color:blue; background:red&quot;);
+</code></pre><p>可以看出%c应用的样式是CSS的语法，所以基本上CSS支持的样式语句都可以支持。当然，Chrome是有过滤一些CSS语法的，比如对元素定位的CSS语法就不支持（ps：貌似定位啥的也没用，除非是想捣乱的程序员，呵呵）</p>
+<p>彩色的输出语句貌似看起来中看不中用，其实不然。大型的web开发项目，特别是多人分模块开发的时候，控制台一大堆console.log输出，你一下子找不到你自己的模块的输出语句。如果给你自己的模块输入语句应用了不同的颜色，相对来说比较好定位到输出的地方，这是提高效率的一个小技巧。</p>
+<h3 id="其他console-Api"><a href="#其他console-Api" class="headerlink" title="其他console Api"></a>其他console Api</h3><ul>
+<li>console.warn</li>
+<li>console.info</li>
+<li>console.error</li>
+<li>console.trace</li>
+<li>console.group</li>
+</ul>
+<h3 id="console-time"><a href="#console-time" class="headerlink" title="console.time"></a>console.time</h3><blockquote>
+<p>console.time用于显示代码执行的时间，要搭配console.timeEnd来使用。</p>
+</blockquote>
+<pre><code>console.time(&quot;getData use time&quot;)
+for(){
+    ...
+}
+console.timeEnd(&quot;getData use time&quot;)
+输出
+getData use time： 50.0000ms
+</code></pre><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>其他的console方法我将简单列举一下，就不一一详细说明了，详细可以参考Google的开发文档。</p>
+<ul>
+<li>console.assert() 用于判断表达式，满足表达式时才输出语句；</li>
+<li>console.debug() 用于输出输出debug的信息；</li>
+<li>console.dir() 用于展开输出一个dom元素的JavaScript对象；</li>
+<li>console.profile() 用于记录代码消耗CPU的信息；</li>
+<li>console.timeStamp() 用于标记运行时的timeline信息；</li>
+<li>console.count() 用于记录代码执行的次数；</li>
+<li>console.memory 用于显示此刻使用的内存信息（这是一个属性而不是方法）；</li>
+<li>console.table() 用表格的形式来输出信息；</li>
+<li>console.clear() 清空控制台的内容（当然你可以用快捷键ctrl+L）；</li>
+</ul>
+<p>另外，再来优惠大派送，介绍几个在Chrome控制台上比较有趣的命令。</p>
+<ul>
+<li>$0 可以在控制台输出在Elements面板选中的页面元素；</li>
+<li>$_ 表示上一次在控制台键入的命令，你也可以用快捷键“上方向键”来达到同样的效果；</li>
+<li>$x 可以用xPath的语法来获取页面上的元素；</li>
+</ul>
+<h2 id="Element-面板的使用"><a href="#Element-面板的使用" class="headerlink" title="Element 面板的使用"></a>Element 面板的使用</h2><p>使用Chrome开发工具中的elements面板估计是前端工程师修改一个页面内容最快的方法了。elements面板的左侧显示页面的HMTL元素，右侧显示选中元素的样式。使用方法也很简单，用左上角的“选择鼠标”在页面上选取元素，然后就可以查看该元素的HTML属性和CSS样式了。</p>
+<h3 id="查看hover方法"><a href="#查看hover方法" class="headerlink" title="查看hover方法"></a>查看hover方法</h3><p>右键Html元素菜单上的“Force element state”这个操作，就是强制设置该元素的状态。状态分为四种，分别是active/hover/focus/visited。强制设置状态在某些情况下比较的有用，例如你想查看某些hover伪类的样式，又例如元素里有隐藏的元素，需要在鼠标hover的时候才出现，但你的鼠标移开的时候hover状态就消失了，强制显示hover状态比较方便你检查元素hover的情况。</p>
+<p>在elements面板的样式区域也可以给元素强制设置状态（active/hover/focus/visited）。做法和原理跟上面说的一样。</p>
+<h3 id="html加断点"><a href="#html加断点" class="headerlink" title="html加断点"></a>html加断点</h3><p>在调试的过程中可以给元素添加断点。很神奇吧？现在支持的断点的状态有：元素的子节点结构改变时、元素的属性改变时、元素被删除时。在大型项目中，这一断点比较有意思。大型项目中的HTML结构都比较宏大，而且脚本在改变HTML接口的时候你又难以跟踪元素HTML的状态。使用断点，这些都不是问题。右键菜单中即可把这一功能呼唤出来。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/chrome/" rel="tag">#chrome</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/18/MVC-MVP-MVVM/" rel="prev">MVC和MVP和MVVM</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/02/git强制拉取覆盖本地文件/" rel="next">git强制拉取覆盖本地文件</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/01/17/深入学习Chrome-DevTools/"
+                   data-title="深入学习Chrome DevTools" data-url="http://www.demozhan.com/2016/01/17/深入学习Chrome-DevTools/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#console相关技巧"><span class="nav-number">1.</span> <span class="nav-text">console相关技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#console-log"><span class="nav-number">1.1.</span> <span class="nav-text">console.log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他console-Api"><span class="nav-number">1.2.</span> <span class="nav-text">其他console Api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#console-time"><span class="nav-number">1.3.</span> <span class="nav-text">console.time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Element-面板的使用"><span class="nav-number">2.</span> <span class="nav-text">Element 面板的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看hover方法"><span class="nav-number">2.1.</span> <span class="nav-text">查看hover方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html加断点"><span class="nav-number">2.2.</span> <span class="nav-text">html加断点</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

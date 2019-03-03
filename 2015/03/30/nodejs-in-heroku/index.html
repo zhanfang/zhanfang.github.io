@@ -1,0 +1,965 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="nodejs,heroku," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="##IntroductionThis tutorial will have you deploying a Node.js app in minutes.
+Hang on for a few more minutes to learn how it all works, so you can make the most out of Heroku.
+The tutorial assumes tha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting Started with Node.js on Heroku（heroku官网教程）">
+<meta property="og:url" content="http://www.demozhan.com/2015/03/30/nodejs-in-heroku/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="##IntroductionThis tutorial will have you deploying a Node.js app in minutes.
+Hang on for a few more minutes to learn how it all works, so you can make the most out of Heroku.
+The tutorial assumes tha">
+<meta property="og:updated_time" content="2015-10-23T04:18:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Getting Started with Node.js on Heroku（heroku官网教程）">
+<meta name="twitter:description" content="##IntroductionThis tutorial will have you deploying a Node.js app in minutes.
+Hang on for a few more minutes to learn how it all works, so you can make the most out of Heroku.
+The tutorial assumes tha">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Getting Started with Node.js on Heroku（heroku官网教程） | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Getting Started with Node.js on Heroku（heroku官网教程）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-03-30T20:40:23+08:00" content="2015-03-30">
+            2015-03-30
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/nodejs/" itemprop="url" rel="index">
+                  <span itemprop="name">nodejs</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/03/30/nodejs-in-heroku/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/nodejs-in-heroku/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>##Introduction<br>This tutorial will have you deploying a Node.js app in minutes.</p>
+<p>Hang on for a few more minutes to learn how it all works, so you can make the most out of Heroku.</p>
+<p>The tutorial assumes that you have a free Heroku account, and that you have Node.js and npm installed.</p>
+<p>##Set up<br>In this step you will install the Heroku Toolbelt. This provides you access to the Heroku Command Line utility, as well as git and Foreman, tools you’ll use in later steps.</p>
+<pre><code>Download Heroku Toolbelt for Mac OS X
+</code></pre><p>Once installed, you can use the heroku command from your command shell.</p>
+<p>Log in using the email address and password you used when creating your Heroku account:</p>
+<pre><code>$ heroku login
+Enter your Heroku credentials.
+Email: zeke@example.com
+Password:
+Authentication successful.
+</code></pre><p>Authenticating is required to allow both the heroku and git commands to operate.</p>
+<p><em>Note that if you’re behind a firewall that requires use of a proxy to connect with external HTTP/HTTPS services, you can set the HTTP_PROXY or HTTPS_PROXY environment variables before running the heroku command.</em></p>
+<p>##Prepare the app<br>In this step, you will prepare a simple application that can be deployed.</p>
+<p>Execute the following commands to clone the sample application:</p>
+<pre><code>$ git clone https://github.com/heroku/node-js-getting-started.git
+$ cd node-js-getting-started
+</code></pre><p>You now have a functioning git repository that contains a simple application as well as a package.json file, which is used by Node’s dependency manager.</p>
+<p>##Deploy the app<br>In this step you will deploy the app to Heroku.</p>
+<p>Create an app on Heroku, which prepares Heroku to receive your source code.</p>
+<pre><code>$ heroku create
+Creating sharp-rain-871... done, stack is cedar-14
+http://sharp-rain-871.herokuapp.com/ | https://git.heroku.com/sharp-rain-871.git
+Git remote heroku added
+</code></pre><p>When you create an app, a git remote (called <code>heroku</code>) is also created and associated with your local git repository.</p>
+<p>Heroku generates a random name (in this case <code>sharp-rain-871</code>) for your app - you can pass a parameter to specify your own, or rename it later with heroku apps:rename.</p>
+<p>Now deploy your code:</p>
+<pre><code>$ git push heroku master
+Counting objects: 343, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (224/224), done.
+Writing objects: 100% (250/250), 238.01 KiB, done.
+Total 250 (delta 63), reused 0 (delta 0)
+
+-----&gt; Node.js app detected
+-----&gt; Resolving engine versions
+   Using Node.js version: 0.10.3
+   Using npm version: 1.2.18
+-----&gt; Fetching Node.js binaries
+-----&gt; Vendoring node into slug
+-----&gt; Installing dependencies with npm
+   ....
+   Dependencies installed
+-----&gt; Building runtime environment
+-----&gt; Discovering process types
+   Procfile declares types -&gt; web
+
+-----&gt; Compiled slug size: 4.1MB
+-----&gt; Launching... done, v9
+   http://sharp-rain-871.herokuapp.com deployed to Heroku
+
+To git@heroku.com:sharp-rain-871.git
+* [new branch]      master -&gt; master
+</code></pre><p>The application is now deployed. Ensure that at least one instance of the app is running:</p>
+<pre><code>$ heroku ps:scale web=1
+</code></pre><p>Now visit the app at the URL generated by its app name. As a handy shortcut, you can open the website as follows:</p>
+<pre><code>$ heroku open
+</code></pre><p>##View logs<br>Heroku treats logs as streams of time-ordered events aggregated from the output streams of all your app and Heroku components, providing a single channel for all of the events.</p>
+<p>View information about your running app using one of the logging commands, heroku logs:</p>
+<pre><code>$ heroku logs --tail
+2011-03-10T10:22:30-08:00 heroku[web.1]: State changed from created to starting
+2011-03-10T10:22:32-08:00 heroku[web.1]: Running process with command: `node index.js`
+2011-03-10T10:22:33-08:00 heroku[web.1]: Listening on 18320
+2011-03-10T10:22:34-08:00 heroku[web.1]: State changed from starting to up
+</code></pre><p>Visit your application in the browser again, and you’ll see another log message generated.</p>
+<p>Press Control+C to stop streaming the logs</p>
+<p>##Define a Procfile<br>Use a Procfile, a text file in the root directory of your application, to explicitly declare what command should be executed to start your app.</p>
+<p>The Procfile in the example app you deployed looks like this:</p>
+<pre><code>web: node index.js
+</code></pre><p>This declares a single process type, web, and the command needed to run it. The name web is important here. It declares that this process type will be attached to the HTTP routing stack of Heroku, and receive web traffic when deployed.</p>
+<p>Procfiles can contain additional process types. For example, you might declare one for a background worker process that processes items off of a queue.</p>
+<p>##Scale the app<br>Right now, your app is running on a single web dyno. Think of a dyno as a lightweight container that runs the command specified in the Procfile.</p>
+<p>You can check how many dynos are running using the ps command:</p>
+<pre><code>$ heroku ps
+=== web (1X): `node index.js`
+web.1: up 2014/04/25 16:26:38 (~ 1s ago)
+</code></pre><p>Having only a single web dyno running will result in the dyno going to sleep after one hour of inactivity. This causes a delay of a few seconds for the first request upon waking. Subsequent requests will perform normally.</p>
+<p>To avoid this, you can scale to more than one web dyno. For example:</p>
+<pre><code>$ heroku ps:scale web=2
+</code></pre><p>For abuse prevention, scaling the application may require account verification. If your account has not been verified, you will be directed to visit the verification site.</p>
+<p>For each application, Heroku provides 750 free dyno-hours. Running your app at 2 dynos would exceed this free, monthly allowance, so scale back:</p>
+<pre><code>$ heroku ps:scale web=1
+</code></pre><p>##Declare app dependencies<br>Heroku recognizes an app as Node.js by the existence of a package.json file in the root directory. For your own apps, you can create one by running npm init.</p>
+<p>The demo app you deployed already has a package.json, and it looks something like this:</p>
+<pre><code>{
+  &quot;name&quot;: &quot;node-js-getting-started&quot;,
+  &quot;version&quot;: &quot;0.1.2&quot;,
+  ...
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;~4.9.x&quot;
+  },
+  ...
+  &quot;engines&quot;: {
+    &quot;node&quot;: &quot;0.10.x&quot;
+  },
+}
+</code></pre><p>The package.json file determines both the version of Node.js that will be used to run your application on Heroku, as well as the dependencies that should be installed with your application. When an app is deployed, Heroku reads this file and installs the appropriate node version together with the dependencies using the npm install command.</p>
+<p>Run this command in your local directory to install the dependencies, preparing your system for running the app locally:</p>
+<pre><code>$ npm install
+npm http GET https://registry.npmjs.org/express
+npm http 304 https://registry.npmjs.org/express
+npm http GET https://registry.npmjs.org/stream-spigot
+npm http GET https://registry.npmjs.org/connect/2.12.0
+...
+express@4.9.4 node_modules/express
++---methods@0.1.0
++---merge-descriptors@0.0.1
++---range-parser@0.0.4
++---cookie-signature@1.0.1
++---debug@2.0.0
++---fresh@0.2.0
++---buffer-crc32@0.2.1
++---cookie@0.1.0
++---mkdirp@0.3.5
++---send@0.9.2 (destroy@1.0.3, ms@0.6.2, mime@1.2.11)
+...
+</code></pre><p>Once dependencies are installed, you will be ready to run your app locally.</p>
+<p>##Run the app locally<br>Now start your application locally using Foreman, which was installed as part of the Toolbelt:</p>
+<pre><code>$ foreman start web
+14:39:04 web.1     | started with pid 24384
+14:39:04 web.1     | Listening on 5000
+</code></pre><p>Just like Heroku, Foreman examines the Procfile to determine what to run.</p>
+<p>Your app will now be running at localhost:5000. Test that it’s working with curl or a web browser, then Ctrl-C to exit.</p>
+<p>Foreman doesn’t just run your app - it also sets “config vars”, something you’ll encounter in a later tutorial.</p>
+<p>##Push local changes<br>In this step you’ll learn how to propagate a local change to the application through to Heroku. As an example, you’ll modify the application to add an additional dependency and the code to use it.</p>
+<p>Modify package.json to include a dependency for cool-ascii-faces:</p>
+<pre><code>&quot;dependencies&quot;: {
+  &quot;express&quot;: &quot;~4.9.x&quot;,
+  &quot;cool-ascii-faces&quot;: &quot;~1.3.x&quot;
+},
+</code></pre><p>Modify index.js so that it requires this module at the start. Also modify the call to route that handles ‘/‘ to use it. Your final code should look like this:</p>
+<pre><code>var express = require(&apos;express&apos;)
+var app = express();
+var cool = require(&apos;cool-ascii-faces&apos;);
+
+app.set(&apos;port&apos;, (process.env.PORT || 5000))
+
+app.get(&apos;/&apos;, function(request, response) {
+  response.send(cool());
+});
+
+app.listen(app.get(&apos;port&apos;), function() {
+  console.log(&quot;Node app is running at localhost:&quot; + app.get(&apos;port&apos;))
+})
+</code></pre><p>Now test locally:</p>
+<pre><code>$ npm install
+$ foreman start
+</code></pre><p>Visiting your application at <code>http://localhost:5000/</code>, you should see cute faces displayed on each refresh: ( ⚆ _ ⚆ ).</p>
+<p>Now deploy. Almost every deploy to Heroku follows this same pattern. First, add the modified files to the local git repository:</p>
+<pre><code>$ git add .
+</code></pre><p>Now commit the changes to the repository:</p>
+<pre><code>$ git commit -m &quot;Demo&quot;
+</code></pre><p>Now deploy, just as you did previously:</p>
+<pre><code>$ git push heroku master
+</code></pre><p>Finally, check that everything is working:</p>
+<pre><code>$ heroku open
+</code></pre><p>##Provision add-ons<br>Add-ons are third-party cloud services that provide out-of-the-box additional services for your application, from persistence through logging to monitoring and more.</p>
+<p>By default, Heroku stores 1500 lines of logs from your application. However, it makes the full log stream available as a service - and several add-on providers have written logging services that provide things such as log persistence, search, and email and SMS alerts when certain conditions are met.</p>
+<p>Provision the papertrail logging add-on:</p>
+<pre><code>$ heroku addons:add papertrail
+Adding papertrail on sharp-rain-871... done, v4 (free)
+Welcome to Papertrail. Questions and ideas are welcome (support@papertrailapp.com). Happy logging!
+Use `heroku addons:docs papertrail` to view documentation.
+</code></pre><p>To help with abuse prevention, provisioning an add-on may require account verification. If your account has not been verified, you will be directed to visit the verification site.</p>
+<p>The add-on is now deployed and configured for your application. You can list add-ons for your app like so:</p>
+<pre><code>$ heroku addons
+</code></pre><p>To see this particular add-on in action, visit your application’s Heroku URL a few times. Each visit will generate more log messages, which should now get routed to the papertrail add-on. Visit the papertrail console to see the log messages:</p>
+<pre><code>$ heroku addons:open papertrail
+</code></pre><p>A console will open up, showing the latest log events, and providing you with an interface to search and set up alerts:</p>
+<p>##Start a console<br>You can run a command, typically scripts and applications that are part of your app, in a one-off dyno using the heroku run command. It can also be used to launch a REPL process attached to your local terminal for experimenting in your app’s environment:</p>
+<pre><code>$ heroku run node
+Running `node` attached to terminal... up, ps.1
+&gt;
+</code></pre><p>If you receive an error, Error connecting to process, then you may need to configure your firewall.</p>
+<p>When the console starts, it has nothing loaded other than the Node.js standard library. From here you can require some of your application files.</p>
+<p>For example, you will be be able to run the following:</p>
+<pre><code>&gt; var cool = require(&apos;cool-ascii-faces&apos;)
+&gt; cool()
+( ⚆ _ ⚆ )
+</code></pre><p>To get a real feel for how dynos work, you can create another one-off dyno and run the bash command, which opens up a shell on that dyno. You can then execute commands there. Each dyno has its own ephemeral filespace, populated with your app and its dependencies - once the command completes (in this case, bash), the dyno is removed.</p>
+<pre><code>$ heroku run bash
+Running `bash` attached to terminal... up, run.3052
+~ $ ls
+Procfile  README.md  composer.json  composer.lock  vendor  views  web
+~ $ exit
+exit
+</code></pre><p>Don’t forget to type exit to exit the shell and terminate the dyno.</p>
+<p>##Define config vars<br>Heroku lets you externalise configuration - storing data such as encryption keys or external resource addresses in config vars.</p>
+<p>At runtime, config vars are exposed as environment variables to the application. For example, modify index.js so that the method repeats an action depending on the value of the TIMES environment variable:</p>
+<pre><code>app.get(&apos;/&apos;, function(request, response) {
+  var result = &apos;&apos;
+  var times = process.env.TIMES || 5
+  for (i=0; i &lt; times; i++)
+    result += cool();
+  response.send(result);
+});
+</code></pre><p>Foreman will automatically set up the environment based on the contents of the .env file in your local directory. Create a .env file that has the following contents:</p>
+<pre><code>TIMES=2
+</code></pre><p>If you run the app with foreman start, you’ll see two faces will be generated every time.</p>
+<p>To set the config var on Heroku, execute the following:</p>
+<pre><code>$ heroku config:set TIMES=2
+</code></pre><p>View the config vars that are set using heroku config:</p>
+<pre><code>$ heroku config
+== sharp-rain-871 Config Vars
+PAPERTRAIL_API_TOKEN: erdKhPeeeehIcdfY7ne
+TIMES: 2
+</code></pre><p>Deploy your changed application to Heroku to see this in action.</p>
+<p>##Provision a database<br>The add-on marketplace has a large number of data stores, from Redis and MongoDB providers, to Postgres and MySQL. In this step you will add a free Heroku Postgres Starter Tier dev database to your app.</p>
+<p>Add the database:</p>
+<pre><code>$ heroku addons:add heroku-postgresql:hobby-dev
+Adding heroku-postgresql:hobby-dev... done, v3 (free)
+</code></pre><p>This creates a database, and sets a DATABASE_URL environment variable (you can check by running heroku config).</p>
+<p>Edit your package.json file to add the pg npm module to your dependencies:</p>
+<pre><code>&quot;dependencies&quot;: {
+    &quot;pg&quot;: &quot;4.x&quot;,
+    &quot;express&quot;: &quot;~4.9.x&quot;,
+    &quot;cool-ascii-faces&quot;: &quot;~1.3.x&quot;
+}
+</code></pre><p>Type npm install to install the new module for running your app locally. Now edit your index.js file to use this module to connect to the database specified in your DATABASE_URL environment variable:</p>
+<pre><code>var pg = require(&apos;pg&apos;);
+
+app.get(&apos;/db&apos;, function (request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query(&apos;SELECT * FROM test_table&apos;, function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send(&quot;Error &quot; + err); }
+      else
+       { response.send(result.rows); }
+    });
+  });
+})
+</code></pre><p>This ensures that when you access your app using the /db route, it will return all rows in the test_table table.</p>
+<p>Deploy this to Heroku. If you access /db you will receive an error as there is no table in the database. Assuming that you have Postgres installed locally, use the heroku pg:psql command to connect to the remote database, create a table and insert a row:</p>
+<pre><code>$ heroku pg:psql
+psql (9.3.2, server 9.3.3)
+SSL connection (cipher: DHE-RSA-AES256-SHA, bits: 256)
+Type &quot;help&quot; for help.
+=&gt; create table test_table (id integer, name text);
+CREATE TABLE
+=&gt; insert into test_table values (1, &apos;hello database&apos;);
+INSERT 0 1
+=&gt; \q
+</code></pre><p>Now when you access your app’s /db route, you will see something like this:</p>
+<pre><code>[
+  {
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;hello database&quot;
+  }
+]
+</code></pre><p>Read more about Heroku PostgreSQL.</p>
+<p>A similar technique can be used to install MongoDB or Redis add-ons.</p>
+<p>##Next steps<br>You now know how to deploy an app, change its configuration, view logs, scale, and attach add-ons.</p>
+<p>Here’s some recommended reading. The first, an article, will give you a firmer understanding of the basics. The second is a pointer to the main Node.js category here on Dev Center:</p>
+<ul>
+<li>Read <code>How Heroku Works(https://devcenter.heroku.com/articles/how-heroku-works)</code> for a technical overview of the concepts you’ll encounter while writing, configuring, deploying and running applications.</li>
+<li>Read <code>Deploying Node.js Apps on Heroku(https://devcenter.heroku.com/articles/deploying-nodejs)</code> to understand how to take an existing Node.js app and deploy it to Heroku.</li>
+<li>Visit the <code>Node.js category(https://devcenter.heroku.com/categories/nodejs)</code> to learn more about developing and deploying Node.js applications.</li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nodejs/" rel="tag">#nodejs</a>
+          
+            <a href="/tags/heroku/" rel="tag">#heroku</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/31/sae-mac-svn/" rel="prev">mac中使用svn从sae下载应用</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/03/22/nodejs4-1/" rel="next">nodejs学习笔记（五）-- http及相关模块（转载自实验室）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/03/30/nodejs-in-heroku/"
+                   data-title="Getting Started with Node.js on Heroku（heroku官网教程）" data-url="http://www.demozhan.com/2015/03/30/nodejs-in-heroku/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

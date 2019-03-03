@@ -1,0 +1,763 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="js,css,http," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="转载 http://www.w3cfuns.com/article-1283-1.html
+《高性能网站建设指南》，对作者提出的前端性能优化的14个规则获益匪浅，为了让自己印象更深刻点，决定作此文，当做学习笔记也好，知识总结也罢，总归看过的东西要让自己很好地掌握很好地运用起来才是王道。在解读这些规则的同时，我会用我一年半多的移动网站开发经历提出一些针对移动网站的优化建议。
+规则01：尽量减少HTT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端优化机制">
+<meta property="og:url" content="http://www.demozhan.com/2015/10/02/前端优化机制/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="转载 http://www.w3cfuns.com/article-1283-1.html
+《高性能网站建设指南》，对作者提出的前端性能优化的14个规则获益匪浅，为了让自己印象更深刻点，决定作此文，当做学习笔记也好，知识总结也罢，总归看过的东西要让自己很好地掌握很好地运用起来才是王道。在解读这些规则的同时，我会用我一年半多的移动网站开发经历提出一些针对移动网站的优化建议。
+规则01：尽量减少HTT">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/gzip.jpg">
+<meta property="og:updated_time" content="2015-10-23T04:18:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端优化机制">
+<meta name="twitter:description" content="转载 http://www.w3cfuns.com/article-1283-1.html
+《高性能网站建设指南》，对作者提出的前端性能优化的14个规则获益匪浅，为了让自己印象更深刻点，决定作此文，当做学习笔记也好，知识总结也罢，总归看过的东西要让自己很好地掌握很好地运用起来才是王道。在解读这些规则的同时，我会用我一年半多的移动网站开发经历提出一些针对移动网站的优化建议。
+规则01：尽量减少HTT">
+<meta name="twitter:image" content="http://7xltvd.com1.z0.glb.clouddn.com/gzip.jpg">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 前端优化机制 | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              前端优化机制
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-10-02T00:42:08+08:00" content="2015-10-02">
+            2015-10-02
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/js/" itemprop="url" rel="index">
+                  <span itemprop="name">js</span>
+                </a>
+              </span>
+
+              
+              
+                , 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/js/css/" itemprop="url" rel="index">
+                  <span itemprop="name">css</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/02/前端优化机制/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/02/前端优化机制/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><code>转载 http://www.w3cfuns.com/article-1283-1.html</code></p>
+<p><strong><em>《高性能网站建设指南》</em></strong>，对作者提出的前端性能优化的14个规则获益匪浅，为了让自己印象更深刻点，决定作此文，当做学习笔记也好，知识总结也罢，总归看过的东西要让自己很好地掌握很好地运用起来才是王道。在解读这些规则的同时，我会用我一年半多的移动网站开发经历提出一些针对移动网站的优化建议。</p>
+<h2 id="规则01：尽量减少HTTP请求"><a href="#规则01：尽量减少HTTP请求" class="headerlink" title="规则01：尽量减少HTTP请求"></a>规则01：尽量减少HTTP请求</h2><p>前端优化的黄金准则指导着前端页面的优化策略：只有10%-20%的最终用户响应时间花在接受请求的HTML文档上，剩下的80%-90%时间花在为HTML文档所引用的所有组件（图片、脚本、样式表等）进行的HTTP请求上。因此，改善响应时间的最简单途径就是减少组件的数量，并由此减少HTTP请求的数量。当然很多人就会说，既然这样，那我们就减少页面组件的数量不就OK了吗？那你试试，你会掀起一场性能优化和产品设计之间的大PK。</p>
+<h3 id="实现图片布局"><a href="#实现图片布局" class="headerlink" title="实现图片布局"></a>实现图片布局</h3><h4 id="图片地图"><a href="#图片地图" class="headerlink" title="图片地图"></a>图片地图</h4><pre><code>&lt;a href=”用户跳转页面URL”&gt;
+  &lt;div class=”定义用户icon显示的样式表”&gt;&lt;/div&gt;
+&lt;/a&gt;
+&lt;a href=”购物车跳转页面URL”&gt;
+  &lt;div class=” 定义用户icon显示的样式表”&gt;&lt;/div&gt;
+&lt;/a&gt;
+</code></pre><p>这种方式无可厚非的，但是两张图片就有两个HTTP请求，这明显是增加了页面中的HTTP请求。那么我们可以把这两个HTTP请求变成一个吗？<br>答案当然是可以的，这就是图片地图：允许在一张图片上关联多个URL，而目标URL的选择取决于用户单击了图片上的哪个位置。<br>这样上面京东两个图标合并成一张图片，这样图片的HTTP请求就减少了一个。<br>示例代码如下：</p>
+<pre><code>&lt;img src=合并后的图片&gt;
+&lt;map name=”map1”&gt;
+  &lt;areashape=”rect” coords=”0,0,40,40” href=”用户跳转页面URL”&gt;
+  &lt;areashape=”rect” coords=”50,0,90,40” href=”购物车跳转页面URL”&gt;
+&lt;/map&gt;
+</code></pre><p>不过图片地图只支持矩形形状，其他形状不支持。</p>
+<h4 id="请CSS喝“雪碧”（CSS-Sprites）"><a href="#请CSS喝“雪碧”（CSS-Sprites）" class="headerlink" title="请CSS喝“雪碧”（CSS Sprites）"></a>请CSS喝“雪碧”（CSS Sprites）</h4><p>CSS Sprites一句话：将多个图片合并到一张单独的图片，这样就大大减少了页面中图片的HTTP请求。</p>
+<h4 id="内联图片和脚本使用data-URL（Base64编码）模式"><a href="#内联图片和脚本使用data-URL（Base64编码）模式" class="headerlink" title="内联图片和脚本使用data:URL（Base64编码）模式"></a>内联图片和脚本使用data:URL（Base64编码）模式</h4><p>直接将图片包含在Web页面中而无需进行HTTP请求。但是此种方法存在明显缺陷：</p>
+<ul>
+<li>不受IE的欢迎；</li>
+<li>图片太大不宜采用这种方式，因为Base64编码之后会增加图片大小，这样页面整体的下载量会变大；</li>
+<li>内联图片在页面跳转的时候不会被缓存。（大图片可以使用浏览器的本地缓存，在首次访问的时候保存到浏览器缓存中，典型的是HTML5的manifest缓存机制以及LocalStorage等）。</li>
+</ul>
+<h4 id="样式表的合并将页面样式定义、脚本、页面本身代码严格区分开"><a href="#样式表的合并将页面样式定义、脚本、页面本身代码严格区分开" class="headerlink" title="样式表的合并将页面样式定义、脚本、页面本身代码严格区分开"></a>样式表的合并将页面样式定义、脚本、页面本身代码严格区分开</h4><p>但是样式表、脚本也不是分割越细越好，因为没多引用一个样式表就增加一次HTPP请求，能合并的样式表尽量合并。一个网站有一个公用样式表定义，每个页面只要有一个样式表就OK啦。</p>
+<p>通过以上四个努力之后，你会发现你的网页响应时间最多能减少一半，这不是作者说大话，也不是我狂吹，我亲手用我的移动网站首页做了一个尝试，本地测试之后响应时间能减少40%左右。所以减少页面HTTP请求数量，是一个很重要的原则。遵循此原则可以同时改善首次访问和后续访问的响应时间，而每一个网站的首次响应时间会决定用户之后还来不来的重要原因。</p>
+<h2 id="规则02：使用内容发布网络（CDN的使用）"><a href="#规则02：使用内容发布网络（CDN的使用）" class="headerlink" title="规则02：使用内容发布网络（CDN的使用）"></a>规则02：使用内容发布网络（CDN的使用）</h2><p>什么叫内容发布网络（CDN）？它是一组分布在多个不同地理位置的Web服务器，用于更加有效地向用户发布内容。主要用于发布页面静态资源：图片、css文件、js文件等。如此，能轻易地提高响应速度。关于CDN的具体详细原理以及优缺点，各位可以自行询问度娘或者google。<br>下面这个比较全<br> <a href="http://www.bootcdn.cn/" target="_blank" rel="external">http://www.bootcdn.cn/</a></p>
+<h2 id="规则03：添加Expires头（缓存机制）"><a href="#规则03：添加Expires头（缓存机制）" class="headerlink" title="规则03：添加Expires头（缓存机制）"></a>规则03：添加Expires头（缓存机制）</h2><p>浏览器使用缓存来减少HTTP请求的数据，并减小HTTP响应的大小，使页面加载更快。Web服务器使用Expires头来告诉浏览器它可以使用一个组件的当前副本，直到指定的deadline为止。HTTP规范中称此头为：在这一时间之后响应被认为失效。个人对这块表示不想使用，其实就是一句话，把一些css、js、图片在首次访问的时候全部缓存到浏览器本地，从我做移动网站的过程中发现，其实没有这么复杂，完全可以使用HTML5提供的本地缓存机制就OK了。关于HTML5本地缓存机制，各位可以查阅相关资料。后续我也会对HTML5的缓存机制进行介绍的。</p>
+<h2 id="规则04：压缩组件（使用Gzip方式）"><a href="#规则04：压缩组件（使用Gzip方式）" class="headerlink" title="规则04：压缩组件（使用Gzip方式）"></a>规则04：压缩组件（使用Gzip方式）</h2><p>书中关于压缩从gzip压缩方式到如何压缩讲了很多，我想直接跳过，对于做PC网站或者移动网站来说，急需要压缩的是css文件和js文件，至于如何压缩，网上有很多在线工具，去挑选一个自己用的顺手看的顺眼的就好，当然也有人选择对HTML进行压缩，这样也可以。但是实际工作中我没有这么做。之所谓没有这么做，是因为我觉得很麻烦。不要鄙视我，毕竟我不是一个真正意义上的前端工程师，哈哈！<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/gzip.jpg" alt="Alt" title="zip效果"></p>
+<h2 id="规则05：将CSS样式表放在顶部"><a href="#规则05：将CSS样式表放在顶部" class="headerlink" title="规则05：将CSS样式表放在顶部"></a>规则05：将CSS样式表放在顶部</h2><p>如果将css样式定义放在页面中或者页面底部，会出现短暂白屏或者某一区域短暂白板的情况，这和浏览器的运营机制有关的，不管页面如何加载，页面都是逐步呈现的。所以在每做一个页面的时候，用Link标签把每一个样式表定义放在head中。</p>
+<h2 id="规则06：将javascript脚本放在底部"><a href="#规则06：将javascript脚本放在底部" class="headerlink" title="规则06：将javascript脚本放在底部"></a>规则06：将javascript脚本放在底部</h2><p>浏览器在加载css文件时，页面逐步呈现会被阻止，直到所有css文件加载完毕，所以要把css文件的引用放到head中去，这样在加载css文件时不会组织页面的呈现。但是对于js文件，在使用的时候，它下面所有也页面内容的呈现都会被阻塞，将脚本放在页面越靠下的地方，就意味着越多的内容能够逐步呈现。</p>
+<h2 id="规则07：避免使用CSS表达式"><a href="#规则07：避免使用CSS表达式" class="headerlink" title="规则07：避免使用CSS表达式"></a>规则07：避免使用CSS表达式</h2><p>CSS表达式是动态玩CSS的一种很强大的方式，但是强大的同时也存在很高的危险性。因为css表达式的频繁求值会导致css表达式性能低下。如果真想玩css表达式，可以选用只求值一次的表达式或者使用事件处理来改变css的值。</p>
+<h2 id="规则08：使用外部javascript和CSS"><a href="#规则08：使用外部javascript和CSS" class="headerlink" title="规则08：使用外部javascript和CSS"></a>规则08：使用外部javascript和CSS</h2><p>内联js和css其实比外部文件有更快的响应速度，那为什么还要用外部呢？因为使用外部的js和css可以让浏览器缓存他们，这样不仅HTML文档大小减少，而且不会增加HTTP请求数量。另外，使用外部js和css可以提高组件的可复用性。</p>
+<h2 id="规则09：减少DNS查询"><a href="#规则09：减少DNS查询" class="headerlink" title="规则09：减少DNS查询"></a>规则09：减少DNS查询</h2><p>DNS查询有时间开销，通常一个浏览器查找一个给定主机名的IP地址需要20-120ms。缓存DNS：缓存DNS查询可以很好地提高网页性能，一旦缓存了DNS查询，之后对于相同主机名的请求就无需进行再次的DNS查找，至少短时间内不需要。所以在使用页面中URL、图片、js文件、css文件等时，不要使用过多不同的主机名。</p>
+<h2 id="规则10：精简javascript"><a href="#规则10：精简javascript" class="headerlink" title="规则10：精简javascript"></a>规则10：精简javascript</h2><p>如何精简？<br>其实W3Cfuns已经给大家准备好精简JS所需的所有工具“前端神器”，这点W3Cfuns为大家做的很不错，在这个规则里我们就用到“JS压缩/混淆/美化工具”<br>最初始的精简方式：就是移除不必要的字符减小js文件大小，改善加载时间。包括所有的注释、不必要的空白字符。</p>
+<p>高级一点的精简方式就是：混淆。<br>它不但会移除不必要的字符，还会改写代码，比如函数和变量的名字会被改成很短的字符串，这样使js代码更简练更难阅读。</p>
+<p>但是我一般很少使用混淆，一个现在互联网时代，代码没有必要整的那么神秘，大可以大家一起share，天下代码一起抄，只要抄出自己的特色就ok了。</p>
+<p>而且一旦使用混淆，对于js代码的维护和调试都很复杂，因为有时候混淆之后的js代码完全看不懂。其实实际开发过程中，从文件大小和代码可复用性来说，不仅仅是js代码需要精简，css代码一样也很需要精简。</p>
+<h2 id="规则11：避免重定向"><a href="#规则11：避免重定向" class="headerlink" title="规则11：避免重定向"></a>规则11：避免重定向</h2><p>重定向的英文是Redirect，用于将用户从一个URL重新跳转到另一个URL。<br>最常见的Redirect就是301和302两种。<br>关于重定向的性能影响这里就不说了，自行查阅相关资料吧。<br>在我们实际开发中避免重定向最简单也最容易被忽视的一个问题就是，设置URL的时候，最后的“/”，有些人有时候会忽略，其实你少了“/”，这时候的URL就被重定向了，所以在给页面链接加URL的时候切记最后的“/”不可丢。</p>
+<h2 id="规则12：删除重复脚本"><a href="#规则12：删除重复脚本" class="headerlink" title="规则12：删除重复脚本"></a>规则12：删除重复脚本</h2><p>重复的js代码除了有不必要的HTTP请求之外，还会浪费执行js的时间。<br>将你使用的js代码模块化，可以很好地避免这个问题，至于js模块化如何实现，现在有很多可以使用的开源框架，我用的比较多的是我们公司玉伯的Sea.js。</p>
+<h2 id="规则13：配置ETag"><a href="#规则13：配置ETag" class="headerlink" title="规则13：配置ETag"></a>规则13：配置ETag</h2><p>Etag（Entity Tag），实体标签，是Web服务器和浏览器用户确认缓存组件的有效性的一种机制。写的很复杂，对我这种非专业的前端开发人员来说，有点过了，关于这个原则有兴趣的自己看吧。</p>
+<h2 id="规则14：使Ajax可缓存"><a href="#规则14：使Ajax可缓存" class="headerlink" title="规则14：使Ajax可缓存"></a>规则14：使Ajax可缓存</h2><p>针对页面中主动的Ajax请求返回的数据要缓存到本地，当然这个是针对短期内不会变化的数据。如果不确定数据变化周期的话，可以增加一个修改标识的判断，我正常处理过程中会给一些Ajax请求返回的数据增加一个MD5值的判断，每次请求会判断当前MD5是否变化，如果变化了取最新的数据，如果不变化，则不变。</p>
+<p>噼里啪啦说了一堆，14个规则啊，那我们开发过程中要针对这每一个规则对自己的前端代码做check吗？我反正不这么干，做前端页面，尤其是移动网站的页面，我所记住的准则就是：尽量减少页面大小，尽量降低页面响应时间。在页面性能和交互设计之中找平衡点。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag">#js</a>
+          
+            <a href="/tags/css/" rel="tag">#css</a>
+          
+            <a href="/tags/http/" rel="tag">#http</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/02/URL加载过程/" rel="prev">URL加载过程</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/01/css实现水平垂直居中/" rel="next">css实现水平垂直居中的几种方法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/10/02/前端优化机制/"
+                   data-title="前端优化机制" data-url="http://www.demozhan.com/2015/10/02/前端优化机制/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#规则01：尽量减少HTTP请求"><span class="nav-number">1.</span> <span class="nav-text">规则01：尽量减少HTTP请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现图片布局"><span class="nav-number">1.1.</span> <span class="nav-text">实现图片布局</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#图片地图"><span class="nav-number">1.1.1.</span> <span class="nav-text">图片地图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请CSS喝“雪碧”（CSS-Sprites）"><span class="nav-number">1.1.2.</span> <span class="nav-text">请CSS喝“雪碧”（CSS Sprites）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内联图片和脚本使用data-URL（Base64编码）模式"><span class="nav-number">1.1.3.</span> <span class="nav-text">内联图片和脚本使用data:URL（Base64编码）模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#样式表的合并将页面样式定义、脚本、页面本身代码严格区分开"><span class="nav-number">1.1.4.</span> <span class="nav-text">样式表的合并将页面样式定义、脚本、页面本身代码严格区分开</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则02：使用内容发布网络（CDN的使用）"><span class="nav-number">2.</span> <span class="nav-text">规则02：使用内容发布网络（CDN的使用）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则03：添加Expires头（缓存机制）"><span class="nav-number">3.</span> <span class="nav-text">规则03：添加Expires头（缓存机制）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则04：压缩组件（使用Gzip方式）"><span class="nav-number">4.</span> <span class="nav-text">规则04：压缩组件（使用Gzip方式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则05：将CSS样式表放在顶部"><span class="nav-number">5.</span> <span class="nav-text">规则05：将CSS样式表放在顶部</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则06：将javascript脚本放在底部"><span class="nav-number">6.</span> <span class="nav-text">规则06：将javascript脚本放在底部</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则07：避免使用CSS表达式"><span class="nav-number">7.</span> <span class="nav-text">规则07：避免使用CSS表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则08：使用外部javascript和CSS"><span class="nav-number">8.</span> <span class="nav-text">规则08：使用外部javascript和CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则09：减少DNS查询"><span class="nav-number">9.</span> <span class="nav-text">规则09：减少DNS查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则10：精简javascript"><span class="nav-number">10.</span> <span class="nav-text">规则10：精简javascript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则11：避免重定向"><span class="nav-number">11.</span> <span class="nav-text">规则11：避免重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则12：删除重复脚本"><span class="nav-number">12.</span> <span class="nav-text">规则12：删除重复脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则13：配置ETag"><span class="nav-number">13.</span> <span class="nav-text">规则13：配置ETag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则14：使Ajax可缓存"><span class="nav-number">14.</span> <span class="nav-text">规则14：使Ajax可缓存</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

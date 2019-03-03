@@ -1,0 +1,849 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="html," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="贴出链接 http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html
+核心其实是读写分离
+网页生成的过程
+网页的生成过程，大致可以分成五步。
+
+HTML代码转化成DOM
+CSS代码转化成CSSOM（CSS Object Model）
+结合DOM和CSSOM，生成一棵渲染树（包含每个节点的视觉信息）
+生成布局（l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网页性能管理（转载自阮一峰）">
+<meta property="og:url" content="http://www.demozhan.com/2015/09/23/网页性能管理/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="贴出链接 http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html
+核心其实是读写分离
+网页生成的过程
+网页的生成过程，大致可以分成五步。
+
+HTML代码转化成DOM
+CSS代码转化成CSSOM（CSS Object Model）
+结合DOM和CSSOM，生成一棵渲染树（包含每个节点的视觉信息）
+生成布局（l">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/网页生成过程.png">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/网页重排.png">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/刷新率.png">
+<meta property="og:updated_time" content="2015-10-23T04:18:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网页性能管理（转载自阮一峰）">
+<meta name="twitter:description" content="贴出链接 http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html
+核心其实是读写分离
+网页生成的过程
+网页的生成过程，大致可以分成五步。
+
+HTML代码转化成DOM
+CSS代码转化成CSSOM（CSS Object Model）
+结合DOM和CSSOM，生成一棵渲染树（包含每个节点的视觉信息）
+生成布局（l">
+<meta name="twitter:image" content="http://7xltvd.com1.z0.glb.clouddn.com/网页生成过程.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 网页性能管理（转载自阮一峰） | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              网页性能管理（转载自阮一峰）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-09-23T09:41:11+08:00" content="2015-09-23">
+            2015-09-23
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/js/" itemprop="url" rel="index">
+                  <span itemprop="name">js</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/23/网页性能管理/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/23/网页性能管理/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><code>贴出链接 http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html</code></p>
+<p><strong>核心其实是读写分离</strong></p>
+<h2 id="网页生成的过程"><a href="#网页生成的过程" class="headerlink" title="网页生成的过程"></a>网页生成的过程</h2><p><img src="http://7xltvd.com1.z0.glb.clouddn.com/网页生成过程.png" alt="Alt text" title="网页生成过程"></p>
+<p>网页的生成过程，大致可以分成五步。</p>
+<ul>
+<li>HTML代码转化成DOM</li>
+<li>CSS代码转化成CSSOM（CSS Object Model）</li>
+<li>结合DOM和CSSOM，生成一棵渲染树（包含每个节点的视觉信息）</li>
+<li>生成布局（layout），即将所有渲染树的所有节点进行平面合成</li>
+<li>将布局绘制（paint）在屏幕上</li>
+</ul>
+<p>这五步里面，第一步到第三步都非常快，耗时的是第四步和第五步。</p>
+<p>“生成布局”（flow）和”绘制”（paint）这两步，合称为”渲染”（render）。</p>
+<p><img src="http://7xltvd.com1.z0.glb.clouddn.com/网页重排.png" alt="Alt text" title="网页生成过程"></p>
+<h2 id="重排和重绘"><a href="#重排和重绘" class="headerlink" title="重排和重绘"></a>重排和重绘</h2><p>网页生成的时候，至少会渲染一次。用户访问的过程中，还会不断重新渲染。<br>以下三种情况，会导致网页重新渲染。</p>
+<ul>
+<li>修改DOM</li>
+<li>修改样式表</li>
+<li>用户事件（比如鼠标悬停、页面滚动、输入框键入文字、改变窗口大小等等）</li>
+</ul>
+<p>重新渲染，就需要重新生成布局和重新绘制。前者叫做”重排”（reflow），后者叫做”重绘”（repaint）。</p>
+<p>需要注意的是，<strong>“重绘”不一定需要”重排”</strong>，比如改变某个网页元素的颜色，就只会触发”重绘”，不会触发”重排”，因为布局没有改变。但是，<strong>“重排”必然导致”重绘”</strong>，比如改变一个网页元素的位置，就会同时触发”重排”和”重绘”，因为布局改变了。</p>
+<h2 id="对于性能的影响"><a href="#对于性能的影响" class="headerlink" title="对于性能的影响"></a>对于性能的影响</h2><p>重排和重绘会不断触发，这是不可避免的。但是，它们非常耗费资源，是导致网页性能低下的根本原因。</p>
+<p><strong>提高网页性能，就是要降低”重排”和”重绘”的频率和成本，尽量少触发重新渲染。</strong></p>
+<p>前面提到，DOM变动和样式变动，都会触发重新渲染。但是，浏览器已经很智能了，会尽量把所有的变动集中在一起，排成一个队列，然后一次性执行，尽量避免多次重新渲染。</p>
+<pre><code>div.style.color = &apos;blue&apos;;
+div.style.marginTop = &apos;30px&apos;;
+</code></pre><p>上面代码中，div元素有两个样式变动，但是浏览器只会触发一次重排和重绘。<br>如果写得不好，就会触发两次重排和重绘。</p>
+<pre><code>div.style.color = &apos;blue&apos;;
+var margin = parseInt(div.style.marginTop);
+div.style.marginTop = (margin + 10) + &apos;px&apos;;
+</code></pre><p>上面代码对div元素设置背景色以后，第二行要求浏览器给出该元素的位置，所以浏览器不得不立即重排。<br>一般来说，样式的写操作之后，如果有下面这些属性的读操作，都会引发浏览器立即重新渲染。</p>
+<pre><code>offsetTop/offsetLeft/offsetWidth/offsetHeight
+scrollTop/scrollLeft/scrollWidth/scrollHeight
+clientTop/clientLeft/clientWidth/clientHeight
+getComputedStyle()
+</code></pre><p><strong>所以，从性能角度考虑，尽量不要把读操作和写操作，放在一个语句里面。</strong></p>
+<pre><code>// bad
+div.style.left = div.offsetLeft + 10 + &quot;px&quot;;
+div.style.top = div.offsetTop + 10 + &quot;px&quot;;
+
+// good
+var left = div.offsetLeft;
+var top  = div.offsetTop;
+div.style.left = left + 10 + &quot;px&quot;;
+div.style.top = top + 10 + &quot;px&quot;;
+</code></pre><p>一般的规则是：</p>
+<ul>
+<li>样式表越简单，重排和重绘就越快。</li>
+<li>重排和重绘的DOM元素层级越高，成本就越高。</li>
+<li>table元素的重排和重绘成本，要高于div元素</li>
+</ul>
+<h2 id="提高性能的九个技巧"><a href="#提高性能的九个技巧" class="headerlink" title="提高性能的九个技巧"></a>提高性能的九个技巧</h2><p>有一些技巧，可以降低浏览器重新渲染的频率和成本。</p>
+<h3 id="第一条是上一节说到的，DOM-的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。"><a href="#第一条是上一节说到的，DOM-的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。" class="headerlink" title="第一条是上一节说到的，DOM 的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。"></a>第一条是上一节说到的，DOM 的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。</h3><h3 id="第二条，如果某个样式是通过重排得到的，那么最好缓存结果。避免下一次用到的时候，浏览器又要重排。"><a href="#第二条，如果某个样式是通过重排得到的，那么最好缓存结果。避免下一次用到的时候，浏览器又要重排。" class="headerlink" title="第二条，如果某个样式是通过重排得到的，那么最好缓存结果。避免下一次用到的时候，浏览器又要重排。"></a>第二条，如果某个样式是通过重排得到的，那么最好缓存结果。避免下一次用到的时候，浏览器又要重排。</h3><h3 id="第三条，不要一条条地改变样式，而要通过改变class，或者csstext属性，一次性地改变样式。"><a href="#第三条，不要一条条地改变样式，而要通过改变class，或者csstext属性，一次性地改变样式。" class="headerlink" title="第三条，不要一条条地改变样式，而要通过改变class，或者csstext属性，一次性地改变样式。"></a>第三条，不要一条条地改变样式，而要通过改变class，或者csstext属性，一次性地改变样式。</h3><pre><code>// bad
+var left = 10;
+var top = 10;
+el.style.left = left + &quot;px&quot;;
+el.style.top  = top  + &quot;px&quot;;
+
+// good 
+el.className += &quot; theclassname&quot;;
+
+// good
+el.style.cssText += &quot;; left: &quot; + left + &quot;px; top: &quot; + top + &quot;px;&quot;;
+</code></pre><h3 id="第四条，尽量使用离线DOM，而不是真实的网面DOM，来改变元素样式。比如，操作Document-Fragment对象，完成后再把这个对象加入DOM。再比如，使用-cloneNode-方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点。"><a href="#第四条，尽量使用离线DOM，而不是真实的网面DOM，来改变元素样式。比如，操作Document-Fragment对象，完成后再把这个对象加入DOM。再比如，使用-cloneNode-方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点。" class="headerlink" title="第四条，尽量使用离线DOM，而不是真实的网面DOM，来改变元素样式。比如，操作Document Fragment对象，完成后再把这个对象加入DOM。再比如，使用 cloneNode() 方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点。"></a>第四条，尽量使用离线DOM，而不是真实的网面DOM，来改变元素样式。比如，操作Document Fragment对象，完成后再把这个对象加入DOM。再比如，使用 cloneNode() 方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点。</h3><h3 id="第五条，先将元素设为-display-none-（需要1次重排和重绘），然后对这个节点进行100次操作，最后再恢复显示（需要1次重排和重绘）。这样一来，你就用两次重新渲染，取代了可能高达100次的重新渲染。"><a href="#第五条，先将元素设为-display-none-（需要1次重排和重绘），然后对这个节点进行100次操作，最后再恢复显示（需要1次重排和重绘）。这样一来，你就用两次重新渲染，取代了可能高达100次的重新渲染。" class="headerlink" title="第五条，先将元素设为 display: none （需要1次重排和重绘），然后对这个节点进行100次操作，最后再恢复显示（需要1次重排和重绘）。这样一来，你就用两次重新渲染，取代了可能高达100次的重新渲染。"></a>第五条，先将元素设为 display: none （需要1次重排和重绘），然后对这个节点进行100次操作，最后再恢复显示（需要1次重排和重绘）。这样一来，你就用两次重新渲染，取代了可能高达100次的重新渲染。</h3><h3 id="第六条，position属性为absolute或fixed的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。"><a href="#第六条，position属性为absolute或fixed的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。" class="headerlink" title="第六条，position属性为absolute或fixed的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。"></a>第六条，position属性为absolute或fixed的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。</h3><h3 id="第七条，只在必要的时候，才将元素的display属性为可见，因为不可见的元素不影响重排和重绘。另外，visibility-hidden-的元素只对重排有影响，不影响重绘。"><a href="#第七条，只在必要的时候，才将元素的display属性为可见，因为不可见的元素不影响重排和重绘。另外，visibility-hidden-的元素只对重排有影响，不影响重绘。" class="headerlink" title="第七条，只在必要的时候，才将元素的display属性为可见，因为不可见的元素不影响重排和重绘。另外，visibility : hidden 的元素只对重排有影响，不影响重绘。"></a>第七条，只在必要的时候，才将元素的display属性为可见，因为不可见的元素不影响重排和重绘。另外，visibility : hidden 的元素只对重排有影响，不影响重绘。</h3><h3 id="第八条，使用虚拟DOM的脚本库，比如React等。"><a href="#第八条，使用虚拟DOM的脚本库，比如React等。" class="headerlink" title="第八条，使用虚拟DOM的脚本库，比如React等。"></a>第八条，使用虚拟DOM的脚本库，比如React等。</h3><h3 id="第九条，使用-window-requestAnimationFrame-、window-requestIdleCallback-这两个方法调节重新渲染"><a href="#第九条，使用-window-requestAnimationFrame-、window-requestIdleCallback-这两个方法调节重新渲染" class="headerlink" title="第九条，使用 window.requestAnimationFrame()、window.requestIdleCallback() 这两个方法调节重新渲染"></a>第九条，使用 window.requestAnimationFrame()、window.requestIdleCallback() 这两个方法调节重新渲染</h3><h2 id="刷新率"><a href="#刷新率" class="headerlink" title="刷新率"></a>刷新率</h2><p>很多时候，密集的重新渲染是无法避免的，比如scroll事件的回调函数和网页动画。<br>网页动画的每一帧（frame）都是一次重新渲染。每秒低于24帧的动画，人眼就能感受到停顿。一般的网页动画，需要达到每秒30帧到60帧的频率，才能比较流畅。如果能达到每秒70帧甚至80帧，就会极其流畅。</p>
+<p>大多数显示器的刷新频率是60Hz，为了与系统一致，以及节省电力，浏览器会自动按照这个频率，刷新动画（如果可以做到的话）。</p>
+<p><img src="http://7xltvd.com1.z0.glb.clouddn.com/刷新率.png" alt="Alt text" title="刷新率"></p>
+<p>所以，如果网页动画能够做到每秒60帧，就会跟显示器同步刷新，达到最佳的视觉效果。这意味着，一秒之内进行60次重新渲染，每次重新渲染的时间不能超过16.66毫秒。</p>
+<p>一秒之间能够完成多少次重新渲染，这个指标就被称为”刷新率”，英文为FPS（frame per second）。60次重新渲染，就是60FPS。</p>
+<h2 id="开发者工具的Timeline面板"><a href="#开发者工具的Timeline面板" class="headerlink" title="开发者工具的Timeline面板"></a>开发者工具的Timeline面板</h2><p>图太多了，懒得贴</p>
+<h2 id="window-requestAnimationFrame"><a href="#window-requestAnimationFrame" class="headerlink" title="window.requestAnimationFrame()"></a>window.requestAnimationFrame()</h2><p>有一些JavaScript方法可以调节重新渲染，大幅提高网页性能。<br>其中最重要的，就是 window.requestAnimationFrame() 方法。它可以将某些代码放到下一次重新渲染时执行。</p>
+<pre><code>function doubleHeight(element) {
+  var currentHeight = element.clientHeight;
+  element.style.height = (currentHeight * 2) + &apos;px&apos;;
+}
+elements.forEach(doubleHeight);
+</code></pre><p>上面的代码使用循环操作，将每个元素的高度都增加一倍。可是，每次循环都是，读操作后面跟着一个写操作。这会在短时间内触发大量的重新渲染，显然对于网页性能很不利。<br> 我们可以使用window.requestAnimationFrame()，让读操作和写操作分离，把所有的写操作放到下一次重新渲染。</p>
+<pre><code>function doubleHeight(element) {
+  var currentHeight = element.clientHeight;
+  window.requestAnimationFrame(function () {
+    element.style.height = (currentHeight * 2) + &apos;px&apos;;
+  });
+}
+elements.forEach(doubleHeight);
+</code></pre><p>页面滚动事件（scroll）的监听函数，就很适合用 window.requestAnimationFrame() ，推迟到下一次重新渲染。</p>
+<pre><code>$(window).on(&apos;scroll&apos;, function() {
+   window.requestAnimationFrame(scrollHandler);
+});
+</code></pre><p>当然，最适用的场合还是网页动画。下面是一个旋转动画的例子，元素每一帧旋转1度。</p>
+<pre><code>var rAF = window.requestAnimationFrame;
+
+var degrees = 0;
+function update() {
+  div.style.transform = &quot;rotate(&quot; + degrees + &quot;deg)&quot;;
+  console.log(&apos;updated to degrees &apos; + degrees);
+  degrees = degrees + 1;
+  rAF(update);
+}
+rAF(update);
+</code></pre><h2 id="window-requestIdleCallback"><a href="#window-requestIdleCallback" class="headerlink" title="window.requestIdleCallback()"></a>window.requestIdleCallback()</h2><p>还有一个函数window.requestIdleCallback()，也可以用来调节重新渲染。<br>它指定只有当一帧的末尾有空闲时间，才会执行回调函数。</p>
+<pre><code>requestIdleCallback(fn);
+</code></pre><p>上面代码中，只有当前帧的运行时间小于16.66ms时，函数fn才会执行。否则，就推迟到下一帧，如果下一帧也没有空闲时间，就推迟到下下一帧，以此类推。<br>它还可以接受第二个参数，表示指定的毫秒数。如果在指定 的这段时间之内，每一帧都没有空闲时间，那么函数fn将会强制执行。</p>
+<pre><code>requestIdleCallback(fn, 5000);
+</code></pre><p>上面的代码表示，函数fn最迟会在5000毫秒之后执行。<br>函数 fn 可以接受一个 deadline 对象作为参数。</p>
+<pre><code>requestIdleCallback(function someHeavyComputation(deadline) {
+  while(deadline.timeRemaining() &gt; 0) {
+    doWorkIfNeeded();
+  }
+
+  if(thereIsMoreWorkToDo) {
+    requestIdleCallback(someHeavyComputation);
+  }
+});
+</code></pre><p>上面代码中，回调函数 someHeavyComputation 的参数是一个 deadline 对象。<br>deadline对象有一个方法和一个属性：timeRemaining() 和 didTimeout。<br>-（1）timeRemaining() 方法<br>timeRemaining() 方法返回当前帧还剩余的毫秒。这个方法只能读，不能写，而且会动态更新。因此可以不断检查这个属性，如果还有剩余时间的话，就不断执行某些任务。一旦这个属性等于0，就把任务分配到下一轮requestIdleCallback。<br>前面的示例代码之中，只要当前帧还有空闲时间，就不断调用doWorkIfNeeded方法。一旦没有空闲时间，但是任务还没有全执行，就分配到下一轮requestIdleCallback。<br>-（2）didTimeout属性<br>deadline对象的 didTimeout 属性会返回一个布尔值，表示指定的时间是否过期。这意味着，如果回调函数由于指定时间过期而触发，那么你会得到两个结果。<br>timeRemaining方法返回0<br>didTimeout 属性等于 true<br>因此，如果回调函数执行了，无非是两种原因：当前帧有空闲时间，或者指定时间到了。</p>
+<pre><code>function myNonEssentialWork (deadline) {
+  while ((deadline.timeRemaining() &gt; 0 || deadline.didTimeout) &amp;&amp; tasks.length &gt; 0)
+    doWorkIfNeeded();
+
+  if (tasks.length &gt; 0)
+    requestIdleCallback(myNonEssentialWork);
+}
+
+requestIdleCallback(myNonEssentialWork, 5000);
+</code></pre><p>上面代码确保了，doWorkIfNeeded 函数一定会在将来某个比较空闲的时间（或者在指定时间过期后）得到反复执行。<br>Tip: requestIdleCallback 是一个很新的函数，刚刚引入标准，目前只有Chrome支持</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/html/" rel="tag">#html</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/25/js闭包/" rel="prev">js闭包</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/22/hexo加速/" rel="next">Hexo 静态博客加速</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/09/23/网页性能管理/"
+                   data-title="网页性能管理（转载自阮一峰）" data-url="http://www.demozhan.com/2015/09/23/网页性能管理/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网页生成的过程"><span class="nav-number">1.</span> <span class="nav-text">网页生成的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重排和重绘"><span class="nav-number">2.</span> <span class="nav-text">重排和重绘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于性能的影响"><span class="nav-number">3.</span> <span class="nav-text">对于性能的影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提高性能的九个技巧"><span class="nav-number">4.</span> <span class="nav-text">提高性能的九个技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一条是上一节说到的，DOM-的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。"><span class="nav-number">4.1.</span> <span class="nav-text">第一条是上一节说到的，DOM 的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二条，如果某个样式是通过重排得到的，那么最好缓存结果。避免下一次用到的时候，浏览器又要重排。"><span class="nav-number">4.2.</span> <span class="nav-text">第二条，如果某个样式是通过重排得到的，那么最好缓存结果。避免下一次用到的时候，浏览器又要重排。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三条，不要一条条地改变样式，而要通过改变class，或者csstext属性，一次性地改变样式。"><span class="nav-number">4.3.</span> <span class="nav-text">第三条，不要一条条地改变样式，而要通过改变class，或者csstext属性，一次性地改变样式。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四条，尽量使用离线DOM，而不是真实的网面DOM，来改变元素样式。比如，操作Document-Fragment对象，完成后再把这个对象加入DOM。再比如，使用-cloneNode-方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点。"><span class="nav-number">4.4.</span> <span class="nav-text">第四条，尽量使用离线DOM，而不是真实的网面DOM，来改变元素样式。比如，操作Document Fragment对象，完成后再把这个对象加入DOM。再比如，使用 cloneNode() 方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第五条，先将元素设为-display-none-（需要1次重排和重绘），然后对这个节点进行100次操作，最后再恢复显示（需要1次重排和重绘）。这样一来，你就用两次重新渲染，取代了可能高达100次的重新渲染。"><span class="nav-number">4.5.</span> <span class="nav-text">第五条，先将元素设为 display: none （需要1次重排和重绘），然后对这个节点进行100次操作，最后再恢复显示（需要1次重排和重绘）。这样一来，你就用两次重新渲染，取代了可能高达100次的重新渲染。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第六条，position属性为absolute或fixed的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。"><span class="nav-number">4.6.</span> <span class="nav-text">第六条，position属性为absolute或fixed的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第七条，只在必要的时候，才将元素的display属性为可见，因为不可见的元素不影响重排和重绘。另外，visibility-hidden-的元素只对重排有影响，不影响重绘。"><span class="nav-number">4.7.</span> <span class="nav-text">第七条，只在必要的时候，才将元素的display属性为可见，因为不可见的元素不影响重排和重绘。另外，visibility : hidden 的元素只对重排有影响，不影响重绘。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第八条，使用虚拟DOM的脚本库，比如React等。"><span class="nav-number">4.8.</span> <span class="nav-text">第八条，使用虚拟DOM的脚本库，比如React等。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第九条，使用-window-requestAnimationFrame-、window-requestIdleCallback-这两个方法调节重新渲染"><span class="nav-number">4.9.</span> <span class="nav-text">第九条，使用 window.requestAnimationFrame()、window.requestIdleCallback() 这两个方法调节重新渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷新率"><span class="nav-number">5.</span> <span class="nav-text">刷新率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发者工具的Timeline面板"><span class="nav-number">6.</span> <span class="nav-text">开发者工具的Timeline面板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window-requestAnimationFrame"><span class="nav-number">7.</span> <span class="nav-text">window.requestAnimationFrame()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window-requestIdleCallback"><span class="nav-number">8.</span> <span class="nav-text">window.requestIdleCallback()</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

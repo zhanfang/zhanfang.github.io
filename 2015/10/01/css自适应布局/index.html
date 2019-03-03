@@ -1,0 +1,715 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="css," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="将张鑫旭精简了一下 http://www.zhangxinxu.com/wordpress/2010/10/%E9%A1%B5%E9%9D%A2%E9%87%8D%E6%9E%84%E2%80%9C%E9%91%AB%E4%B8%89%E6%97%A0%E5%87%86%E5%88%99%E2%80%9D-%E4%B9%8B%E2%80%9C%E6%97%A0%E5%AE%BD%E5%BA%A6%">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css自适应布局(一)">
+<meta property="og:url" content="http://www.demozhan.com/2015/10/01/css自适应布局/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="将张鑫旭精简了一下 http://www.zhangxinxu.com/wordpress/2010/10/%E9%A1%B5%E9%9D%A2%E9%87%8D%E6%9E%84%E2%80%9C%E9%91%AB%E4%B8%89%E6%97%A0%E5%87%86%E5%88%99%E2%80%9D-%E4%B9%8B%E2%80%9C%E6%97%A0%E5%AE%BD%E5%BA%A6%">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局1.png">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局3.png">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局2.png">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局4.png">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局5.png">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局6.png">
+<meta property="og:updated_time" content="2015-10-23T04:18:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css自适应布局(一)">
+<meta name="twitter:description" content="将张鑫旭精简了一下 http://www.zhangxinxu.com/wordpress/2010/10/%E9%A1%B5%E9%9D%A2%E9%87%8D%E6%9E%84%E2%80%9C%E9%91%AB%E4%B8%89%E6%97%A0%E5%87%86%E5%88%99%E2%80%9D-%E4%B9%8B%E2%80%9C%E6%97%A0%E5%AE%BD%E5%BA%A6%">
+<meta name="twitter:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局1.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> css自适应布局(一) | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              css自适应布局(一)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-10-01T11:57:22+08:00" content="2015-10-01">
+            2015-10-01
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/css/" itemprop="url" rel="index">
+                  <span itemprop="name">css</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/01/css自适应布局/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/01/css自适应布局/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><code>将张鑫旭精简了一下 http://www.zhangxinxu.com/wordpress/2010/10/%E9%A1%B5%E9%9D%A2%E9%87%8D%E6%9E%84%E2%80%9C%E9%91%AB%E4%B8%89%E6%97%A0%E5%87%86%E5%88%99%E2%80%9D-%E4%B9%8B%E2%80%9C%E6%97%A0%E5%AE%BD%E5%BA%A6%E2%80%9D%E5%87%86%E5%88%99/</code></p>
+<h2 id="页面重构“鑫三无准则”-之“无宽度”准则"><a href="#页面重构“鑫三无准则”-之“无宽度”准则" class="headerlink" title="页面重构“鑫三无准则” 之“无宽度”准则"></a>页面重构“鑫三无准则” 之“无宽度”准则</h2><p> 无宽度指的是宽度分离，并不是指没有宽度<br>使用宽度计算+横向拼接的做法不仅浪费精力、开发成本，最终实现的页面其实也是比较脆弱的。举个实际点的例子，比如新浪微博内容列表布局，用firebug看了下其布局的方式，结果就是定宽的浮动布局。左边头像左浮动，宽度56像素；右侧内容484像素，右浮动。如下图所示：<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局1.png" alt="Alt" title="新浪布局"></p>
+<p>这是个比较简单的两栏布局，这里宽度限定，左右浮动，这也是目前主流布局方式。但是主流的方法并不一定是最好的方法，就此例子而言，没有左右padding/margin/border等属性，所以右侧栏的宽度(484px)确定貌似还是比较简单的（事实上还是要去量一下，这是可避免的劳力成本）；但是，其扩展性和重用性则完全不及格了，首先，这里的列表不可能放在500像素宽的div中（没有了重用性），日后要是网站改版，总体宽度增加，那么显然，这里的宽度又要重新计算，这就缺少了扩展性；同时，这种浮动布局会带来一些副作用，首先是浮动本身的代码成本，其次是清除浮动所需要的成本。(如下图)<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局3.png" alt="Alt" title="清除浮动影响"></p>
+<h2 id="“无宽度”之实现"><a href="#“无宽度”之实现" class="headerlink" title="“无宽度”之实现"></a>“无宽度”之实现</h2><p><strong><em>“无宽度”具体指的是没有固定的宽度值（尤其是以px为单位的宽度值，em需看具体情况，%百分值不在其中）</em></strong></p>
+<p>这是比较简单的也是比较基本的两栏布局，一般这种layout我们需要借助一些平时会给我们带来麻烦的，本身带刺的一些CSS属性，那就是float以及position:absolute属性，我在“absolute绝对定位的非绝对定位用法”一文中就多次提到我的这个观点：未设定left/top值的absolute元素和float元素就是两个混蛋近亲，同样的都是“包裹与破坏”，但是，虽然很多时候，这种破坏会给我们带来些麻烦（例如清除浮动造成的高度塌陷的问题），但是，万物皆有两面性，我们有时候可以利用这种破坏的特性来帮助我们进行更加有韧性的布局。<br>如下图是重构之后的代码<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局2.png" alt="Alt" title="重构之后代码"><br>相比原来的代码，只是把头像的56像素宽度左浮动和484像素内容宽度右浮动改成position:absolute和padding-left:76px，然后，实现的效果就是一模一样了，不仅代码量少了，布局也更有扩展性。同时，也不需要什么清除浮动之类的代码了：<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局4.png" alt="Alt" title="删除浮动影响"></p>
+<p>整个布局的CSS代码就非常之清爽，没有浮动，没有计算，也没有清除浮动，而且扩展性强。</p>
+<pre><code>.abs{position:absolute;}
+.pl76{padding-left:76px;}
+</code></pre><p>facebook在个人主页动态列表使用的定位方法：<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局5.png" alt="Alt" title="facebook自适应布局"><br>但是，facebook这里的absolute定位属于标签内定位，外套relative属性限制，好处在于可以直接忽略我上面提到的不少需要注意的细节，且易于理解掌握，但是不足在于CSS代码量，开销，开发成本都比较大。所以，个人权衡来讲，还是直接的外标签裸absolute属性方法更好些。</p>
+<p>还有，今天我去看facebook首页好友动态列表的代码，发现了一个很牛逼的方法，float外加table-cell方法（table-cell的宽度上千上万却依然布局良好，很神奇），我琢磨着，可能是因为国外基本上不鸟IE6浏览器的缘故，所以会果敢的使用display:table-cell属性，此方法要想在国内盛行，还需有段时日。<br><img src="http://7xltvd.com1.z0.glb.clouddn.com/css自适应布局6.png" alt="Alt" title="facebook自适应布局"></p>
+<h2 id="Tip"><a href="#Tip" class="headerlink" title="Tip"></a>Tip</h2><p>position与float在例子中的表现有所不同，当页面宽度小，右列内容比较多时，两者没有区别。<br>当页面宽度很大，右列内容所显示的高度比左列小时，就会发现父元素的表格不一致了。使用position时，父元素框架不会被撑开。而使用float时，父元素框架会同样被撑开，显示起来较为美观。<br>结论：使用float进行宽度自适应会比较好。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag">#css</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/01/css文字和表单元素垂直对齐/" rel="prev">css文字和表单元素垂直对齐</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/27/js作用域链与原型链/" rel="next">js作用域链与原型链</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/10/01/css自适应布局/"
+                   data-title="css自适应布局(一)" data-url="http://www.demozhan.com/2015/10/01/css自适应布局/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#页面重构“鑫三无准则”-之“无宽度”准则"><span class="nav-number">1.</span> <span class="nav-text">页面重构“鑫三无准则” 之“无宽度”准则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“无宽度”之实现"><span class="nav-number">2.</span> <span class="nav-text">“无宽度”之实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip"><span class="nav-number">3.</span> <span class="nav-text">Tip</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

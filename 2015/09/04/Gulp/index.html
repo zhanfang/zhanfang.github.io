@@ -1,0 +1,953 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="gulp," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="转载地址 http://www.w3ctech.com/topic/134
+对网站资源进行优化，并使用不同浏览器测试并不是网站设计过程中最有意思的部分，但是这个过程中的很多重复的任务能够使用正确的工具自动完成，从而使效率大大提高，这是让很多开发者觉得有趣的地方。
+Gulp是一个构建系统，它能通过自动执行常见任务，比如编译预处理CSS，压缩JavaScript和刷新浏览器，来改进网站开发的过程。通过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gulp开发教程（转载）">
+<meta property="og:url" content="http://www.demozhan.com/2015/09/04/Gulp/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="转载地址 http://www.w3ctech.com/topic/134
+对网站资源进行优化，并使用不同浏览器测试并不是网站设计过程中最有意思的部分，但是这个过程中的很多重复的任务能够使用正确的工具自动完成，从而使效率大大提高，这是让很多开发者觉得有趣的地方。
+Gulp是一个构建系统，它能通过自动执行常见任务，比如编译预处理CSS，压缩JavaScript和刷新浏览器，来改进网站开发的过程。通过">
+<meta property="og:updated_time" content="2015-10-23T04:18:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gulp开发教程（转载）">
+<meta name="twitter:description" content="转载地址 http://www.w3ctech.com/topic/134
+对网站资源进行优化，并使用不同浏览器测试并不是网站设计过程中最有意思的部分，但是这个过程中的很多重复的任务能够使用正确的工具自动完成，从而使效率大大提高，这是让很多开发者觉得有趣的地方。
+Gulp是一个构建系统，它能通过自动执行常见任务，比如编译预处理CSS，压缩JavaScript和刷新浏览器，来改进网站开发的过程。通过">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Gulp开发教程（转载） | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Gulp开发教程（转载）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-09-04T23:21:03+08:00" content="2015-09-04">
+            2015-09-04
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/前端工具/" itemprop="url" rel="index">
+                  <span itemprop="name">前端工具</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/04/Gulp/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/04/Gulp/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>转载地址 <a href="http://www.w3ctech.com/topic/134" target="_blank" rel="external">http://www.w3ctech.com/topic/134</a></p>
+<p>对网站资源进行优化，并使用不同浏览器测试并不是网站设计过程中最有意思的部分，但是这个过程中的很多重复的任务能够使用正确的工具自动完成，从而使效率大大提高，这是让很多开发者觉得有趣的地方。</p>
+<p>Gulp是一个构建系统，它能通过自动执行常见任务，比如编译预处理CSS，压缩JavaScript和刷新浏览器，来改进网站开发的过程。通过本文，我们将知道如何使用Gulp来改变开发流程，从而使开发更加快速高效。</p>
+<p>##What Is Gulp?</p>
+<p>Gulp是一个构建系统，开发者可以使用它在网站开发过程中自动执行常见任务。Gulp是基于Node.js构建的，因此Gulp源文件和你用来定义任务的Gulp文件都被写进了JavaScript（或者CoffeeScript）里。前端开发工程师还可以用自己熟悉的语言来编写任务去lint JavaScript和CSS、解析模板以及在文件变动时编译LESS文件（当然这些只是一小部分例子）。</p>
+<p>Gulp本身虽然不能完成很多任务，但它有大量插件可用，开发者可以访问插件页面或者在npm搜索gulpplugin就能看到。例如，有些插件可以用来执行JSHint、编译CoffeeScript，执行Mocha测试，甚至更新版本号。</p>
+<p>对比其他构建工具，比如Grunt，以及最近流行的Broccoli，我相信Gulp会更胜一筹（请看后面的”Why Gulp?”部分），同时我汇总了一个使用Javascript编写的构建工具清单，可供大家参考。</p>
+<p>Gulp是一个可以在GitHub上找到的开源项目。</p>
+<p>##Installing Gulp</p>
+<p>安装Gulp的过程十分简单。首先，需要在全局安装Gulp包：</p>
+<pre><code>npm install -g gulp
+</code></pre><p>然后，在项目里面安装Gulp：</p>
+<pre><code>npm install --save-dev gulp
+</code></pre><p>##Using Gulp</p>
+<p>现在我们创建一个Gulp任务来压缩JavaScript文件。首先创建一个名为gulpfile.js的文件，这是定义Gulp任务的地方，它可以通过gulp命令来运行，接着把下面的代码放到gulpfile.js文件里面。</p>
+<pre><code>var gulp = require(&apos;gulp&apos;),
+   uglify = require(&apos;gulp-uglify&apos;);
+
+gulp.task(&apos;minify&apos;, function () {
+   gulp.src(&apos;js/app.js&apos;)
+      .pipe(uglify())
+      .pipe(gulp.dest(&apos;build&apos;))
+});
+</code></pre><p>然后在npm里面运行npm install -–save-dev gulp-uglify来安装gulp-uglify，最后通过运行gulp minify来执行任务。假设js目录下有个app.js文件，那么一个新的app.js将被创建在编译目录下，它包含了js/app.js的压缩内容。想一想，到底发生了什么？</p>
+<p>我们只在gulpfile.js里做了一点事情。首先，我们加载gulp和gulp-uglify模块：</p>
+<pre><code>var gulp = require(&apos;gulp&apos;),
+    uglify = require(&apos;gulp-uglify&apos;);
+</code></pre><p>然后，我们定义了一个叫minify的任务，它执行时会调用函数，这个函数会作为第二个参数：</p>
+<pre><code>gulp.task(&apos;minify&apos;, function () {
+
+});
+</code></pre><p>最后，也是难点所在，我们需要定义任务应该做什么：</p>
+<pre><code>gulp.src(&apos;js/app.js&apos;)
+   .pipe(uglify())
+   .pipe(gulp.dest(&apos;build&apos;))
+</code></pre><p>如果你对数据流非常熟悉（其实大多数前端开发人员并不熟悉），上面所提供的代码对你来说就没有太大意义了。</p>
+<p>##STREAMS</p>
+<p>数据流能够通过一系列的小函数来传递数据，这些函数会对数据进行修改，然后把修改后的数据传递给下一个函数。</p>
+<p>在上面的例子中，gulp.src()函数用字符串匹配一个文件或者文件的编号（被称为“glob”）,然后创建一个对象流来代表这些文件，接着传递给uglify()函数，它接受文件对象之后返回有新压缩源文件的文件对象，最后那些输出的文件被输入gulp.dest()函数，并保存下来。</p>
+<p>整个数据流动过程如下图所示： </p>
+<p>当只有一个任务的时候，函数并不会起太大的作用。然而，仔细思考下面的代码：</p>
+<pre><code>gulp.task(&apos;js&apos;, function () {
+   return gulp.src(&apos;js/*.js&apos;)
+      .pipe(jshint())
+      .pipe(jshint.reporter(&apos;default&apos;))
+      .pipe(uglify())
+      .pipe(concat(&apos;app.js&apos;))
+      .pipe(gulp.dest(&apos;build&apos;));
+});
+</code></pre><p>在运行这段程序之前，你需要先安装gulp,gulp-jshint,gulp-uglify和gulp-concat。</p>
+<p>这个任务会让所有的文件匹配js/*.js（比如js目录下的所有JavaScript文件），并且执行JSHint，然后打印输出结果，取消文件缩进，最后把他们合并起来，保存为build/app.js，整个过程如下图所示： </p>
+<p>如果你对Grunt 足够熟悉，就会注意到，Gulp和Grunt的工作方式很不一样。Grunt不使用数据流，而是使用文件，对文件执行单个任务然后保存到新的文件中，每个任务都会重复执行所有进程，文件系统频繁的处理任务会导致Grunt的运行速度比Gulp慢。</p>
+<p>如果想要获取更加全面的数据流知识，请查看“Stream Handbook”.</p>
+<p>##GULP.SRC()</p>
+<p>gulp.src()方法输入一个glob(比如匹配一个或多个文件的字符串)或者glob数组，然后返回一个可以传递给插件的数据流。</p>
+<p>Gulp使用node-glob来从你指定的glob里面获取文件，这里列举下面的例子来阐述，方便大家理解：</p>
+<pre><code>js/app.js 精确匹配文件
+js/*.js 仅匹配js目录下的所有后缀为.js的文件
+js/*/.js 匹配js目录及其子目录下所有后缀为.js的文件
+!js/app.js 从匹配结果中排除js/app.js，这种方法在你想要匹配除了特殊文件之外的所有文件时非常管用
+*.+(js|css) 匹配根目录下所有后缀为.js或者.css的文件
+此外，Gulp也有很多其他的特征，但并不常用。如果你想了解更多的特征，请查看Minimatch文档。
+
+js目录下包含了压缩和未压缩的JavaScript文件，现在我们想要创建一个任务来压缩还没有被压缩的文件，我们需要先匹配目录下所有的JavaScript文件，然后排除后缀为.min.js的文件:
+
+gulp.src([&apos;js/**/*.js&apos;, &apos;!js/**/*.min.js&apos;])
+</code></pre><p>##DEFINING TASKS</p>
+<p>gulp.task()函数通常会被用来定义任务。当你定义一个简单的任务时，需要传入任务名字和执行函数两个属性。</p>
+<pre><code>gulp.task(&apos;greet&apos;, function () {
+   console.log(&apos;Hello world!&apos;);
+});
+</code></pre><p>执行gulp greet的结果就是在控制台上打印出“Hello world”.</p>
+<p>一个任务有时也可以是一系列任务。假设要定义一个任务build来执行css、js、imgs这三个任务，我们可以通过指定一个任务数组而不是函数来完成。</p>
+<pre><code>gulp.task(&apos;build&apos;, [&apos;css&apos;, &apos;js&apos;, &apos;imgs&apos;]);
+</code></pre><p>这些任务不是同时进行的，所以你不能认为在js任务开始的时候css任务已经结束了，也可能还没有结束。为了确保一个任务在另一个任务执行前已经结束，可以将函数和任务数组结合起来指定其依赖关系。例如，定义一个css任务，在执行前需要检查greet任务是否已经执行完毕，这样做就是可行的:</p>
+<pre><code>gulp.task(&apos;css&apos;, [&apos;greet&apos;], function () {
+   // Deal with CSS here
+});
+</code></pre><p>现在，当执行css任务时，Gulp会先执行greet任务，然后在它结束后再调用你定义的函数。</p>
+<p>##DEFAULT TASKS</p>
+<p>你可以定义一个在gulp开始运行时候默认执行的任务，并将这个任务命名为“default”：</p>
+<pre><code>gulp.task(&apos;default&apos;, function () {
+   // Your default task
+});
+</code></pre><p>##PLUGINS</p>
+<p>Gulp上有超过600种插件供你选择，你可以在插件页面或者npm上搜索gulpplugin来浏览插件列表。有些拥有“gulpfriendly”标签的插件，他们不能算插件，但是能在Gulp上正常运行。 需要注意的是，当直接在npm里搜索时，你无法知道某一插件是否在黑名单上（你需要滚动到插件页面底部才能看到）。</p>
+<p>大多数插件的使用都很方便，它们都配有详细的文档，而且调用方法也相同（通过传递文件对象流给它），它们通常会对这些文件进行修改（但是有一些插件例外，比如validators），最后返回新的文件给下一个插件。</p>
+<p>让我们用前面的js任务来详细说明一下：</p>
+<pre><code>var gulp = require(&apos;gulp&apos;),
+    jshint = require(&apos;gulp-jshint&apos;),
+    uglify = require(&apos;gulp-uglify&apos;),
+    concat = require(&apos;gulp-concat&apos;);
+
+gulp.task(&apos;js&apos;, function () {
+   return gulp.src(&apos;js/*.js&apos;)
+      .pipe(jshint())
+      .pipe(jshint.reporter(&apos;default&apos;))
+      .pipe(uglify())
+      .pipe(concat(&apos;app.js&apos;))
+      .pipe(gulp.dest(&apos;build&apos;));
+});
+</code></pre><p>这里使用了三个插件，gulp-jshint,gulp-uglify和gulp-concat。开发者可以参考插件的README文档，插件有很多配置选项，而且给定的初始值通常能满足需求。细心的读者可能会发现，程序中JSHint插件执行了2次，这是因为第一次执行JSHint只是给文件对象附加了jshint属性，并没有输出。你可以自己读取jshint的属性或者传递给默认的JSHint的接收函数或者其他的接收函数,比如jshint-stylish.</p>
+<p>其他两个插件的作用很清楚：uglify()函数压缩代码，concat(‘app.js’)函数将所有文件合并到一个叫app.js的文件中。</p>
+<p>##GULP-LOAD-PLUGINS</p>
+<p>我发现gulp-load-plugin模块十分有用，它能够自动地从package.json中加载任意Gulp插件然后把它们附加到一个对象上。它的基本用法如下所示：</p>
+<pre><code>var gulpLoadPlugins = require(&apos;gulp-load-plugins&apos;),
+    plugins = gulpLoadPlugins();
+</code></pre><p>你可以把所有代码写到一行，但是我并不推荐这样做。</p>
+<p>在执行那些代码之后，插件对象就已经包含了插件，并使用“驼峰式”的方式进行命名（例如，gulp-ruby-sass将被加载成plugins.rubySass），这样就可以很方便地使用了。例如，前面的js任务简化为如下：</p>
+<pre><code>var gulp = require(&apos;gulp&apos;),
+    gulpLoadPlugins = require(&apos;gulp-load-plugins&apos;),
+    plugins = gulpLoadPlugins();
+
+gulp.task(&apos;js&apos;, function () {
+   return gulp.src(&apos;js/*.js&apos;)
+      .pipe(plugins.jshint())
+      .pipe(plugins.jshint.reporter(&apos;default&apos;))
+      .pipe(plugins.uglify())
+      .pipe(plugins.concat(&apos;app.js&apos;))
+      .pipe(gulp.dest(&apos;build&apos;));
+});
+</code></pre><p>假设package.json文件如下面所示：</p>
+<pre><code>{
+   &quot;devDependencies&quot;: {
+      &quot;gulp-concat&quot;: &quot;~2.2.0&quot;,
+      &quot;gulp-uglify&quot;: &quot;~0.2.1&quot;,
+      &quot;gulp-jshint&quot;: &quot;~1.5.1&quot;,
+      &quot;gulp&quot;: &quot;~3.5.6&quot;
+   }
+}
+</code></pre><p>这个例子虽然已经够短了，但是使用更长更复杂的Gulp文件会把它们简化成一两行代码。</p>
+<p>三月初发布的Gulp-load-plugins0.4.0版本添加了延迟加载功能，提高了插件的性能，因为插件在使用的时候才会被加载进来，你不用担心package.json里未被使用的插件影响性能（但是你需要把他们清理掉）。换句话说，如果你在执行任务时只需要两个插件，那么其他不相关的插件就不会被加载。</p>
+<p>##WATCHING FILES</p>
+<p>Gulp可以监听文件的修改动态，然后在文件被改动的时候执行一个或多个任务。这个特性十分有用（对我来说，这可能是Gulp中最有用的一个功能）。你可以保存LESS文件，接着Gulp会自动把它转换为CSS文件并更新浏览器。</p>
+<p>使用gulp.watch()方法可以监听文件，它接受一个glob或者glob数组（和gulp.src()一样）以及一个任务数组来执行回调。</p>
+<p>让我们看看下面，build任务可以将模板转换成html格式，然后我们希望定义一个watch任务来监听模板文件的变化，并将这些模板转换成html格式。watch函数的使用方法如下所示：</p>
+<pre><code>gulp.task(&apos;watch&apos;, function () {
+   gulp.watch(&apos;templates/*.tmpl.html&apos;, [&apos;build&apos;]);
+});
+</code></pre><p>现在，当改变一个模板文件时，build任务会被执行并生成HTML文件，也可以给watch函数一个回调函数，而不是一个任务数组。在这个示例中，回调函数有一个包含触发回调函数信息的event对象：</p>
+<pre><code>gulp.watch(&apos;templates/*.tmpl.html&apos;, function (event) {
+   console.log(&apos;Event type: &apos; + event.type); // added, changed, or deleted
+   console.log(&apos;Event path: &apos; + event.path); // The path of the modified file
+});
+</code></pre><p>Gulp.watch()的另一个非常好的特性是返回我们熟知的watcher。利用watcher来监听额外的事件或者向watch中添加文件。例如，在执行一系列任务和调用一个函数时，你就可以在返回的watcher中添加监听change事件:</p>
+<pre><code>var watcher = gulp.watch(&apos;templates/*.tmpl.html&apos;, [&apos;build&apos;]);
+watcher.on(&apos;change&apos;, function (event) {
+   console.log(&apos;Event type: &apos; + event.type); // added, changed, or deleted
+   console.log(&apos;Event path: &apos; + event.path); // The path of the modified file
+});
+</code></pre><p>除了change事件，还可以监听很多其他的事件:</p>
+<pre><code>end 在watcher结束时触发（这意味着，在文件改变的时候，任务或者回调不会执行）
+error 在出现error时触发
+ready 在文件被找到并正被监听时触发
+nomatch 在glob没有匹配到任何文件时触发
+Watcher对象也包含了一些可以调用的方法：
+
+watcher.end() 停止watcher（以便停止执行后面的任务或者回调函数）
+watcher.files() 返回watcher监听的文件列表
+watcher.add(glob) 将与指定glob相匹配的文件添加到watcher（也接受可选的回调当第二个参数）
+watcher.remove(filepath) 从watcher中移除个别文件
+Reloading Changes In The Browser
+</code></pre><p>当一个文件被修改或者Gulp任务被执行时可以用Gulp来加载或者更新网页。LiveReload和BrowserSync插件就可以用来实现在游览器中加载更新的内容。</p>
+<p>##LIVERELOAD</p>
+<p>LiveReload结合了浏览器扩展（包括Chrome extension），在发现文件被修改时会实时更新网页。它可以和gulp-watch插件或者前面描述的gulp-watch()函数一起使用。下面有一个gulp-livereload仓库中的README文件提到的例子:</p>
+<pre><code>var gulp = require(&apos;gulp&apos;),
+    less = require(&apos;gulp-less&apos;),
+    livereload = require(&apos;gulp-livereload&apos;),
+    watch = require(&apos;gulp-watch&apos;);
+
+gulp.task(&apos;less&apos;, function() {
+   gulp.src(&apos;less/*.less&apos;)
+      .pipe(watch())
+      .pipe(less())
+      .pipe(gulp.dest(&apos;css&apos;))
+      .pipe(livereload());
+});
+</code></pre><p>这会监听到所有与less/*.less相匹配的文件的变化。一旦监测到变化，就会生成css并保存，然后重新加载网页.</p>
+<p>##BROWSERSYNC</p>
+<p>BroserSync在浏览器中展示变化的功能与LiveReload非常相似，但是它有更多的功能。</p>
+<p>当你改变代码的时候，BrowserSync会重新加载页面，或者如果是css文件，会直接添加进css中，页面并不需要再次刷新。这项功能在网站是禁止刷新的时候是很有用的。假设你正在开发单页应用的第4页，刷新页面就会导致你回到开始页。使用LiveReload的话，你就需要在每次改变代码之后还需要点击四次，而当你修改CSS时，插入一些变化时，BrowserSync会直接将需要修改的地方添加进CSS，就不用再点击回退。</p>
+<p>BrowserSync提供了一种在多个浏览器里测试网页的很好方式（查看大图）。</p>
+<p>BrowserSync也可以在不同浏览器之间同步点击翻页、表单操作、滚动位置。你可以在电脑和iPhone上打开不同的浏览器然后进行操作。所有设备上的链接将会随之变化，当你向下滚动页面时，所有设备上页面都会向下滚动（通常还很流畅！）。当你在表单中输入文本时，每个窗口都会有输入。当你不想要这种行为时，也可以把这个功能关闭。</p>
+<p>BrowserSync不需要使用浏览器插件，因为它本身就可以给你提供文件。（查看大图）</p>
+<p>BrowserSync不需要使用浏览器插件，因为它本身就可以为你提供文件服务（如果文件是动态的，则为他们提供代理服务）和用来开启浏览器和服务器之间的socket的脚本服务。到目前为止这个功能的使用都十分顺畅。</p>
+<p>实际上BrowserSync对于Gulp并不算一种插件，因为BrowserSync并不像一个插件一样操作文件。然而，npm上的BrowserSync模块能在Gulp上被直接调用。</p>
+<p>首先，需要通过npm安装一下：</p>
+<pre><code>npm install --save-dev browser-sync
+</code></pre><p>然后gulpfile.js会启动BrowserSync并监听文件：</p>
+<pre><code>var gulp = require(&apos;gulp&apos;),
+    browserSync = require(&apos;browser-sync&apos;);
+
+gulp.task(&apos;browser-sync&apos;, function () {
+   var files = [
+      &apos;app/**/*.html&apos;,
+      &apos;app/assets/css/**/*.css&apos;,
+      &apos;app/assets/imgs/**/*.png&apos;,
+      &apos;app/assets/js/**/*.js&apos;
+   ];
+
+   browserSync.init(files, {
+      server: {
+         baseDir: &apos;./app&apos;
+      }
+   });
+});
+</code></pre><p>执行gulp browser-sync后会监听匹配文件的变化，同时为app目录提供文件服务。</p>
+<p>此外BrowserSync的开发者还写了很多关于BrowserSync+Gulp仓库的其他用途。</p>
+<p>##Why Gulp?</p>
+<p>前面提到过，Gulp是为数不多的使用JavaScript开发的构建工具之一，也有其他不是用JavaScript开发的构建工具，比如Rake，那么我们为什么要选择Gulp呢?</p>
+<p>目前最流行的两种使用JavaScript开发的构建工具是Grunt和Gulp。Grunt在2013年非常流行，因为它彻底改变了许多人开发网站的方式，它有上千种插件可供用户使用，从linting、压缩、合并代码到使用Bower安装程序包,启动Express服务都能办到。这些和Gulp的很不一样，Gulp只有执行单个小任务来处理文件的插件，因为任务都是JavaScript（和Grunt使用的大型对象不同），根本不需要插件，你只需用传统方法启动一个Express服务就可以了。</p>
+<p>Grunt任务拥有大量的配置，会引用大量你实际上并不需要的对象属性，但是Gulp里同样的任务也许只有几行。让我们看个简单的Gruntfile.js，它规定一个将LESS转换为CSS的任务，然后执行Autoprefixer:</p>
+<pre><code>grunt.initConfig({
+   less: {
+      development: {
+         files: {
+            &quot;build/tmp/app.css&quot;: &quot;assets/app.less&quot;
+         }
+      }
+   },
+
+   autoprefixer: {
+      options: {
+         browsers: [&apos;last 2 version&apos;, &apos;ie 8&apos;, &apos;ie 9&apos;]
+      },
+      multiple_files: {
+         expand: true,
+         flatten: true,
+         src: &apos;build/tmp/app.css&apos;,
+         dest: &apos;build/&apos;
+      }
+   }
+});
+
+grunt.loadNpmTasks(&apos;grunt-contrib-less&apos;);
+grunt.loadNpmTasks(&apos;grunt-autoprefixer&apos;);
+
+grunt.registerTask(&apos;css&apos;, [&apos;less&apos;, &apos;autoprefixer&apos;]);
+</code></pre><p>与Gulpfile.js文件进行对比，它们执行的任务相同：</p>
+<pre><code>var gulp = require(&apos;gulp&apos;),
+   less = require(&apos;gulp-less&apos;),
+   autoprefix = require(&apos;gulp-autoprefixer&apos;);
+
+gulp.task(&apos;css&apos;, function () {
+   gulp.src(&apos;assets/app.less&apos;)
+      .pipe(less())
+      .pipe(autoprefix(&apos;last 2 version&apos;, &apos;ie 8&apos;, &apos;ie 9&apos;))
+      .pipe(gulp.dest(&apos;build&apos;));
+});
+</code></pre><p>因为Grunt比Gulp更加频繁地操作文件系统，所以使用数据流的Gulp总是比Grunt快。对于一个小的LESS文件，gulpfile.js通常需要6ms，而gruntfile.js则需要大概50ms——慢8倍多。这只是个简单的例子，对于长的文件，这个数字会增加得更显著。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gulp/" rel="tag">#gulp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/05/js模块化1/" rel="prev">Javascript模块化编程（一）：模块的写法(转载自阮一峰)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/04/cnpm/" rel="next">cnpm--淘宝的nodejs镜像</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/09/04/Gulp/"
+                   data-title="Gulp开发教程（转载）" data-url="http://www.demozhan.com/2015/09/04/Gulp/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

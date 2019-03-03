@@ -1,0 +1,742 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="css," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="参考 http://www.divcss5.com/jiqiao/j406.shtml
+浮动产生原因一般浮动是什么情况呢？一般是一个盒子里使用了CSSfloat浮动属性，导致父级对象盒子不能被撑开，这样CSS float浮动就产生了。这个问题经常发生，特别是在我改写ecshop源代码的时候
+
+本来两个黑色对象盒子是在红色盒子内，因为对两个黑色盒子使用了float浮动，所以两个黑色盒子产生了浮动，导">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css清除浮动-高度塌陷问题">
+<meta property="og:url" content="http://www.demozhan.com/2015/09/16/css清除浮动-高度塌陷问题/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="参考 http://www.divcss5.com/jiqiao/j406.shtml
+浮动产生原因一般浮动是什么情况呢？一般是一个盒子里使用了CSSfloat浮动属性，导致父级对象盒子不能被撑开，这样CSS float浮动就产生了。这个问题经常发生，特别是在我改写ecshop源代码的时候
+
+本来两个黑色对象盒子是在红色盒子内，因为对两个黑色盒子使用了float浮动，所以两个黑色盒子产生了浮动，导">
+<meta property="og:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css1.png">
+<meta property="og:updated_time" content="2016-01-17T09:55:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css清除浮动-高度塌陷问题">
+<meta name="twitter:description" content="参考 http://www.divcss5.com/jiqiao/j406.shtml
+浮动产生原因一般浮动是什么情况呢？一般是一个盒子里使用了CSSfloat浮动属性，导致父级对象盒子不能被撑开，这样CSS float浮动就产生了。这个问题经常发生，特别是在我改写ecshop源代码的时候
+
+本来两个黑色对象盒子是在红色盒子内，因为对两个黑色盒子使用了float浮动，所以两个黑色盒子产生了浮动，导">
+<meta name="twitter:image" content="http://7xltvd.com1.z0.glb.clouddn.com/css1.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> css清除浮动-高度塌陷问题 | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              css清除浮动-高度塌陷问题
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-09-16T16:32:19+08:00" content="2015-09-16">
+            2015-09-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/css/" itemprop="url" rel="index">
+                  <span itemprop="name">css</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/16/css清除浮动-高度塌陷问题/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/16/css清除浮动-高度塌陷问题/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><code>参考 http://www.divcss5.com/jiqiao/j406.shtml</code></p>
+<h2 id="浮动产生原因"><a href="#浮动产生原因" class="headerlink" title="浮动产生原因"></a>浮动产生原因</h2><p>一般浮动是什么情况呢？一般是一个盒子里使用了CSSfloat浮动属性，导致父级对象盒子不能被撑开，这样CSS float浮动就产生了。这个问题经常发生，特别是在我改写ecshop源代码的时候</p>
+<p><img src="http://7xltvd.com1.z0.glb.clouddn.com/css1.png" alt="alt css浮动" title="浮动问题"></p>
+<p>本来两个黑色对象盒子是在红色盒子内，因为对两个黑色盒子使用了float浮动，所以两个黑色盒子产生了浮动，导致红色盒子不能撑开，这样浮动就产生了。</p>
+<h2 id="浮动产生负作用"><a href="#浮动产生负作用" class="headerlink" title="浮动产生负作用"></a>浮动产生负作用</h2><ul>
+<li>背景不能显示<br>由于浮动产生，如果对父级设置了（CSS background背景）CSS背景颜色或CSS背景图片，而父级不能被撑开，所以导致CSS背景不能显示。</li>
+<li>边框不能撑开<br>如上图中，如果父级设置了CSS边框属性（css border），由于子级里使用了float属性，产生浮动，父级不能被撑开，导致边框不能随内容而被撑开。</li>
+<li>margin padding设置值不能正确显示<br>由于浮动导致父级子级之间设置了css padding、css margin属性的值不能正确表达。特别是上下边的padding和margin不能正确显示。</li>
+</ul>
+<p><strong><em>在 <a href="http://www.zhangxinxu.com/wordpress/?p=1287" target="_blank" rel="external">http://www.zhangxinxu.com/wordpress/?p=1287</a> 这位大神的博客中将float和absolute比作折翼的天使，和天使中的魔鬼，我觉得很准确</em></strong></p>
+<h2 id="css解决浮动，清除浮动方法"><a href="#css解决浮动，清除浮动方法" class="headerlink" title="css解决浮动，清除浮动方法"></a>css解决浮动，清除浮动方法</h2><h3 id="对父级设置适合CSS高度，前提是对象内容高度要能确定并能计算好"><a href="#对父级设置适合CSS高度，前提是对象内容高度要能确定并能计算好" class="headerlink" title="对父级设置适合CSS高度，前提是对象内容高度要能确定并能计算好"></a>对父级设置适合CSS高度，前提是对象内容高度要能确定并能计算好</h3><blockquote>
+<p>这种方法基本不考虑，违背文档流自由发展的原则，后期开发难度很大</p>
+</blockquote>
+<h3 id="clear-both清除浮动"><a href="#clear-both清除浮动" class="headerlink" title="clear:both清除浮动"></a>clear:both清除浮动</h3><pre><code>.clear{clear:both}
+并添加到浮动div之后
+</code></pre><p>缺点：会添加很多无意义的空标签，有违结构与表现的分离，在后期维护中将是噩梦，这是坚决不能忍受的，不考虑</p>
+<h3 id="父级div定义-overflow-hidden"><a href="#父级div定义-overflow-hidden" class="headerlink" title="父级div定义 overflow:hidden"></a>父级div定义 overflow:hidden</h3><blockquote>
+<p>在IE6中还需要触发 hasLayout ，例如 zoom：1；</p>
+</blockquote>
+<pre><code>&lt;div style=&quot;overflow:hidden; *zoom:1;&quot;&gt;
+</code></pre><p>优点：不存在结构和语义化问题，代码量极少</p>
+<p>缺点：内容增多时候容易造成不会自动换行导致内容被隐藏掉，无法显示需要溢出的元素；04年POPO就发现overflow:hidden会导致中键失效。不建议使用了</p>
+<h3 id="父元素设置-overflow：auto-属性"><a href="#父元素设置-overflow：auto-属性" class="headerlink" title="父元素设置 overflow：auto 属性"></a>父元素设置 overflow：auto 属性</h3><p>同上</p>
+<p>缺点：多个嵌套后，firefox某些情况会造成内容全选；IE中mouseover造成宽度改变时会出现最外层模块有滚动条等，firefox早期版本会无故产生focus等</p>
+<h3 id="父元素也设置浮动"><a href="#父元素也设置浮动" class="headerlink" title="父元素也设置浮动"></a>父元素也设置浮动</h3><blockquote>
+<p>使得与父元素相邻的元素的布局会受到影响，不可能一直浮动到body，不推荐使用</p>
+</blockquote>
+<h3 id="父元素设置display-table"><a href="#父元素设置display-table" class="headerlink" title="父元素设置display:table"></a>父元素设置display:table</h3><p>优点：结构语义化完全正确，代码量极少</p>
+<p>缺点：盒模型属性已经改变，由此造成的一系列问题，得不偿失，不推荐使用</p>
+<h3 id="after-zoom方法"><a href="#after-zoom方法" class="headerlink" title="after + zoom方法"></a>after + zoom方法</h3><p>先来简单讲讲after，所谓after，就是指标签的最后一个子元素的后面。于是呢，我们可以用CSS代码生成一个具有clear属性的元素，其中的关键样式就是content了。或许您从网上看到的content里面的内容是”.”一个点，我了很多次，貌似随便写什么东西都没有问题，比如content:’clear both’;没问题，或是content:’张鑫旭’也是ok的。于是有：</p>
+<pre><code>.fix{zoom:1;}
+ .fix:after{display:block; content:&apos;clear&apos;; clear:both; line-height:0; visibility:hidden;} 
+</code></pre><p>这里的line-height:0写成height:0也是可以的。此方法可以说是综合起来最好的方法了，我都是用这个样式清除浮动的，不会影响任何其他样式，通用性强，覆盖面广，我很推荐哦。</p>
+<p><em>由于IE6-7不支持:after，使用 zoom:1触发 hasLayout</em></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag">#css</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/22/ajax/" rel="prev">ajax及跨域的几种办法</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/16/http1/" rel="next">http学习笔记（一）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/09/16/css清除浮动-高度塌陷问题/"
+                   data-title="css清除浮动-高度塌陷问题" data-url="http://www.demozhan.com/2015/09/16/css清除浮动-高度塌陷问题/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浮动产生原因"><span class="nav-number">1.</span> <span class="nav-text">浮动产生原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮动产生负作用"><span class="nav-number">2.</span> <span class="nav-text">浮动产生负作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css解决浮动，清除浮动方法"><span class="nav-number">3.</span> <span class="nav-text">css解决浮动，清除浮动方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对父级设置适合CSS高度，前提是对象内容高度要能确定并能计算好"><span class="nav-number">3.1.</span> <span class="nav-text">对父级设置适合CSS高度，前提是对象内容高度要能确定并能计算好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clear-both清除浮动"><span class="nav-number">3.2.</span> <span class="nav-text">clear:both清除浮动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父级div定义-overflow-hidden"><span class="nav-number">3.3.</span> <span class="nav-text">父级div定义 overflow:hidden</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父元素设置-overflow：auto-属性"><span class="nav-number">3.4.</span> <span class="nav-text">父元素设置 overflow：auto 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父元素也设置浮动"><span class="nav-number">3.5.</span> <span class="nav-text">父元素也设置浮动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父元素设置display-table"><span class="nav-number">3.6.</span> <span class="nav-text">父元素设置display:table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#after-zoom方法"><span class="nav-number">3.7.</span> <span class="nav-text">after + zoom方法</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

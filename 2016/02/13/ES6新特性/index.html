@@ -1,0 +1,1246 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="js,es6," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="最近在阅读阮一峰老师的 ECMAScript 6 入门 下面进行简单的总结，大部分内容是摘抄自上面链接，具体内容还需要深入阅读理解
+
+let和constlet
+ES6新增了let命令，用来声明变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效
+
+for(let i = 0; i &amp;lt; arr.length; i++){}
+console.log(i)
+//Refe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6新特性（一）">
+<meta property="og:url" content="http://www.demozhan.com/2016/02/13/ES6新特性/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="最近在阅读阮一峰老师的 ECMAScript 6 入门 下面进行简单的总结，大部分内容是摘抄自上面链接，具体内容还需要深入阅读理解
+
+let和constlet
+ES6新增了let命令，用来声明变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效
+
+for(let i = 0; i &amp;lt; arr.length; i++){}
+console.log(i)
+//Refe">
+<meta property="og:updated_time" content="2016-02-15T09:23:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6新特性（一）">
+<meta name="twitter:description" content="最近在阅读阮一峰老师的 ECMAScript 6 入门 下面进行简单的总结，大部分内容是摘抄自上面链接，具体内容还需要深入阅读理解
+
+let和constlet
+ES6新增了let命令，用来声明变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效
+
+for(let i = 0; i &amp;lt; arr.length; i++){}
+console.log(i)
+//Refe">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> ES6新特性（一） | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              ES6新特性（一）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2016-02-13T15:40:14+08:00" content="2016-02-13">
+            2016-02-13
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/es6/" itemprop="url" rel="index">
+                  <span itemprop="name">es6</span>
+                </a>
+              </span>
+
+              
+              
+                , 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/es6/js/" itemprop="url" rel="index">
+                  <span itemprop="name">js</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/02/13/ES6新特性/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/13/ES6新特性/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><blockquote>
+<p>最近在阅读阮一峰老师的 <a href="http://es6.ruanyifeng.com/" title="ECMAScript 6 入门" target="_blank" rel="external">ECMAScript 6 入门</a> 下面进行简单的总结，大部分内容是摘抄自上面链接，具体内容还需要深入阅读理解</p>
+</blockquote>
+<h2 id="let和const"><a href="#let和const" class="headerlink" title="let和const"></a>let和const</h2><h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><blockquote>
+<p>ES6新增了let命令，用来声明变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效</p>
+</blockquote>
+<pre><code>for(let i = 0; i &lt; arr.length; i++){}
+console.log(i)
+//ReferenceError: i is not defined
+</code></pre><p>下面的代码如果使用var，最后输出的是10。</p>
+<pre><code>var a = [];
+for (var i = 0; i &lt; 10; i++) {
+    a[i] = function () {
+       console.log(i);
+    };
+}
+a[6](); // 10
+</code></pre><p>上面代码中，变量i是var声明的，在全局范围内都有效。所以每一次循环，新的i值都会覆盖旧值，导致最后输出的是最后一轮的i的值。</p>
+<p>利用闭包解决该问题</p>
+<pre><code>var a = [];
+for (var i = 0; i &lt; 10; i++) {
+  a[i] = function(num){ 
+    return function () {
+     console.log(num);
+    }
+  }(i);
+}
+a[6](); // 6
+</code></pre><p>使用let解决该问题</p>
+<pre><code>var a = [];
+for (let i = 0; i &lt; 10; i++) {
+  a[i] = function () {
+    console.log(i);
+  };
+}
+a[6](); // 6
+</code></pre><p>上面代码中，变量i是let声明的，当前的i只在本轮循环有效，所以每一次循环的i其实都是一个新的变量，所以最后输出的是6。</p>
+<h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><ul>
+<li>不存在变量提升: let不像var那样会发生“变量提升”现象。所以，变量一定要在声明后使用，否则报错。</li>
+<li>暂时性死区: 只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。</li>
+<li>let不允许在相同作用域内，重复声明同一个变量。</li>
+<li>let实际上为JavaScript新增了块级作用域。</li>
+</ul>
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><blockquote>
+<p>const也用来声明变量，但是声明的是常量。一旦声明，常量的值就不能改变。</p>
+</blockquote>
+<p><strong>const命令声明的常量也是不提升，同样存在暂时性死区，只能在声明的位置后面使用。</strong></p>
+<h2 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h2><blockquote>
+<p>解构的含义简单点就是自动解析数组或者对象中值，解析出来之后一次赋值给一系列的变量。</p>
+</blockquote>
+<p>利用这个特性，我们可以让一个函数返回一个数组，然后利用解构赋值得到数组中的每一个元素.</p>
+<h3 id="数组的解构赋值"><a href="#数组的解构赋值" class="headerlink" title="数组的解构赋值"></a>数组的解构赋值</h3><pre><code>var [a, b, c] = [1, 2, 3];
+</code></pre><h3 id="对象的解构赋值"><a href="#对象的解构赋值" class="headerlink" title="对象的解构赋值"></a>对象的解构赋值</h3><p>对象的解构与数组有一个重要的不同。数组的元素是按次序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值。</p>
+<pre><code>var { bar, foo } = { foo: &quot;aaa&quot;, bar: &quot;bbb&quot; };
+foo // &quot;aaa&quot;
+bar // &quot;bbb&quot;
+
+var { baz } = { foo: &quot;aaa&quot;, bar: &quot;bbb&quot; };
+baz // undefined
+</code></pre><h3 id="字符串的解构"><a href="#字符串的解构" class="headerlink" title="字符串的解构"></a>字符串的解构</h3><p>字符串也可以解构赋值。这是因为此时，字符串被转换成了一个类似数组的对象。</p>
+<pre><code>const [a, b, c, d, e] = &apos;hello&apos;;
+a // &quot;h&quot;
+b // &quot;e&quot;
+c // &quot;l&quot;
+d // &quot;l&quot;
+e // &quot;o&quot;
+</code></pre><p>类似数组的对象都有一个length属性，因此还可以对这个属性解构赋值。</p>
+<pre><code>let {length : len} = &apos;hello&apos;;
+len // 5
+</code></pre><h3 id="数值和布尔值的解构赋值"><a href="#数值和布尔值的解构赋值" class="headerlink" title="数值和布尔值的解构赋值"></a>数值和布尔值的解构赋值</h3><pre><code>let {toString: s} = 123;
+s === Number.prototype.toString // true
+
+let {toString: s} = true;
+s === Boolean.prototype.toString // true
+</code></pre><p>上面代码中，数值和布尔值的包装对象都有toString属性，因此变量s都能取到值。</p>
+<p>解构赋值的规则是，只要等号右边的值不是对象，就先将其转为对象。由于undefined和null无法转为对象，所以对它们进行解构赋值，都会报错。</p>
+<pre><code>let { prop: x } = undefined; // TypeError
+let { prop: y } = null; // TypeError
+</code></pre><h3 id="函数参数的解构赋值"><a href="#函数参数的解构赋值" class="headerlink" title="函数参数的解构赋值"></a>函数参数的解构赋值</h3><p>函数参数的解构也可以使用默认值。</p>
+<pre><code>function move({x = 0, y = 0} = {}) {
+  return [x, y];
+}
+
+move({x: 3, y: 8}); // [3, 8]
+move({x: 3}); // [3, 0]
+move({}); // [0, 0]
+move(); // [0, 0]
+</code></pre><h2 id="箭头操作符"><a href="#箭头操作符" class="headerlink" title="箭头操作符"></a>箭头操作符</h2><blockquote>
+<p>其实箭头操作符其实就是使用=&gt;语法来代替函数。</p>
+</blockquote>
+<pre><code>var arr = [1, 2, 3];
+
+// 传统写法
+arr.forEach(function (v) {
+    console.log(v);
+});
+
+// 使用箭头操作符
+arr.forEach( v =&gt; console.log(v));
+</code></pre><h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><blockquote>
+<p><strong>ES6引入了一种新的原始数据类型Symbol，表示独一无二的值。它是JavaScript语言的第七种数据类型，前六种是：Undefined、Null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。</strong></p>
+</blockquote>
+<p>Symbol值通过Symbol函数生成。这就是说，对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的Symbol类型。凡是属性名属于Symbol类型，就都是独一无二的，可以保证不会与其他属性名产生冲突。</p>
+<pre><code>var mySymbol = Symbol();
+
+// 第一种写法
+var a = {};
+a[mySymbol] = &apos;Hello!&apos;;
+
+// 第二种写法
+var a = {
+  [mySymbol]: &apos;Hello!&apos;
+};
+
+// 第三种写法
+var a = {};
+Object.defineProperty(a, mySymbol, { value: &apos;Hello!&apos; });
+
+// 以上写法都得到同样结果
+a[mySymbol] // &quot;Hello!&quot;
+</code></pre><h2 id="Proxy和Reflect"><a href="#Proxy和Reflect" class="headerlink" title="Proxy和Reflect"></a>Proxy和Reflect</h2><h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><blockquote>
+<p>Proxy可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。Proxy这个词的原意是代理，用在这里表示由它来“代理”某些操作，可以译为“代理器”。</p>
+</blockquote>
+<pre><code>var obj = new Proxy({}, {
+  get: function (target, key, receiver) {
+    console.log(`getting ${key}!`);
+    return Reflect.get(target, key, receiver);
+  },
+  set: function (target, key, value, receiver) {
+    console.log(`setting ${key}!`);
+    return Reflect.set(target, key, value, receiver);
+  }
+});
+</code></pre><p>上面代码对一个空对象架设了一层拦截，重定义了属性的读取（get）和设置（set）行为。这里暂时先不解释具体的语法，只看运行结果。对设置了拦截行为的对象obj，去读写它的属性，就会得到下面的结果。</p>
+<pre><code>obj.count = 1
+//  setting count!
+++obj.count
+//  getting count!
+//  setting count!
+//  2
+</code></pre><h3 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a>Reflect</h3><p>Reflect对象的设计目的有这样几个。</p>
+<ol>
+<li><p>将Object对象的一些明显属于语言内部的方法（比如Object.defineProperty），放到Reflect对象上。现阶段，某些方法同时在Object和Reflect对象上部署，未来的新方法将只部署在Reflect对象上。</p>
+</li>
+<li><p>修改某些Object方法的返回结果，让其变得更合理。比如，Object.defineProperty(obj, name, desc)在无法定义属性时，会抛出一个错误，而Reflect.defineProperty(obj, name, desc)则会返回false。</p>
+<pre><code>// 老写法
+try {
+  Object.defineProperty(target, property, attributes);
+  // success
+} catch (e) {
+  // failure
+}
+
+// 新写法
+if (Reflect.defineProperty(target, property, attributes)) {
+  // success
+} else {
+  // failure
+}
+</code></pre></li>
+<li><p>让Object操作都变成函数行为。某些Object操作是命令式，比如name in obj和delete obj[name]，而Reflect.has(obj, name)和Reflect.deleteProperty(obj, name)让它们变成了函数行为。</p>
+<pre><code>// 老写法
+&apos;assign&apos; in Object // true
+
+// 新写法
+Reflect.has(Object, &apos;assign&apos;) // true
+</code></pre></li>
+<li><p>Reflect对象的方法与Proxy对象的方法一一对应，只要是Proxy对象的方法，就能在Reflect对象上找到对应的方法。这就让Proxy对象可以方便地调用对应的Reflect方法，完成默认行为，作为修改行为的基础。也就是说，不管Proxy怎么修改默认行为，你总可以在Reflect上获取默认行为。</p>
+<pre><code>var loggedObj = new Proxy(obj, {
+  get(target, name) {
+    console.log(&apos;get&apos;, target, name);
+    return Reflect.get(target, name);
+  },
+  deleteProperty(target, name) {
+    console.log(&apos;delete&apos; + name);
+    return Reflect.deleteProperty(target, name);
+  },
+  has(target, name) {
+    console.log(&apos;has&apos; + name);
+    return Reflect.has(target, name);
+  }
+});
+</code></pre><p> 上面代码中，每一个Proxy对象的拦截操作（get、delete、has），内部都调用对应的Reflect方法，保证原生行为能够正常执行。添加的工作，就是将每一个操作输出一行日志。</p>
+<p> 有了Reflect对象以后，很多操作会更易读。</p>
+<pre><code>// 老写法
+Function.prototype.apply.call(Math.floor, undefined, [1.75]) // 1
+
+// 新写法
+Reflect.apply(Math.floor, undefined, [1.75]) // 1
+</code></pre></li>
+</ol>
+<h2 id="二进制数组"><a href="#二进制数组" class="headerlink" title="二进制数组"></a>二进制数组</h2><blockquote>
+<p>这个接口的原始设计目的，与WebGL项目有关。所谓WebGL，就是指浏览器与显卡之间的通信接口，为了满足JavaScript与显卡之间大量的、实时的数据交换，它们之间的数据通信必须是二进制的，而不能是传统的文本格式。文本格式传递一个32位整数，两端的JavaScript脚本与显卡都要进行格式转化，将非常耗时。这时要是存在一种机制，可以像C语言那样，直接操作字节，将4个字节的32位整数，以二进制形式原封不动地送入显卡，脚本的性能就会大幅提升。</p>
+</blockquote>
+<h2 id="Set和Map数据结构"><a href="#Set和Map数据结构" class="headerlink" title="Set和Map数据结构"></a>Set和Map数据结构</h2><h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><blockquote>
+<p>ES6提供了新的数据结构Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。</p>
+</blockquote>
+<p>Set本身是一个构造函数，用来生成Set数据结构。</p>
+<pre><code>var s = new Set();
+
+[2,3,5,4,5,2,2].map(x =&gt; s.add(x))
+
+for (let i of s) {console.log(i)}
+// 2 3 5 4
+</code></pre><p>上面代码通过add方法向Set结构加入成员，结果表明Set结构不会添加重复的值。</p>
+<p>Set函数可以接受一个数组（或类似数组的对象）作为参数，用来初始化。</p>
+<pre><code>var set = new Set([1, 2, 3, 4, 4])
+[...set]
+// [1, 2, 3, 4]
+
+var items = new Set([1, 2, 3, 4, 5, 5, 5, 5]);
+items.size // 5
+
+function divs () {
+  return [...document.querySelectorAll(&apos;div&apos;)]
+}
+
+var set = new Set(divs())
+set.size // 56
+
+// 类似于
+divs().forEach(div =&gt; set.add(div))
+set.size // 56
+</code></pre><h3 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h3><p>WeakSet结构与Set类似，也是不重复的值的集合。但是，它与Set有两个区别。</p>
+<p>首先，WeakSet的成员只能是对象，而不能是其他类型的值。</p>
+<p>其次，WeakSet中的对象都是弱引用，即垃圾回收机制不考虑WeakSet对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于WeakSet之中。这个特点意味着，无法引用WeakSet的成员，因此WeakSet是不可遍历的。</p>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>JavaScript的对象（Object），本质上是键值对的集合（Hash结构），但是只能用字符串当作键。这给它的使用带来了很大的限制。</p>
+<pre><code>var data = {};
+var element = document.getElementById(&quot;myDiv&quot;);
+
+data[element] = metadata;
+data[&quot;[Object HTMLDivElement]&quot;] // metadata
+</code></pre><p>上面代码原意是将一个DOM节点作为对象data的键，但是由于对象只接受字符串作为键名，所以element被自动转为字符串[Object HTMLDivElement]。</p>
+<p>为了解决这个问题，ES6提供了Map数据结构。它类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键。也就是说，Object结构提供了“字符串—值”的对应，Map结构提供了“值—值”的对应，是一种更完善的Hash结构实现。如果你需要“键值对”的数据结构，Map比Object更合适。</p>
+<pre><code>var m = new Map();
+var o = {p: &quot;Hello World&quot;};
+
+m.set(o, &quot;content&quot;)
+m.get(o) // &quot;content&quot;
+
+m.has(o) // true
+m.delete(o) // true
+m.has(o) // false
+</code></pre><h3 id="WeakMap"><a href="#WeakMap" class="headerlink" title="WeakMap"></a>WeakMap</h3><p>WeakMap结构与Map结构基本类似，唯一的区别是它只接受对象作为键名（null除外），不接受其他类型的值作为键名，而且键名所指向的对象，不计入垃圾回收机制。</p>
+<h2 id="Iterator和for…of循环"><a href="#Iterator和for…of循环" class="headerlink" title="Iterator和for…of循环"></a>Iterator和for…of循环</h2><p>JavaScript原有的表示“集合”的数据结构，主要是数组（Array）和对象（Object），ES6又添加了Map和Set。这样就有了四种数据集合，用户还可以组合使用它们，定义自己的数据结构，比如数组的成员是Map，Map的成员是对象。这样就需要一种统一的接口机制，来处理所有不同的数据结构。</p>
+<p>遍历器（Iterator）就是这样一种机制。它是一种接口，为各种不同的数据结构提供统一的访问机制。任何数据结构只要部署Iterator接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）。</p>
+<p>Iterator的作用有三个：一是为各种数据结构，提供一个统一的、简便的访问接口；二是使得数据结构的成员能够按某种次序排列；三是ES6创造了一种新的遍历命令for…of循环，Iterator接口主要供for…of消费。</p>
+<p>Iterator的遍历过程是这样的。</p>
+<ol>
+<li><p>创建一个指针对象，指向当前数据结构的起始位置。也就是说，遍历器对象本质上，就是一个指针对象。</p>
+</li>
+<li><p>第一次调用指针对象的next方法，可以将指针指向数据结构的第一个成员。</p>
+</li>
+<li><p>第二次调用指针对象的next方法，指针就指向数据结构的第二个成员。</p>
+</li>
+<li><p>不断调用指针对象的next方法，直到它指向数据结构的结束位置。</p>
+</li>
+</ol>
+<h3 id="for…of"><a href="#for…of" class="headerlink" title="for…of"></a>for…of</h3><p>ES6借鉴C++、Java、C#和Python语言，引入了for…of循环，作为遍历所有数据结构的统一的方法。一个数据结构只要部署了Symbol.iterator属性，就被视为具有iterator接口，就可以用for…of循环遍历它的成员。也就是说，for…of循环内部调用的是数据结构的Symbol.iterator方法。</p>
+<p>for…of循环可以使用的范围包括数组、Set和Map结构、某些类似数组的对象（比如arguments对象、DOM NodeList对象）、后文的Generator对象，以及字符串。</p>
+<p>JavaScript原有的for…in循环，只能获得对象的键名，不能直接获取键值。ES6提供for…of循环，允许遍历获得键值。</p>
+<pre><code>var arr = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;];
+
+for (let a in arr) {
+  console.log(a); // 0 1 2 3
+}
+
+for (let a of arr) {
+  console.log(a); // a b c d
+}
+</code></pre><h2 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h2><p>Generator函数有多种理解角度。从语法上，首先可以把它理解成，<strong>Generator函数是一个状态机，封装了多个内部状态。</strong></p>
+<p>执行Generator函数会返回一个遍历器对象，也就是说，<strong>Generator函数除了状态机，还是一个遍历器对象生成函数。</strong>返回的遍历器对象，可以依次遍历Generator函数内部的每一个状态。</p>
+<p>形式上，Generator函数是一个普通函数，但是有两个特征。<strong>一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义不同的内部状态</strong>（yield语句在英语里的意思就是“产出”）。</p>
+<h3 id="yield语句"><a href="#yield语句" class="headerlink" title="yield语句"></a>yield语句</h3><p>由于Generator函数返回的遍历器对象，只有调用next方法才会遍历下一个内部状态，所以其实提供了一种可以暂停执行的函数。yield语句就是暂停标志。</p>
+<p>遍历器对象的next方法的运行逻辑如下。</p>
+<ol>
+<li><p>遇到yield语句，就暂停执行后面的操作，并将紧跟在yield后面的那个表达式的值，作为返回的对象的value属性值。</p>
+</li>
+<li><p>下一次调用next方法时，再继续往下执行，直到遇到下一个yield语句。</p>
+</li>
+<li><p>如果没有再遇到新的yield语句，就一直运行到函数结束，直到return语句为止，并将return语句后面的表达式的值，作为返回的对象的value属性值。</p>
+</li>
+<li><p>如果该函数没有return语句，则返回的对象的value属性值为undefined。</p>
+</li>
+</ol>
+<p>需要注意的是，yield语句后面的表达式，只有当调用next方法、内部指针指向该语句时才会执行，因此等于为JavaScript提供了手动的“惰性求值”（Lazy Evaluation）的语法功能</p>
+<pre><code>function* gen() {
+  yield  123 + 456;
+}
+</code></pre><p>上面代码中，yield后面的表达式123 + 456，不会立即求值，只会在next方法将指针移到这一句时，才会求值。</p>
+<p>Generator函数可以不用yield语句，这时就变成了一个单纯的暂缓执行函数。</p>
+<pre><code>function* f() {
+  console.log(&apos;执行了！&apos;)
+}
+
+var generator = f();
+
+setTimeout(function () {
+  generator.next()
+}, 2000);
+</code></pre><h3 id="for…of循环"><a href="#for…of循环" class="headerlink" title="for…of循环"></a>for…of循环</h3><p>for…of循环可以自动遍历Generator函数，且此时不再需要调用next方法。</p>
+<pre><code>function *foo() {
+  yield 1;
+  yield 2;
+  yield 3;
+  yield 4;
+  yield 5;
+  return 6;
+}
+
+for (let v of foo()) {
+  console.log(v);
+}
+// 1 2 3 4 5
+</code></pre><h2 id="Promise对象"><a href="#Promise对象" class="headerlink" title="Promise对象"></a>Promise对象</h2><blockquote>
+<p>所谓Promise，简单说就是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，Promise是一个对象，从它可以获取异步操作的消息。Promise提供统一的API，各种异步操作都可以用同样的方法进行处理。</p>
+</blockquote>
+<p>Promise对象有以下两个特点。</p>
+<ol>
+<li><p>对象的状态不受外界影响。Promise对象代表一个异步操作，有三种状态：Pending（进行中）、Resolved（已完成，又称Fulfilled）和Rejected（已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。这也是Promise这个名字的由来，它的英语意思就是“承诺”，表示其他手段无法改变。</p>
+</li>
+<li><p>一旦状态改变，就不会再变，任何时候都可以得到这个结果。Promise对象的状态改变，只有两种可能：从Pending变为Resolved和从Pending变为Rejected。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果。就算改变已经发生了，你再对Promise对象添加回调函数，也会立即得到这个结果。这与事件（Event）完全不同，事件的特点是，如果你错过了它，再去监听，是得不到结果的。</p>
+</li>
+</ol>
+<p>有了Promise对象，就可以将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。此外，Promise对象提供统一的接口，使得控制异步操作更加容易。</p>
+<p>Promise也有一些缺点。首先，无法取消Promise，一旦新建它就会立即执行，无法中途取消。其次，如果不设置回调函数，Promise内部抛出的错误，不会反应到外部。第三，当处于Pending状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。</p>
+<p>如果某些事件不断地反复发生，一般来说，使用stream模式是比部署Promise更好的选择。</p>
+<p>下面是一个用Promise对象实现的Ajax操作的例子。</p>
+<pre><code>var getJSON = function(url) {
+  var promise = new Promise(function(resolve, reject){
+    var client = new XMLHttpRequest();
+    client.open(&quot;GET&quot;, url);
+    client.onreadystatechange = handler;
+    client.responseType = &quot;json&quot;;
+    client.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;);
+    client.send();
+
+    function handler() {
+      if ( this.readyState !== 4 ) {
+        return;
+      }
+      if (this.status === 200) {
+        resolve(this.response);
+      } else {
+        reject(new Error(this.statusText));
+      }
+    };
+  });
+
+  return promise;
+};
+
+getJSON(&quot;/posts.json&quot;).then(function(json) {
+  console.log(&apos;Contents: &apos; + json);
+}, function(error) {
+  console.error(&apos;出错了&apos;, error);
+});
+</code></pre><h2 id="异步操作和Async函数"><a href="#异步操作和Async函数" class="headerlink" title="异步操作和Async函数"></a>异步操作和Async函数</h2><p>ES6诞生以前，异步编程的方法，大概有下面四种。</p>
+<ul>
+<li>回调函数</li>
+<li>事件监听</li>
+<li>发布/订阅</li>
+<li>Promise 对象</li>
+</ul>
+<p>ES6将JavaScript异步编程带入了一个全新的阶段，ES7的Async函数更是提出了异步编程的终极解决方案。</p>
+<hr>
+<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><blockquote>
+<p>JavaScript语言对异步编程的实现，就是回调函数。所谓回调函数，就是把任务的第二段单独写在一个函数里面，等到重新执行这个任务的时候，就直接调用这个函数。它的英语名字callback，直译过来就是”重新调用”。</p>
+</blockquote>
+<p>读取文件进行处理，是这样写的。</p>
+<pre><code>fs.readFile(&apos;/etc/passwd&apos;, function (err, data) {
+  if (err) throw err;
+  console.log(data);
+});
+</code></pre><p>上面代码中，readFile函数的第二个参数，就是回调函数，也就是任务的第二段。等到操作系统返回了/etc/passwd这个文件以后，回调函数才会执行。</p>
+<p>一个有趣的问题是，为什么Node.js约定，回调函数的第一个参数，必须是错误对象err（如果没有错误，该参数就是null）？原因是执行分成两段，在这两段之间抛出的错误，程序无法捕捉，只能当作参数，传入第二段。</p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>回调函数本身并没有问题，它的问题出现在多个回调函数嵌套。假定读取A文件之后，再读取B文件，代码如下。</p>
+<pre><code>fs.readFile(fileA, function (err, data) {
+  fs.readFile(fileB, function (err, data) {
+    // ...
+  });
+});
+</code></pre><p>不难想象，如果依次读取多个文件，就会出现多重嵌套。代码不是纵向发展，而是横向发展，很快就会乱成一团，无法管理。这种情况就称为“回调函数噩梦”（callback hell）。</p>
+<p>Promise就是为了解决这个问题而提出的。它不是新的语法功能，而是一种新的写法，允许将回调函数的横向加载，改成纵向加载。采用Promise，连续读取多个文件，写法如下。</p>
+<pre><code>var readFile = require(&apos;fs-readfile-promise&apos;);
+
+readFile(fileA)
+.then(function(data){
+  console.log(data.toString());
+})
+.then(function(){
+  return readFile(fileB);
+})
+.then(function(data){
+  console.log(data.toString());
+})
+.catch(function(err) {
+  console.log(err);
+});
+</code></pre><p>上面代码中，我使用了fs-readfile-promise模块，它的作用就是返回一个Promise版本的readFile函数。Promise提供then方法加载回调函数，catch方法捕捉执行过程中抛出的错误。</p>
+<p>可以看到，Promise 的写法只是回调函数的改进，使用then方法以后，异步任务的两段执行看得更清楚了，除此以外，并无新意。</p>
+<p>Promise 的最大问题是代码冗余，原来的任务被Promise 包装了一下，不管什么操作，一眼看去都是一堆 then，原来的语义变得很不清楚。</p>
+<h3 id="Generator函数"><a href="#Generator函数" class="headerlink" title="Generator函数"></a>Generator函数</h3><p>协程<br>传统的编程语言，早有异步编程的解决方案（其实是多任务的解决方案）。其中有一种叫做”协程”（coroutine），意思是多个线程互相协作，完成异步任务。</p>
+<p>协程有点像函数，又有点像线程。它的运行流程大致如下。</p>
+<ol>
+<li>第一步，协程A开始执行。</li>
+<li>第二步，协程A执行到一半，进入暂停，执行权转移到协程B。</li>
+<li>第三步，（一段时间后）协程B交还执行权。</li>
+<li>第四步，协程A恢复执行。</li>
+</ol>
+<p>上面流程的协程A，就是异步任务，因为它分成两段（或多段）执行。</p>
+<p>举例来说，读取文件的协程写法如下。</p>
+<pre><code>function *asnycJob() {
+  // ...其他代码
+  var f = yield readFile(fileA);
+  // ...其他代码
+}
+</code></pre><p>上面代码的函数asyncJob是一个协程，它的奥妙就在其中的yield命令。它表示执行到此处，执行权将交给其他协程。也就是说，yield命令是异步两个阶段的分界线。</p>
+<p>协程遇到yield命令就暂停，等到执行权返回，再从暂停的地方继续往后执行。它的最大优点，就是代码的写法非常像同步操作，如果去除yield命令，简直一模一样。</p>
+<h4 id="异步任务的封装"><a href="#异步任务的封装" class="headerlink" title="异步任务的封装"></a>异步任务的封装</h4><p>下面看看如何使用 Generator 函数，执行一个真实的异步任务。</p>
+<pre><code>var fetch = require(&apos;node-fetch&apos;);
+
+function* gen(){
+  var url = &apos;https://api.github.com/users/github&apos;;
+  var result = yield fetch(url);
+  console.log(result.bio);
+}
+</code></pre><p>上面代码中，Generator函数封装了一个异步操作，该操作先读取一个远程接口，然后从JSON格式的数据解析信息。就像前面说过的，这段代码非常像同步操作，除了加上了yield命令。</p>
+<p>执行这段代码的方法如下。</p>
+<pre><code>var g = gen();
+var result = g.next();
+
+result.value.then(function(data){
+  return data.json();
+}).then(function(data){
+  g.next(data);
+});
+</code></pre><p>上面代码中，首先执行Generator函数，获取遍历器对象，然后使用next 方法（第二行），执行异步任务的第一阶段。由于Fetch模块返回的是一个Promise对象，因此要用then方法调用下一个next 方法。</p>
+<p>可以看到，虽然 Generator 函数将异步操作表示得很简洁，但是流程管理却不方便（即何时执行第一阶段、何时执行第二阶段）。</p>
+<h3 id="async函数"><a href="#async函数" class="headerlink" title="async函数"></a>async函数</h3><blockquote>
+<p>ES7提供了async函数，使得异步操作变得更加方便。async函数是什么？一句话，async函数就是Generator函数的语法糖。</p>
+</blockquote>
+<p>有一个Generator函数，依次读取两个文件。<br>    var fs = require(‘fs’);</p>
+<pre><code>var readFile = function (fileName){
+  return new Promise(function (resolve, reject){
+    fs.readFile(fileName, function(error, data){
+      if (error) reject(error);
+      resolve(data);
+    });
+  });
+};
+
+var gen = function* (){
+  var f1 = yield readFile(&apos;/etc/fstab&apos;);
+  var f2 = yield readFile(&apos;/etc/shells&apos;);
+  console.log(f1.toString());
+  console.log(f2.toString());
+};
+</code></pre><p>写成async函数，就是下面这样。</p>
+<pre><code>var asyncReadFile = async function (){
+  var f1 = await readFile(&apos;/etc/fstab&apos;);
+  var f2 = await readFile(&apos;/etc/shells&apos;);
+  console.log(f1.toString());
+  console.log(f2.toString());
+};
+</code></pre><p>一比较就会发现，async函数就是将Generator函数的星号（*）替换成async，将yield替换成await，仅此而已。</p>
+<p>async函数对 Generator 函数的改进，体现在以下四点。</p>
+<ol>
+<li><p>内置执行器。Generator函数的执行必须靠执行器，所以才有了co模块，而async函数自带执行器。也就是说，async函数的执行，与普通函数一模一样，只要一行。</p>
+<pre><code>var result = asyncReadFile();
+</code></pre><p>上面的代码调用了asyncReadFile函数，然后它就会自动执行，输出最后结果。这完全不像Generator函数，需要调用next方法，或者用co模块，才能得到真正执行，得到最后结果。</p>
+</li>
+<li><p>更好的语义。async和await，比起星号和yield，语义更清楚了。async表示函数里有异步操作，await表示紧跟在后面的表达式需要等待结果。</p>
+</li>
+<li><p>更广的适用性。 co模块约定，yield命令后面只能是Thunk函数或Promise对象，而async函数的await命令后面，可以是Promise对象和原始类型的值（数值、字符串和布尔值，但这时等同于同步操作）。</p>
+</li>
+<li><p>返回值是Promise。async函数的返回值是Promise对象，这比Generator函数的返回值是Iterator对象方便多了。你可以用then方法指定下一步的操作。</p>
+</li>
+</ol>
+<p>进一步说，async函数完全可以看作多个异步操作，包装成的一个Promise对象，而await命令就是内部then命令的语法糖。</p>
+<p>正常情况下，await命令后面是一个Promise对象，否则会被转成Promise。</p>
+<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>JavaScript语言的传统方法是通过构造函数，定义并生成新对象。下面是一个例子。</p>
+<pre><code>function Point(x,y){
+  this.x = x;
+  this.y = y;
+}
+
+Point.prototype.toString = function () {
+  return &apos;(&apos; + this.x + &apos;, &apos; + this.y + &apos;)&apos;;
+}
+</code></pre><p>上面这种写法跟传统的面向对象语言（比如C++和Java）差异很大，很容易让新学习这门语言的程序员感到困惑。</p>
+<p>ES6提供了更接近传统语言的写法，引入了Class（类）这个概念，作为对象的模板。通过class关键字，可以定义类。基本上，ES6的class可以看作只是一个语法糖，它的绝大部分功能，ES5都可以做到，新的class写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已。上面的代码用ES6的“类”改写，就是下面这样。</p>
+<pre><code>//定义类
+class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  toString() {
+    return &apos;(&apos; + this.x + &apos;, &apos; + this.y + &apos;)&apos;;
+  }
+}
+typeof Point // &quot;function&quot;
+Point === Point.prototype.constructor // true
+</code></pre><h2 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h2><p>在ES6之前，社区制定了一些模块加载方案，最主要的有CommonJS和AMD两种。前者用于服务器，后者用于浏览器。ES6在语言规格的层面上，实现了模块功能，而且实现得相当简单，完全可以取代现有的CommonJS和AMD规范，成为浏览器和服务器通用的模块解决方案。</p>
+<p>ES6模块的设计思想，是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。CommonJS和AMD模块，都只能在运行时确定这些东西。比如，CommonJS模块就是对象，输入时必须查找对象属性。</p>
+<pre><code>// CommonJS模块
+let { stat, exists, readFile } = require(&apos;fs&apos;);
+// 等同于
+let _fs = require(&apos;fs&apos;);
+let stat = _fs.stat, exists = _fs.exists, readfile = _fs.readfile;
+// ES6模块
+import { stat, exists, readFile } from &apos;fs&apos;;
+</code></pre><h2 id="tip"><a href="#tip" class="headerlink" title="tip"></a>tip</h2><p>另外还有 <strong>修饰器（Decorator）</strong>这一点，会另开一篇文章讲。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag">#js</a>
+          
+            <a href="/tags/es6/" rel="tag">#es6</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/13/迭代器和生成器-function-yield/" rel="prev">迭代器和生成器(function* & yield)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/13/ES6新特性0/" rel="next">ES6新特性--表格</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/02/13/ES6新特性/"
+                   data-title="ES6新特性（一）" data-url="http://www.demozhan.com/2016/02/13/ES6新特性/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#let和const"><span class="nav-number">1.</span> <span class="nav-text">let和const</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#let"><span class="nav-number">1.1.</span> <span class="nav-text">let</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Tips"><span class="nav-number">1.1.1.</span> <span class="nav-text">Tips</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">1.2.</span> <span class="nav-text">const</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解构"><span class="nav-number">2.</span> <span class="nav-text">解构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组的解构赋值"><span class="nav-number">2.1.</span> <span class="nav-text">数组的解构赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的解构赋值"><span class="nav-number">2.2.</span> <span class="nav-text">对象的解构赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的解构"><span class="nav-number">2.3.</span> <span class="nav-text">字符串的解构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数值和布尔值的解构赋值"><span class="nav-number">2.4.</span> <span class="nav-text">数值和布尔值的解构赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数参数的解构赋值"><span class="nav-number">2.5.</span> <span class="nav-text">函数参数的解构赋值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#箭头操作符"><span class="nav-number">3.</span> <span class="nav-text">箭头操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol"><span class="nav-number">4.</span> <span class="nav-text">Symbol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy和Reflect"><span class="nav-number">5.</span> <span class="nav-text">Proxy和Reflect</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Proxy"><span class="nav-number">5.1.</span> <span class="nav-text">Proxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reflect"><span class="nav-number">5.2.</span> <span class="nav-text">Reflect</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制数组"><span class="nav-number">6.</span> <span class="nav-text">二进制数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set和Map数据结构"><span class="nav-number">7.</span> <span class="nav-text">Set和Map数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Set"><span class="nav-number">7.1.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WeakSet"><span class="nav-number">7.2.</span> <span class="nav-text">WeakSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">7.3.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WeakMap"><span class="nav-number">7.4.</span> <span class="nav-text">WeakMap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterator和for…of循环"><span class="nav-number">8.</span> <span class="nav-text">Iterator和for…of循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for…of"><span class="nav-number">8.1.</span> <span class="nav-text">for…of</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generator-函数"><span class="nav-number">9.</span> <span class="nav-text">Generator 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yield语句"><span class="nav-number">9.1.</span> <span class="nav-text">yield语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for…of循环"><span class="nav-number">9.2.</span> <span class="nav-text">for…of循环</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise对象"><span class="nav-number">10.</span> <span class="nav-text">Promise对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步操作和Async函数"><span class="nav-number">11.</span> <span class="nav-text">异步操作和Async函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#回调函数"><span class="nav-number">11.1.</span> <span class="nav-text">回调函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise"><span class="nav-number">11.2.</span> <span class="nav-text">Promise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator函数"><span class="nav-number">11.3.</span> <span class="nav-text">Generator函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异步任务的封装"><span class="nav-number">11.3.1.</span> <span class="nav-text">异步任务的封装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async函数"><span class="nav-number">11.4.</span> <span class="nav-text">async函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class"><span class="nav-number">12.</span> <span class="nav-text">Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Module"><span class="nav-number">13.</span> <span class="nav-text">Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tip"><span class="nav-number">14.</span> <span class="nav-text">tip</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>

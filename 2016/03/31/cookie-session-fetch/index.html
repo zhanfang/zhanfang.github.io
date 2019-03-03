@@ -1,0 +1,744 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="max-age=86400" />
+<meta name="baidu-site-verification" content="I3b2hxwJQe" />
+
+<!-- <meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" /> -->
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="詹方的个人博客" />
+
+
+
+  <meta name="keywords" content="http,cookie,session,fetch," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="背景最近一定是太“闲”了，遇到一个问题非要深究下去，最近在做koa-weixin的时候遇到几个问题，当然也是因为之前学习不够深入造成的；
+
+默认使用koa-generic-session和koa-redis配合使用完成session机制，可是存在一个问题，默认cookie保存时间为一天，我认为关闭浏览器cookie就会被销毁，结果第二天打开网站发现能够登陆；
+修改cookie保存时间可行，但是却始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cookie-session-fetch">
+<meta property="og:url" content="http://www.demozhan.com/2016/03/31/cookie-session-fetch/index.html">
+<meta property="og:site_name" content="Fang -.-">
+<meta property="og:description" content="背景最近一定是太“闲”了，遇到一个问题非要深究下去，最近在做koa-weixin的时候遇到几个问题，当然也是因为之前学习不够深入造成的；
+
+默认使用koa-generic-session和koa-redis配合使用完成session机制，可是存在一个问题，默认cookie保存时间为一天，我认为关闭浏览器cookie就会被销毁，结果第二天打开网站发现能够登陆；
+修改cookie保存时间可行，但是却始">
+<meta property="og:updated_time" content="2016-03-31T09:43:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cookie-session-fetch">
+<meta name="twitter:description" content="背景最近一定是太“闲”了，遇到一个问题非要深究下去，最近在做koa-weixin的时候遇到几个问题，当然也是因为之前学习不够深入造成的；
+
+默认使用koa-generic-session和koa-redis配合使用完成session机制，可是存在一个问题，默认cookie保存时间为一天，我认为关闭浏览器cookie就会被销毁，结果第二天打开网站发现能够登陆；
+修改cookie保存时间可行，但是却始">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> cookie-session-fetch | Fang -.- </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f060a37ef3c67e7d80e0730ccf4c5f23";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Fang -.-</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','http://7xltvd.com1.z0.glb.clouddn.com/swifty_st.js','_st');
+
+  _st('install', '8paz1yFszaADHgDv8F_P','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              cookie-session-fetch
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2016-03-31T15:30:19+08:00" content="2016-03-31">
+            2016-03-31
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/03/31/cookie-session-fetch/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/31/cookie-session-fetch/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近一定是太“闲”了，遇到一个问题非要深究下去，最近在做koa-weixin的时候遇到几个问题，当然也是因为之前学习不够深入造成的；</p>
+<ol>
+<li>默认使用<code>koa-generic-session</code>和<code>koa-redis</code>配合使用完成session机制，可是存在一个问题，默认cookie保存时间为一天，我认为关闭浏览器cookie就会被销毁，结果第二天打开网站发现能够登陆；</li>
+<li>修改cookie保存时间可行，但是却始终无法使得关闭浏览器cookie失效；</li>
+<li>使用fetch异步发送数据，无法发送cookie；</li>
+</ol>
+<h2 id="cookie及session原理"><a href="#cookie及session原理" class="headerlink" title="cookie及session原理"></a>cookie及session原理</h2><blockquote>
+<p>保持一个会话的方式是利用session存储在服务器，常见的存储方式是存储在内存、文件、redis和数据库，不管使用哪种方式，都需要产生一个session，并将session id存储到cookie，通过将cookie发送给客户端来保持连接，在每次客户端发送请求的时候，都会带上cookie的相关信息，其中就包括session id，在服务器端通过session id来查询session的相关信息</p>
+</blockquote>
+<p><strong>下面内容转载自 <a href="http://www.cnblogs.com/fnng/archive/2012/08/14/2637279.html" target="_blank" rel="external">虫师</a> :</strong></p>
+<h3 id="Cookie-与session的产生过程"><a href="#Cookie-与session的产生过程" class="headerlink" title="Cookie 与session的产生过程"></a>Cookie 与session的产生过程</h3><p>我们都知道HTTP协议本身是无状态的，客户只需要简单的向服务器来发送请求下载某些文件，客户端向服务器端发送的每次请求都是独立的。对于当前的web应用，HTTP的“无状态”，导致许多应用都不得不花费大量的精力来记录用户的操作步骤。就像我们上面介绍的第一种情况，银行职员要花费大量的精力来记忆每一位用户的存/取款记录。</p>
+<p>程序员很快发现，如果能够提供一些按需生成的动太信息，会使web的交互能力大大增强。程序员一方面在HTML中添加表单、脚本、DOM等客户端行为，来增加web应用与客户端的交互性。另一方面在服务器端测出现了CGI规范以响应客户端的动态请求，作为传输载体的HTTP协议添加了文件上载、cookie 等特性。那cookie的原理与我们上面介绍的使用存折记录用户应为的方式是一样一样的。</p>
+<p>通过前面的例子我们已经发现，通过cookie的方式存储信息，可能会存在一点定的安全性，因为所有的信息都是写在客户端的，客户可能会对这些信息进行修改或清除。然后就又出现session的方式用于保存用户行为，这种方式的原理与前面介绍银行卡的方式是一样的。</p>
+<p>具体来说cookie机制采用的是在客户端保持状态的方案，而session机制采用的是在服务器端保持状态的方案。同时我们也看到，由于采用服务器端保持状态的方案在客户端也需要保存一个标识，所以session机制可能需要借助于cookie机制来达到保存标识的目的，但实际上它还有其他选择。</p>
+<h3 id="cookie机制。"><a href="#cookie机制。" class="headerlink" title="cookie机制。"></a>cookie机制。</h3><p>正统的cookie分发是通过扩展HTTP协议来实现的，服务器通过在HTTP的响应头中加上一行特殊的指示以提示浏览器按照指示生成相应的cookie。然而纯粹的客户端脚本如JavaScript或者VBScript也可以生成cookie。而cookie的使用是由浏览器按照一定的原则在后台自动发送给服务器的。浏览器检查所有存储的cookie，如果某个cookie所声明的作用范围大于等于将要请求的资源所在的位置，则把该cookie附在请求资源的HTTP请求头上发送给服务器。</p>
+<p>cookie的内容主要包括：名字，值，过期时间，路径和域。路径与域一起构成cookie的作用范围。若不设置过期时间，则表示这个cookie的生命期为浏览器会话期间，关闭浏览器窗口，cookie就消失。这种生命期为浏览器会话期的cookie被称为会话cookie。会话cookie一般不存储在硬盘上而是保存在内存里，当然这种行为并不是规范规定的。若设置了过期时间，浏览器就会把cookie保存到硬盘上，关闭后再次打开浏览器，这些cookie仍然有效直到超过设定的过期时间。存储在硬盘上的cookie可以在不同的浏览器进程间共享，比如两个IE窗口。而对于保存在内存里的cookie，不同的浏览器有不同的处理方式。 </p>
+<h3 id="session机制"><a href="#session机制" class="headerlink" title="session机制"></a>session机制</h3><p>session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。 </p>
+<p>当程序需要为某个客户端的请求创建一个session时，服务器首先检查这个客户端的请求里是否已包含了一个session标识————称为session id，如果已包含则说明以前已经为此客户端创建过session，服务器就按照session id把这个session检索出来使用（检索不到，会新建一个），如果客户端请求不包含session id，则为此客户端创建一个session并且生成一个与此session相关联的session id，session id的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。</p>
+<p>保存这个session id的方式可以采用cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识发挥给服务器。一般这个cookie的名字都是类似于SEEESIONID。但cookie可以被人为的禁止，则必须有其他机制以便在cookie被禁止时仍然能够把session id传递回服务器。</p>
+<p>经常被使用的一种技术叫做URL重写，就是把session id直接附加在URL路径的后面。还有一种技术叫做表单隐藏字段。就是服务器会自动修改表单，添加一个隐藏字段，以便在表单提交时能够把session id传递回服务器。</p>
+<h3 id="Jsessionid"><a href="#Jsessionid" class="headerlink" title="Jsessionid"></a>Jsessionid</h3><p>Jsessionid只是tomcat的对sessionid的叫法，其实就是sessionid；在其它的容器也许就不叫jsessionid了。</p>
+<h2 id="关闭浏览器cookie清除"><a href="#关闭浏览器cookie清除" class="headerlink" title="关闭浏览器cookie清除"></a>关闭浏览器cookie清除</h2><p>cookie 参数: </p>
+<ul>
+<li>path：表示 cookie 影响到的路径，匹配该路径才发送这个 cookie。</li>
+<li>expires 和 maxAge：告诉浏览器这个 cookie 什么时候过期，expires 是 UTC 格式时间，maxAge 是 cookie 多久后过期的相对时间。当不设置这两个选项时，会产生 session cookie，session cookie 是 transient 的，当用户关闭浏览器时，就被清除。一般用来保存 session 的 session_id。</li>
+<li>secure：当 secure 值为 true 时，cookie 在 HTTP 中是无效，在 HTTPS 中才有效。</li>
+<li>httpOnly：浏览器不允许脚本操作 document.cookie 去更改 cookie。一般情况下都应该设置这个为 true，这样可以避免被 xss 攻击拿到 cookie。</li>
+</ul>
+<blockquote>
+<p>所以为了使得关闭浏览器清除cookie应该不设置expires/max-age，深层的原理，当设置expires/max-age后，浏览器默认会把cookie存放到硬盘里面，所以即使关闭浏览器，甚至关闭电脑后，下次打开浏览器仍然会保存着cookie的信息。</p>
+</blockquote>
+<p>可是查看<code>koa-generic-session</code>的源码可以发现：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> defaultCookie = &#123;</div><div class="line">  <span class="attr">httpOnly</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">path</span>: <span class="string">'/'</span>,</div><div class="line">  <span class="attr">overwrite</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">signed</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">maxAge</span>: <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span> <span class="comment">//one day in ms</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>maxAge默认时间为1天，所以需要修改源码为：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> defaultCookie = &#123;</div><div class="line">  <span class="attr">httpOnly</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">path</span>: <span class="string">'/'</span>,</div><div class="line">  <span class="attr">overwrite</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">signed</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">maxAge</span>: <span class="literal">null</span> <span class="comment">//one day in ms</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>如果有需要可以在index.js中设置<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">app.use(session(&#123;</div><div class="line">  <span class="attr">store</span>: redisStore(),</div><div class="line">  <span class="attr">cookie</span>: &#123;</div><div class="line">    <span class="attr">httpOnly</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">path</span>: <span class="string">'/'</span>,</div><div class="line">    <span class="attr">overwrite</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">signed</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">maxAge</span>: <span class="literal">null</span> <span class="comment">//one hour in ms</span></div><div class="line">  &#125;</div><div class="line">&#125;));</div></pre></td></tr></table></figure></p>
+<p>好了大功告成</p>
+<h2 id="fetch中cookie问题"><a href="#fetch中cookie问题" class="headerlink" title="fetch中cookie问题"></a>fetch中cookie问题</h2><p>理论上所以http请求都应该带上cookie，可是fetch比较坑</p>
+<blockquote>
+<p>Fetch 请求默认是不带 cookie 的，需要设置 fetch(url, {credentials: ‘include’})</p>
+</blockquote>
+<p>ajax版本<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> key = <span class="built_in">document</span>.getElementById(<span class="string">'title'</span>).value;</div><div class="line"> <span class="keyword">var</span> val = <span class="built_in">document</span>.getElementById(<span class="string">'lab-create-input'</span>).value;</div><div class="line"> <span class="keyword">if</span> (key.trim() === <span class="string">''</span> || val.trim() === <span class="string">''</span>) &#123;</div><div class="line">   alert(<span class="string">'关键字或者回复，不能为空'</span>);</div><div class="line"> &#125; <span class="keyword">else</span> &#123;</div><div class="line">   <span class="keyword">var</span> data = &#123;</div><div class="line">     <span class="attr">key</span>: key,</div><div class="line">     <span class="attr">val</span>: val</div><div class="line">   &#125;;</div><div class="line">   <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">   xhr.open(<span class="string">'post'</span>, <span class="string">'/weixin/addK'</span>, <span class="literal">true</span>);</div><div class="line">   xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</div><div class="line">       <span class="keyword">var</span> result,</div><div class="line">         status = xhr.status;</div><div class="line"></div><div class="line">       <span class="keyword">if</span> ((status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span>) || status === <span class="number">304</span>) &#123;</div><div class="line">         result = xhr.responseText;</div><div class="line">         <span class="built_in">console</span>.log(result);</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">         <span class="built_in">console</span>.log(<span class="string">"ERR"</span>, xhr.status);</div><div class="line">       &#125;</div><div class="line">     &#125;</div><div class="line">   &#125;;</div><div class="line">   xhr.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>);</div><div class="line">   xhr.send(<span class="built_in">JSON</span>.stringify(data));</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>fetch版本<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> key = <span class="built_in">document</span>.getElementById(<span class="string">'title'</span>).value;</div><div class="line"><span class="keyword">var</span> val = <span class="built_in">document</span>.getElementById(<span class="string">'lab-create-input'</span>).value;</div><div class="line"><span class="keyword">if</span> (key.trim() === <span class="string">''</span> || val.trim() === <span class="string">''</span>) &#123;</div><div class="line">  alert(<span class="string">'关键字或者回复，不能为空'</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="keyword">var</span> data = &#123;</div><div class="line">    <span class="attr">key</span>: key,</div><div class="line">    <span class="attr">val</span>: val</div><div class="line">  &#125;;</div><div class="line">  data = <span class="built_in">JSON</span>.stringify(data);</div><div class="line">  fetch(<span class="string">'/weixin/addK'</span>, &#123;</div><div class="line">    <span class="attr">method</span>: <span class="string">'POST'</span>,</div><div class="line">    <span class="attr">credentials</span>: <span class="string">'include'</span>,</div><div class="line">    <span class="attr">headers</span>: &#123;</div><div class="line">      <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">body</span>: data</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="fetch坑"><a href="#fetch坑" class="headerlink" title="fetch坑"></a>fetch坑</h3><ul>
+<li>Fetch 请求默认是不带 cookie 的，需要设置 fetch(url, {credentials: ‘include’})</li>
+<li>服务器返回 400，500 错误码时并不会 reject，只有网络错误这些导致请求不能完成时，fetch 才会被 reject。</li>
+<li>IE8 IE9的XHR不支持CORS跨域,推荐使用fetch-jsonp</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.jianshu.com/p/fc7c0954b6e5" target="_blank" rel="external">简书 KeKeMars</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag">#http</a>
+          
+            <a href="/tags/cookie/" rel="tag">#cookie</a>
+          
+            <a href="/tags/session/" rel="tag">#session</a>
+          
+            <a href="/tags/fetch/" rel="tag">#fetch</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/11/react服务器渲染及路由同步/" rel="prev">react服务器渲染及路由同步</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/30/koa-nginx-反向代理/" rel="next">koa-nginx-反向代理</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/03/31/cookie-session-fetch/"
+                   data-title="cookie-session-fetch" data-url="http://www.demozhan.com/2016/03/31/cookie-session-fetch/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xltvd.com1.z0.glb.clouddn.com/default_avatar.jpg" alt="zhanfang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zhanfang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">詹方的个人博客</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">79</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhanfang" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2840048377/profile?topnav=1&wvr=6" target="_blank">Weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.demozhan.com/default" target="_blank">我的作品</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie及session原理"><span class="nav-number">2.</span> <span class="nav-text">cookie及session原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie-与session的产生过程"><span class="nav-number">2.1.</span> <span class="nav-text">Cookie 与session的产生过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie机制。"><span class="nav-number">2.2.</span> <span class="nav-text">cookie机制。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session机制"><span class="nav-number">2.3.</span> <span class="nav-text">session机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jsessionid"><span class="nav-number">2.4.</span> <span class="nav-text">Jsessionid</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭浏览器cookie清除"><span class="nav-number">3.</span> <span class="nav-text">关闭浏览器cookie清除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fetch中cookie问题"><span class="nav-number">4.</span> <span class="nav-text">fetch中cookie问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fetch坑"><span class="nav-number">4.1.</span> <span class="nav-text">fetch坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.2.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhanfang</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<div class="theme-info">© zhanfang 2015 陕ICP备15014665号-1</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhanfang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</body>
+</html>
