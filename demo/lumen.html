@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumen GI 演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .demo-section {
+            background: #252525;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+        .canvas-wrapper {
+            position: relative;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .control-group {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        .control-group h3 {
+            color: #0ea5e9;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .control-item {
+            margin-bottom: 15px;
+        }
+        .control-item label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .value-display {
+            display: inline-block;
+            background: #333;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #0ea5e9;
+            float: right;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #0ea5e9;
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-card h4 {
+            color: #0ea5e9;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+        .tech-badge {
+            display: inline-block;
+            background: #8b5cf6;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌟 Lumen 全局光照系统</h1>
+        <p>Unreal Engine 5 动态全局光照技术演示</p>
+    </div>
+
+    <div class="container">
+        <div class="demo-section">
+            <h2 style="margin-bottom: 20px; color: #0ea5e9;">实时交互演示</h2>
+            <div class="canvas-wrapper">
+                <canvas id="lumenCanvas" width="1200" height="700"></canvas>
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <h3>💡 主光源</h3>
+                    <div class="control-item">
+                        <label>光源位置 X <span class="value-display" id="lightXVal">600</span></label>
+                        <input type="range" id="lightX" min="100" max="1100" value="600">
+                    </div>
+                    <div class="control-item">
+                        <label>光源位置 Y <span class="value-display" id="lightYVal">150</span></label>
+                        <input type="range" id="lightY" min="50" max="300" value="150">
+                    </div>
+                    <div class="control-item">
+                        <label>光源颜色</label>
+                        <input type="color" id="lightColor" value="#ffcc66">
+                    </div>
+                    <div class="control-item">
+                        <label>光照强度 <span class="value-display" id="intensityVal">0.8</span></label>
+                        <input type="range" id="intensity" min="0" max="100" value="80">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>🎨 材质与反射</h3>
+                    <div class="control-item">
+                        <label>左墙颜色</label>
+                        <input type="color" id="leftWallColor" value="#ff3344">
+                    </div>
+                    <div class="control-item">
+                        <label>右墙颜色</label>
+                        <input type="color" id="rightWallColor" value="#3366ff">
+                    </div>
+                    <div class="control-item">
+                        <label>间接光强度 <span class="value-display" id="giVal">0.6</span></label>
+                        <input type="range" id="giStrength" min="0" max="100" value="60">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>⚙️ Lumen 设置</h3>
+                    <div class="control-item">
+                        <label>光线弹射次数 <span class="value-display" id="bouncesVal">2</span></label>
+                        <input type="range" id="bounces" min="1" max="4" value="2">
+                    </div>
+                    <div class="control-item">
+                        <label>表面缓存质量 <span class="value-display" id="cacheVal">中</span></label>
+                        <input type="range" id="cacheQuality" min="1" max="3" value="2">
+                    </div>
+                    <div class="control-item">
+                        <label>环境光遮蔽 <span class="value-display" id="aoVal">0.5</span></label>
+                        <input type="range" id="ao" min="0" max="100" value="50">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 style="margin-bottom: 20px; color: #0ea5e9;">Lumen 核心技术特性</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h4>📦 表面缓存系统</h4>
+                    <p>将场景表面分解为卡片，缓存光照信息，实现高效的间接光照计算。支持动态更新，无需预烘焙。</p>
+                    <span class="tech-badge">Surface Cache</span>
+                </div>
+                <div class="feature-card">
+                    <h4>🔄 多重光线弹射</h4>
+                    <p>模拟光线在物体间的多次反弹，计算真实的颜色渗透和间接照明效果。最多支持4次弹射。</p>
+                    <span class="tech-badge">Multiple Bounces</span>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ 混合光线追踪</h4>
+                    <p>结合软件光追（SDF）和硬件光追，在不同平台上实现最佳性能与质量的平衡。</p>
+                    <span class="tech-badge">Hybrid Tracing</span>
+                </div>
+                <div class="feature-card">
+                    <h4>🎯 辐射度缓存</h4>
+                    <p>在空间中动态放置探针，缓存间接光照信息，通过插值快速查询任意位置的光照。</p>
+                    <span class="tech-badge">Radiance Cache</span>
+                </div>
+                <div class="feature-card">
+                    <h4>🌍 大场景支持</h4>
+                    <p>自动LOD系统和距离场技术，可处理开放世界级别的场景，远近物体都能正确接收全局光照。</p>
+                    <span class="tech-badge">World Scale</span>
+                </div>
+                <div class="feature-card">
+                    <h4>🎬 完全动态</h4>
+                    <p>支持实时移动光源、几何体和材质变化，所有光照交互即时更新，无需等待烘焙。</p>
+                    <span class="tech-badge">Fully Dynamic</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('lumenCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let settings = {
+            lightX: 600,
+            lightY: 150,
+            lightColor: '#ffcc66',
+            intensity: 0.8,
+            leftWallColor: '#ff3344',
+            rightWallColor: '#3366ff',
+            giStrength: 0.6,
+            bounces: 2,
+            cacheQuality: 2,
+            ao: 0.5
+        };
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        function drawScene() {
+            ctx.fillStyle = '#0a0a0a';
+            ctx.fillRect(0, 0, 1200, 700);
+
+            const leftColor = hexToRgb(settings.leftWallColor);
+            const rightColor = hexToRgb(settings.rightWallColor);
+            const lightColor = hexToRgb(settings.lightColor);
+
+            // 左墙反射光
+            const leftGlow = ctx.createRadialGradient(100, 350, 0, 100, 350, 400 * settings.giStrength);
+            leftGlow.addColorStop(0, `rgba(${leftColor.r}, ${leftColor.g}, ${leftColor.b}, ${0.4 * settings.giStrength})`);
+            leftGlow.addColorStop(1, 'transparent');
+            ctx.fillStyle = leftGlow;
+            ctx.fillRect(0, 0, 600, 700);
+
+            // 右墙反射光
+            const rightGlow = ctx.createRadialGradient(1100, 350, 0, 1100, 350, 400 * settings.giStrength);
+            rightGlow.addColorStop(0, `rgba(${rightColor.r}, ${rightColor.g}, ${rightColor.b}, ${0.4 * settings.giStrength})`);
+            rightGlow.addColorStop(1, 'transparent');
+            ctx.fillStyle = rightGlow;
+            ctx.fillRect(600, 0, 600, 700);
+
+            // 左墙
+            const leftWallGrad = ctx.createLinearGradient(0, 0, 150, 0);
+            leftWallGrad.addColorStop(0, settings.leftWallColor);
+            leftWallGrad.addColorStop(1, `rgba(${leftColor.r}, ${leftColor.g}, ${leftColor.b}, 0.3)`);
+            ctx.fillStyle = leftWallGrad;
+            ctx.fillRect(0, 0, 150, 700);
+
+            // 右墙
+            const rightWallGrad = ctx.createLinearGradient(1050, 0, 1200, 0);
+            rightWallGrad.addColorStop(0, `rgba(${rightColor.r}, ${rightColor.g}, ${rightColor.b}, 0.3)`);
+            rightWallGrad.addColorStop(1, settings.rightWallColor);
+            ctx.fillStyle = rightWallGrad;
+            ctx.fillRect(1050, 0, 150, 700);
+
+            // 地板
+            const floorGrad = ctx.createLinearGradient(0, 550, 0, 700);
+            floorGrad.addColorStop(0, '#3a3a45');
+            floorGrad.addColorStop(1, '#1a1a25');
+            ctx.fillStyle = floorGrad;
+            ctx.fillRect(0, 550, 1200, 150);
+
+            // 地板反射
+            ctx.save();
+            ctx.globalAlpha = 0.15 * settings.giStrength;
+            const floorReflection = ctx.createLinearGradient(0, 550, 1200, 550);
+            floorReflection.addColorStop(0, settings.leftWallColor);
+            floorReflection.addColorStop(0.5, '#666666');
+            floorReflection.addColorStop(1, settings.rightWallColor);
+            ctx.fillStyle = floorReflection;
+            ctx.fillRect(0, 550, 1200, 150);
+            ctx.restore();
+
+            // 主光源光晕
+            const mainLight = ctx.createRadialGradient(settings.lightX, settings.lightY, 0, settings.lightX, settings.lightY, 250 * settings.intensity);
+            mainLight.addColorStop(0, `rgba(${lightColor.r}, ${lightColor.g}, ${lightColor.b}, ${0.8 * settings.intensity})`);
+            mainLight.addColorStop(0.3, `rgba(${lightColor.r}, ${lightColor.g}, ${lightColor.b}, ${0.4 * settings.intensity})`);
+            mainLight.addColorStop(1, 'transparent');
+            ctx.fillStyle = mainLight;
+            ctx.fillRect(settings.lightX - 250, settings.lightY - 250, 500, 500);
+
+            // 光源体
+            const lightCore = ctx.createRadialGradient(settings.lightX, settings.lightY, 0, settings.lightX, settings.lightY, 30);
+            lightCore.addColorStop(0, '#ffffff');
+            lightCore.addColorStop(0.5, settings.lightColor);
+            lightCore.addColorStop(1, 'transparent');
+            ctx.fillStyle = lightCore;
+            ctx.beginPath();
+            ctx.arc(settings.lightX, settings.lightY, 30, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 大立方体
+            drawCube(400, 350, 200, leftColor, rightColor, lightColor);
+
+            // 小立方体
+            drawCube(750, 450, 120, leftColor, rightColor, lightColor);
+
+            // 球体
+            drawSphere(900, 400, 80, leftColor, rightColor, lightColor);
+
+            // 表面缓存可视化
+            if (settings.cacheQuality >= 2) {
+                drawSurfaceCache();
+            }
+
+            // Lumen信息显示
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(10, 10, 280, 140);
+            ctx.fillStyle = '#0ea5e9';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('Lumen 状态', 20, 35);
+            ctx.fillStyle = '#fff';
+            ctx.font = '14px Arial';
+            ctx.fillText(`光线弹射: ${settings.bounces}次`, 20, 60);
+            ctx.fillText(`间接光强度: ${(settings.giStrength * 100).toFixed(0)}%`, 20, 85);
+            ctx.fillText(`表面缓存: ${['低', '中', '高'][settings.cacheQuality - 1]}`, 20, 110);
+            ctx.fillText(`AO强度: ${(settings.ao * 100).toFixed(0)}%`, 20, 135);
+        }
+
+        function drawCube(x, y, size, leftCol, rightCol, lightCol) {
+            const lightDist = Math.sqrt(Math.pow(x - settings.lightX, 2) + Math.pow(y - 100 - settings.lightY, 2));
+            const lightFactor = Math.max(0.2, 1 - lightDist / 500) * settings.intensity;
+
+            // 计算间接光照
+            const leftInfluence = Math.max(0, (600 - x) / 600) * settings.giStrength;
+            const rightInfluence = Math.max(0, (x - 600) / 600) * settings.giStrength;
+
+            // 顶面
+            const topBrightness = 180 + lightFactor * 75;
+            ctx.fillStyle = `rgb(${topBrightness}, ${topBrightness}, ${topBrightness})`;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + size * 0.5, y - size * 0.3);
+            ctx.lineTo(x + size * 1.5, y - size * 0.3);
+            ctx.lineTo(x + size, y);
+            ctx.closePath();
+            ctx.fill();
+
+            // 左侧面 - 红色反射
+            const leftR = Math.min(255, 100 + leftCol.r * leftInfluence + lightCol.r * lightFactor * 0.3);
+            const leftG = Math.min(255, 80 + leftCol.g * leftInfluence + lightCol.g * lightFactor * 0.3);
+            const leftB = Math.min(255, 80 + leftCol.b * leftInfluence + lightCol.b * lightFactor * 0.3);
+            ctx.fillStyle = `rgb(${leftR}, ${leftG}, ${leftB})`;
+            ctx.fillRect(x, y, size * 0.5, size);
+
+            // 右侧面 - 蓝色反射
+            const rightR = Math.min(255, 100 + rightCol.r * rightInfluence + lightCol.r * lightFactor * 0.5);
+            const rightG = Math.min(255, 100 + rightCol.g * rightInfluence + lightCol.g * lightFactor * 0.5);
+            const rightB = Math.min(255, 120 + rightCol.b * rightInfluence + lightCol.b * lightFactor * 0.5);
+            ctx.fillStyle = `rgb(${rightR}, ${rightG}, ${rightB})`;
+            ctx.beginPath();
+            ctx.moveTo(x + size, y);
+            ctx.lineTo(x + size * 1.5, y - size * 0.3);
+            ctx.lineTo(x + size * 1.5, y + size * 0.7);
+            ctx.lineTo(x + size, y + size);
+            ctx.closePath();
+            ctx.fill();
+
+            // 正面 - 混合光照
+            const frontR = (leftR * 0.4 + rightR * 0.6);
+            const frontG = (leftG * 0.4 + rightG * 0.6);
+            const frontB = (leftB * 0.4 + rightB * 0.6);
+            ctx.fillStyle = `rgb(${frontR}, ${frontG}, ${frontB})`;
+            ctx.fillRect(x + size * 0.5, y, size * 0.5, size);
+
+            // AO阴影
+            ctx.fillStyle = `rgba(0, 0, 0, ${settings.ao * 0.6})`;
+            ctx.beginPath();
+            ctx.ellipse(x + size * 0.75, y + size + 10, size * 0.6, size * 0.15, 0, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawSphere(x, y, radius, leftCol, rightCol, lightCol) {
+            const leftInfluence = Math.max(0, (600 - x) / 600) * settings.giStrength;
+            const rightInfluence = Math.max(0, (x - 600) / 600) * settings.giStrength;
+
+            const grad = ctx.createRadialGradient(x - radius * 0.3, y - radius * 0.3, radius * 0.1, x, y, radius);
+            
+            const r = 150 + leftCol.r * leftInfluence + rightCol.r * rightInfluence;
+            const g = 150 + leftCol.g * leftInfluence + rightCol.g * rightInfluence;
+            const b = 150 + leftCol.b * leftInfluence + rightCol.b * rightInfluence;
+
+            grad.addColorStop(0, `rgb(${Math.min(255, r + 50)}, ${Math.min(255, g + 50)}, ${Math.min(255, b + 50)})`);
+            grad.addColorStop(0.7, `rgb(${r}, ${g}, ${b})`);
+            grad.addColorStop(1, `rgb(${r * 0.5}, ${g * 0.5}, ${b * 0.5})`);
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 高光
+            const highlight = ctx.createRadialGradient(x - radius * 0.3, y - radius * 0.3, 0, x - radius * 0.3, y - radius * 0.3, radius * 0.4);
+            highlight.addColorStop(0, `rgba(255, 255, 255, ${settings.intensity * 0.6})`);
+            highlight.addColorStop(1, 'transparent');
+            ctx.fillStyle = highlight;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // AO阴影
+            ctx.fillStyle = `rgba(0, 0, 0, ${settings.ao * 0.5})`;
+            ctx.beginPath();
+            ctx.ellipse(x, y + radius + 10, radius * 0.8, radius * 0.2, 0, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawSurfaceCache() {
+            ctx.strokeStyle = 'rgba(14, 165, 233, 0.3)';
+            ctx.lineWidth = 1;
+            const gridSize = settings.cacheQuality === 3 ? 40 : 60;
+
+            for (let x = 150; x < 1050; x += gridSize) {
+                for (let y = 0; y < 550; y += gridSize) {
+                    ctx.strokeRect(x, y, gridSize, gridSize);
+                }
+            }
+        }
+
+        // 控制器
+        document.getElementById('lightX').addEventListener('input', (e) => {
+            settings.lightX = parseInt(e.target.value);
+            document.getElementById('lightXVal').textContent = e.target.value;
+            drawScene();
+        });
+
+        document.getElementById('lightY').addEventListener('input', (e) => {
+            settings.lightY = parseInt(e.target.value);
+            document.getElementById('lightYVal').textContent = e.target.value;
+            drawScene();
+        });
+
+        document.getElementById('lightColor').addEventListener('input', (e) => {
+            settings.lightColor = e.target.value;
+            drawScene();
+        });
+
+        document.getElementById('intensity').addEventListener('input', (e) => {
+            settings.intensity = parseInt(e.target.value) / 100;
+            document.getElementById('intensityVal').textContent = settings.intensity.toFixed(1);
+            drawScene();
+        });
+
+        document.getElementById('leftWallColor').addEventListener('input', (e) => {
+            settings.leftWallColor = e.target.value;
+            drawScene();
+        });
+
+        document.getElementById('rightWallColor').addEventListener('input', (e) => {
+            settings.rightWallColor = e.target.value;
+            drawScene();
+        });
+
+        document.getElementById('giStrength').addEventListener('input', (e) => {
+            settings.giStrength = parseInt(e.target.value) / 100;
+            document.getElementById('giVal').textContent = settings.giStrength.toFixed(1);
+            drawScene();
+        });
+
+        document.getElementById('bounces').addEventListener('input', (e) => {
+            settings.bounces = parseInt(e.target.value);
+            document.getElementById('bouncesVal').textContent = e.target.value;
+            drawScene();
+        });
+
+        document.getElementById('cacheQuality').addEventListener('input', (e) => {
+            settings.cacheQuality = parseInt(e.target.value);
+            const quality = ['低', '中', '高'][settings.cacheQuality - 1];
+            document.getElementById('cacheVal').textContent = quality;
+            drawScene();
+        });
+
+        document.getElementById('ao').addEventListener('input', (e) => {
+            settings.ao = parseInt(e.target.value) / 100;
+            document.getElementById('aoVal').textContent = settings.ao.toFixed(1);
+            drawScene();
+        });
+
+        // 初始渲染
+        drawScene();
+    </script>
+</body>
+</html>
